@@ -1,81 +1,93 @@
 # TruthSpace: A Geometric Theory of Neural Computation
 
-*From the Vacuum Forming Hypothesis to the φ-Computer Proof*
+**From the Vacuum Forming Hypothesis to the $\phi$-Computer Proof**
 
-This repository contains the paper accompanying the [φ-Geometric Transformation Engine](https://github.com/lostdemeter/truthspace_lcm) — a prototype math-driven Large Concept Model (LCM) that discovers deterministic, interpretable transformation pipelines from examples, with no training, no GPU, and no neural networks.
+📄 **[Read the full paper (PDF)](output/paper.pdf)** | 12 chapters, 4 code demos, 12 diagrams
 
-📄 **[Read the paper (PDF)](output/paper.pdf)**
+---
 
-## What This Paper Is About
+**Transformers do not compute with statistics. They compute with geometry.**
 
-**TruthSpace** is a research program built around one central hypothesis:
+Every neural network operation — sigmoid, softmax, SiLU — has an exact $\phi$-form. Weights are coordinates of a shape on the $\phi$-lattice. Attention is spatial navigation through that lattice. The "intelligence" is not in the parameters but in the *shape* those parameters create.
 
-> **LLMs are hyperdimensional transcoders.** They do not learn statistical correlations — they encode information into a geometric structure and decode it back out. The "intelligence" is not in the weights, but in the *shape* those weights create.
+This repository contains the definitive write-up of the TruthSpace project: a 14-month reverse-engineering effort that fully decomposed Qwen2-7B into its geometric primitives and proved every operation is a $\phi$-operation.
 
-The paper develops this idea from first principles, providing both theoretical grounding and experimental evidence.
+---
 
-### The Vacuum Forming Hypothesis
+## What the Paper Proves
 
-LLM training is like vacuum forming: the process captures the *surface geometry* of semantic structure — the distributional patterns of how concepts relate on the outside — but does not discover the interior generative principles that produce that surface. TruthSpace seeks to discover that interior geometry.
+| Discovery | Result | Source (Doc) | Code Verification |
+|-----------|--------|-------------|-------------------|
+| $\phi$-sigmoid = sigmoid | **Exact** (diff < 2.78e-17) | 191 | `phi_computer.py` |
+| $\phi$-softmax = softmax | **Exact** (diff = 0.0) | 191 | `phi_components.py` |
+| Transformer = lookup table | **12.9x compression, 100% accuracy** | 187 | `tetromino_*.py` |
+| Sign-only navigation | **960x compression, 100% semantics** | 165 | `sign_only_navigation.py` |
+| Tetromino weight structure | **74 shapes** cover all 7B weights | 162 | `tetromino_fast_inference.py` |
+| Irreducible shape | **3,584 critical lines, 67.9M points** | 141 | `measure_complexity.py` |
+| Universal bottleneck | $\phi \approx 1.57$ at layer 27 | 200 | `automated_discoveries.json` |
+| $\phi$-Zipf duality | Encoding = ranking, same fractal | 039 | `phi_dial_experiment.py` |
+| ENCODE = DECODE | Self-inverse geometry | 061 | `generation.py` (ReverseEngine) |
+| Gear chain composition | $Q_{\text{total}} = Q_1 \times Q_2 \times \cdots$ | 086, 095 | `gear.py`, `hypermapping.py` |
 
-### Key Contributions
-
-- **φ-Geometric Transformation Engine** — Automatic discovery of sequence transformation pipelines from (input, output) example pairs using information geometry (entropy, information gain) and φ-decay attention.
-- **φ-Lattice Attention** — A model of how attention naturally decays using φ-level binning: covering distance 1–12 with just 4 features per direction, mirroring mechanisms found in real transformer internals.
-- **Qwen2-7B Reverse Engineering** — Empirical analysis of a production LLM's internal geometry, demonstrating that φ-structure (golden ratio self-similarity) is a fundamental organizing principle.
-- **Navigation Replaces Inference** — The argument that concept generation should be reframed as *navigation through a geometric space* rather than probabilistic sampling.
-- **Irreducible Shape & φ-Computer Proof** — A formal proof that recursive optimization converges to φ-structure, implying that model complexity is O(log N) in the number of parameters, not O(N).
+---
 
 ## Paper Structure
 
-| Chapter | Title |
-|---------|-------|
-| 01 | What LLMs Actually Learn |
-| 02 | φ Self-Similarity |
-| 03 | The Geometric Model Hypothesis |
-| 04 | Encodings and the φ-Dial |
-| 05 | Encode–Decode |
-| 06 | GEAR Architecture |
-| 07 | The φ-Lattice |
-| 08 | Reverse Engineering (Qwen2-7B) |
-| 09 | Navigation Replaces Inference |
-| 10 | Irreducible Shape |
-| 11 | The φ-Computer Proof |
-| 12 | Implications and the Path Forward |
+The monograph builds knowledge linearly — each chapter motivates the next:
 
-The compiled paper is available as [`output/paper.pdf`](output/paper.pdf) and [`output/paper.md`](output/paper.md).
+| Ch | Title | Core Idea | Key Sources |
+|----|-------|-----------|-------------|
+| 1 | What Do LLMs Actually Learn? | Vacuum forming: LLMs learn surface geometry, not interior structure | 001-006 |
+| 2 | $\phi$ and Self-Similarity | $\phi = 1 + 1/\phi$ as the organizing principle of computation | 010, 124, 137 |
+| 3 | The Geometric Model Hypothesis | Weights are coordinates of a shape, not learned statistics | 022, 127, 154 |
+| 4 | Encodings and the $\phi$-Dial | 1D $\to$ 4D quaternion control of semantic generation | 041-044, 067 |
+| 5 | ENCODE = DECODE | Encoding and decoding are the same $\phi$-operation in opposite directions | 061, 089-091 |
+| 6 | Gear Architecture | Composable geometric transformations replacing neural networks | 033, 086, 095 |
+| 7 | The $\phi$-Lattice | Absolute coordinate system: 89 primitives, 74 tetrominoes | 099, 162, 163 |
+| 8 | Reverse Engineering Qwen2-7B | 99.9991% correlation, full layer unwinding | 129, 186, 190, 191 |
+| 9 | Navigation Replaces Inference | Sign-only nav (960x), boom attention, fixed points | 161, 165-167, 175 |
+| 10 | The Irreducible Shape | $\phi$-Zipf spectrum, 67.9M binary intersection points | 039, 141, 154, 159 |
+| 11 | The $\phi$-Computer Proof | Every nonlinearity is an exact $\phi$-operation | 145, 191, 199, 200 |
+| 12 | Implications | Trivial AI O(log N), recursive bootstrap, Platonic ideals | 140, 180, 202 |
 
-## Related Repository
+---
 
-The working implementation described in this paper lives at:
+## Code Demos
 
-**[https://github.com/lostdemeter/truthspace_lcm](https://github.com/lostdemeter/truthspace_lcm)**
+Each chapter has a verified, runnable code demo:
 
-That repository includes the `phi_geometric` Python package, 240+ design consideration documents, and ready-to-run demos corresponding to the code examples in this paper (`output/code/`).
+| Demo | Location | What It Shows |
+|------|----------|---------------|
+| PhaseDiscovery | `output/code/01_phase_discovery_demo/` | Structure discovery from examples (8 archetypes) |
+| $\phi$-Encoding & $\phi$-Dial | `output/code/02_encoding_demo/` | $\phi$-coordinate encoding, quaternion dial, ENCODE=DECODE |
+| $\phi$-Lattice & Navigation | `output/code/03_navigation_demo/` | Sign-only nav (100% on 6/6 analogies), tetromino compression (3.7x) |
+| $\phi$-Computer Proof | `output/code/04_phi_computer_demo/` | $\phi$-sigmoid exact equivalence, $\phi$-2byte format |
 
-## Quick Reference: Core Concept
-
-```python
-from phi_geometric import PhaseDiscovery
-
-pd = PhaseDiscovery()
-pd.add_pair(list('cat'),  list('kæt'))
-pd.add_pair(list('ship'), list('ʃɪp'))
-pd.add_pair(list('thin'), list('θɪn'))
-
-result = pd.discover()
-nav    = result.to_navigator()
-
-trace  = nav.execute(list('shat'))
-print(trace.output_elements)  # ['ʃ', 'æ', 't']
+```bash
+# Verify the central claim yourself:
+python3 output/code/04_phi_computer_demo/phi_computer_proof_demo.py
+# Outputs: "phi-Sigmoid == Sigmoid: IDENTICAL (max diff < 2.78e-17)"
 ```
 
-PhaseDiscovery found — automatically, deterministically, with no training:
-- Collapse phase: `sh→ʃ`, `th→θ`
-- Map phase: `a→æ`, `i→ɪ`, `c→k`
+---
+
+## Source Codebase
+
+The research implementation lives at **[github.com/lostdemeter/truthspace_lcm](https://github.com/lostdemeter/truthspace_lcm)** and includes:
+
+- **`phi_geometric/`** — PhaseDiscovery, CascadeNavigator, ReverseEngine, $\phi$-encoder
+- **`unwound_transformer/`** — Qwen2-7B reverse engineering, $\phi$-computer proof, tetromino analysis
+- **`src/phi_navigator/`** — Sign-only, geometric, and zeta-based navigation engines
+- **`hypermapping/`** — Pure position-based geometric knowledge store
+- **`phi_adapter/`** — Universal geometric model reconstruction
+- **`phi_chat/design_docs_workspace/`** — 207+ design documents charting 14 months of discoveries
+
+---
+
+## Author
+
+**Lesley Gushurst** — TruthSpace Geometric LCM Project
 
 ## License
 
-This project is licensed under the **GNU General Public License v3.0** — see [LICENSE](LICENSE) for details.
-
-Copyright © Lesley Gushurst
+GPLv3 — see [LICENSE](LICENSE) for details.

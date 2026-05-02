@@ -9,7 +9,8 @@ No torch or neural networks. Pure information-theoretic structure detection.
 """
 
 import sys
-sys.path.insert(0, '/home/thorin/truthspace-lcm')
+# sys.path.insert(0, '/home/thorin/truthspace-lcm')  # local dev path
+# For git-cloned copies, install the package or set PYTHONPATH instead
 
 from phi_geometric.core.phase_discovery import PhaseDiscovery
 
