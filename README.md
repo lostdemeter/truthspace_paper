@@ -82,6 +82,10 @@ The research implementation lives at **[github.com/lostdemeter/truthspace_lcm](h
 - **`phi_adapter/`** — Universal geometric model reconstruction
 - **`phi_chat/design_docs_workspace/`** — 207+ design documents charting 14 months of discoveries
 
+> **Note on the state of `truthspace_lcm`:** That repository reflects 14 months of active, exploratory research and is currently in an organic, pre-reorganization state. It was not designed as a clean reference implementation — it is a working research environment that accumulated structure as ideas evolved. Some diagrams and modules are provisional, naming conventions are inconsistent across phases of the project, and not all components are expected to run out of the box without context.
+>
+> **This paper repository is the intended starting point.** It exists precisely to distill, clarify, and reorganize the ideas from `truthspace_lcm` into a coherent, linear narrative. If you want to understand the theory, start here. The source codebase is best approached *after* reading the paper, and with the expectation that it is a research artifact rather than a finished product.
+
 ---
 
 ## Author
