@@ -2,7 +2,9 @@
 
 **From the Vacuum Forming Hypothesis to the $\phi$-Computer Proof**
 
-📄 **[Read the full paper (PDF)](output/paper.pdf)** | 12 chapters, 4 code demos, 12 diagrams
+📄 **[Read the full paper (PDF)](output/paper.pdf)** | 12 chapters, 4 code demos, 12 figures
+
+All figures are generated from scripts in `output/figures/scripts/` — tweak and regenerate with `python3 output/figures/scripts/figX_Y_title.py`.
 
 ---
 

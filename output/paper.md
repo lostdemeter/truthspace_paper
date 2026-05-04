@@ -11,6 +11,12 @@ toc: true
 listings-disable-line-numbers: true
 ---
 
+# Chapter 1: What Do LLMs Actually Learn?
+
+*The vacuum forming hypothesis and the search for interior structure.*
+
+---
+
 ## 1.1 The Black Box Problem
 
 Large Language Models (LLMs) are the most successful AI systems ever built, yet we have remarkably little understanding of what they actually learn. We know the mechanics—token embeddings, attention patterns, feed-forward projections—but the *nature* of the knowledge they acquire remains opaque. When GPT-4 translates a sentence, answers a question, or writes code, what *kind* of thing is happening inside its billions of weights?
@@ -205,7 +211,7 @@ And in the \ensuremath{\phi}-coordinate conversion (`unwound_transformer/phi_com
 
 ```python
 class PhiCoord:
-    """A coordinate in φ-space: value = sign x phi^level x (1 + residual x (phi-1))"""
+    """A coordinate in \ensuremath{\phi}-space: value = sign x phi^level x (1 + residual x (phi-1))"""
     level: int
     sign: int  # +1 or -1
     residual: float  # in [0, 1)
@@ -504,14 +510,14 @@ This philosophy enforces a critical constraint: every component must work **geom
 # Pure geometry: discover, navigate, verify.
 
 pd = PhaseDiscovery()
-pd.add_pair(list('ship'), list('ʃɪp'))
-pd.add_pair(list('cat'),  list('kæt'))
+pd.add_pair(list('ship'), list('/sh//ih/p'))
+pd.add_pair(list('cat'),  list('k/ae/t'))
 
 result = pd.discover()
 nav = result.to_navigator()
 
 trace = nav.execute(list('shop'))
-print(trace.output_elements)  # ['ʃ', 'ɒ', 'p']
+print(trace.output_elements)  # ['/sh/', 'ɒ', 'p']
 ```
 
 The PhaseDiscovery engine finds geometric structure in transformation data without any neural network components. It uses:
@@ -801,7 +807,7 @@ There is an explicit "thinking" step between input and output. The processing is
 In \ensuremath{\phi}-geometry:
 
 ```
-TEXT IN → φ-space → TEXT OUT
+TEXT IN → \ensuremath{\phi}-space → TEXT OUT
 ```
 
 The "thinking" IS the encoding. This leads to three profound consequences:
@@ -813,11 +819,11 @@ Because $\phi \cdot 1/\phi = 1$, the \ensuremath{\phi}-space geometry is **self-
 ```python
 # Forward: input → output (navigation)
 nav = result.to_navigator()
-trace = nav.execute(['s', 'h', 'i', 'p'])  # → ['ʃ', 'ɪ', 'p']
+trace = nav.execute(['s', 'h', 'i', 'p'])  # → ['/sh/', '/ih/', 'p']
 
 # Reverse: output → input (same structure, opposite direction)
 engine = ReverseEngine(nav)
-inputs = engine.reverse(['ʃ', 'ɪ', 'p'])  # → [['s', 'h', 'i', 'p']]
+inputs = engine.reverse(['/sh/', '/ih/', 'p'])  # → [['s', 'h', 'i', 'p']]
 ```
 
 The reverse engine works by inverting the same geometric rules: a collapse pattern `sh→/sh/` becomes an expansion `/sh/→sh`, a consistent map `a→A` becomes `A←{a}`, and the \ensuremath{\phi}-level binning structure remains identical.
@@ -993,7 +999,7 @@ The base class (`gear.py`) defines the contract:
 
 ```python
 class Gear(ABC):
-    """A transformation unit in φ-space."""
+    """A transformation unit in \ensuremath{\phi}-space."""
     
     def __init__(self, name: str, ratio: float = 1.0):
         self.name = name
@@ -1140,7 +1146,7 @@ In the `PhiDialSpace` experiment, structure is defined by the dimensionality and
 
 ```python
 space = PhiDialSpace(dims=8)
-# Defines an 8-dimensional φ-space for concept navigation
+# Defines an 8-dimensional \ensuremath{\phi}-space for concept navigation
 ```
 
 ### 6.4.2 BOOTSTRAP: Seed with Examples
@@ -1233,7 +1239,7 @@ space.map("show directory", "ls", position=[0.3, 0.4, ...])
 result = space.forward("display files")  # → "ls"
 
 # No if-statements, no pattern matching, no neural networks
-# Pure position similarity in φ-space
+# Pure position similarity in \ensuremath{\phi}-space
 ```
 
 The key advantage: **HyperMapping is interpretable, serializable, and trainable without gradients**. You add data, compute positions, and query by proximity. The `from_pairs()` convenience function builds a mapping directly:
@@ -1429,7 +1435,7 @@ The `PhiEncoder` pre-computes a Look-Up Table for \ensuremath{\phi}-exponent add
 ```python
 phi_powers[e] = PHI ^ ((e - bias) / K)  # LUT for decoding
 
-# Addition in φ-space:
+# Addition in \ensuremath{\phi}-space:
 # phi^a + phi^b = phi^b * (phi^(a-b) + 1) = phi^(b + LUT[a-b])
 # where LUT[d] = K * log_phi(phi^(d/K) + 1)
 ```
@@ -1521,12 +1527,12 @@ The `PhiQwen2Engine` (`phi_geometric/inference/phi_engine.py`) implements the fu
 
 ```python
 class PhiQwen2Engine:
-    """Full Qwen2-7B forward pass in φ-geometry."""
+    """Full Qwen2-7B forward pass in \ensuremath{\phi}-geometry."""
     
     def forward(self, token_ids):
-        h = self.embed(token_ids)          # Positions in φ-space
+        h = self.embed(token_ids)          # Positions in \ensuremath{\phi}-space
         for layer in self.layers:
-            h = layer.forward(h)            # φ-transformation
+            h = layer.forward(h)            # \ensuremath{\phi}-transformation
         return self.lm_head(h)             # Navigation to tokens
 ```
 
@@ -1719,16 +1725,16 @@ The `PhiAttention` class (`phi_geometric/inference/phi_attention.py`) implements
 ```python
 class PhiAttention:
     def forward(self, h, cos, sin):
-        # φ-linear projections (exponent addition)
+        # \ensuremath{\phi}-linear projections (exponent addition)
         Q = phi_linear(self.W_q, h, self.b_q)
         K = phi_linear(self.W_k, h, self.b_k)
         V = phi_linear(self.W_v, h, self.b_v)
         
-        # φ-RoPE (rotation in φ-space)
+        # \ensuremath{\phi}-RoPE (rotation in \ensuremath{\phi}-space)
         for pos in range(seq_len):
             Q[pos] = apply_rope_phi(Q[pos], cos[pos], sin[pos])
         
-        # φ-softmax attention
+        # \ensuremath{\phi}-softmax attention
         attn_weights = phi_softmax(scores, axis=-1)
         attn_output = phi_linear(self.W_o, attn_weights @ V)
 ```
@@ -1791,7 +1797,7 @@ The 960× compression means a 7B parameter model compresses to ~7.3 MB of sign b
 Navigation does not require manually defined dimensions. The system can **discover semantic relationships** directly from the embedding structure:
 
 ```python
-# Navigators discover relationships from the φ-lattice structure
+# Navigators discover relationships from the \ensuremath{\phi}-lattice structure
 navigator = SignOnlyNavigator(model, tokenizer)
 
 # Automatically discover: which dimensions flip between known pairs?
@@ -1817,7 +1823,7 @@ This was discovered through the observation that token embeddings do not change 
 ```python
 # Entity-to-Answer transformations are rotations of consistent angle
 # "capital of France → Paris" and "capital of Japan → Tokyo"
-# Both rotate by ~77 degrees in φ-space
+# Both rotate by ~77 degrees in \ensuremath{\phi}-space
 ```
 
 The `BoomAttention` mechanism [192] exploits this by computing attention only at positions where the \ensuremath{\phi}-coordinate is likely to change (boom positions), skipping the fixed-point regions entirely:
