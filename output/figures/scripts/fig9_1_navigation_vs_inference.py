@@ -1,134 +1,119 @@
 #!/usr/bin/env python3
 """
-Figure 9.1: Navigation vs Inference
-Panel A: Full O(N^2) attention fan - every token attends to all previous tokens.
-Panel B: phi-lattice navigation - the SAME sign-flip vector moves every pair of
-         semantically related words (king->queen, man->woman, ...), making
-         navigation a geometric O(1) lookup rather than a statistical computation.
+Figure 9.1 - Navigation replaces inference.
+
+Panel A: full O(N^2) attention fan over N=7 tokens.
+Panel B: phi-lattice navigation - the SAME flip vector connects every
+         pair of semantically related words on a phi-crystal plane.
 """
 import numpy as np
-import matplotlib
-matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.patches import FancyBboxPatch, FancyArrowPatch
+from figstyle import (apply_style, save_fig, panel_label,
+                      INK, INK_SOFT, GOLD, RED, TEAL, VIOLET, GRID, MUTED)
 
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(13, 5.5))
+apply_style()
 
-# ------------------------------------------------------------------
-# Panel A: Traditional inference - full attention fan is O(N^2)
-# ------------------------------------------------------------------
-ax1.set_xlim(0, 1); ax1.set_ylim(0, 1)
-ax1.axis('off')
-ax1.text(0.5, 0.95, r'Traditional Inference: $O(N^2)$',
-         fontsize=13, fontweight='bold', ha='center')
+fig, (axA, axB) = plt.subplots(1, 2, figsize=(13.5, 5.6))
+
+# =========================================================================
+# Panel A : O(N^2) attention fan
+# =========================================================================
+panel_label(axA, "A")
+axA.set_xlim(0, 1); axA.set_ylim(-0.05, 1.05)
+axA.axis("off")
+axA.set_title(r"Traditional inference:  $O(N^{\,2})$",
+              fontsize=12, color=INK, pad=8)
 
 N = 7
-token_y = 0.22
-x_tokens = np.linspace(0.08, 0.92, N)
+ty = 0.18
+xt = np.linspace(0.07, 0.93, N)
 
-# Full attention arcs: every token attends to all previous tokens.
-# Total edges = N(N-1)/2.  For N=7 that is 21 arcs.
-edge_count = 0
+edges = 0
 for j in range(N):
     for i in range(j):
-        dx = x_tokens[j] - x_tokens[i]
-        arc = FancyArrowPatch(
-            (x_tokens[i], token_y + 0.05),
-            (x_tokens[j], token_y + 0.05),
-            connectionstyle=f"arc3,rad=-{0.25 + 0.05 * (j - i)}",
-            arrowstyle='-',
-            color='#E74C3C', alpha=0.35, linewidth=1.0,
-            mutation_scale=0,
-        )
-        ax1.add_patch(arc)
-        edge_count += 1
+        rad = -(0.18 + 0.05 * (j - i))
+        a = FancyArrowPatch((xt[i], ty + 0.04), (xt[j], ty + 0.04),
+                            connectionstyle=f"arc3,rad={rad}",
+                            arrowstyle="-", color=RED,
+                            lw=0.9, alpha=0.4)
+        axA.add_patch(a)
+        edges += 1
 
-# Token boxes on top of arcs so labels remain readable.
-for i, x in enumerate(x_tokens):
-    ax1.add_patch(FancyBboxPatch(
-        (x - 0.045, token_y - 0.055), 0.09, 0.11,
-        boxstyle="round,pad=0.015",
-        facecolor='#FF6B6B', alpha=0.9, edgecolor='#333', linewidth=1.0,
-        zorder=3,
-    ))
-    ax1.text(x, token_y, f'T{i+1}', ha='center', va='center',
-             fontsize=9, fontweight='bold', color='#222', zorder=4)
+for i, x in enumerate(xt):
+    axA.add_patch(FancyBboxPatch((x - 0.038, ty - 0.05), 0.076, 0.1,
+                                 boxstyle="round,pad=0.01,rounding_size=0.04",
+                                 facecolor=RED, edgecolor=INK,
+                                 lw=0.9, alpha=0.95, zorder=4))
+    axA.text(x, ty, f"T{i+1}", ha="center", va="center",
+             fontsize=9.5, fontweight="bold", color="white", zorder=5)
 
-# Key callout: N(N-1)/2 attention edges.
-ax1.text(0.5, 0.85,
-         f'N = {N} tokens  -->  {edge_count} attention edges  =  N(N-1)/2',
-         ha='center', fontsize=10, color='#222')
-ax1.text(0.5, 0.05,
-         'Every token attends to every previous token.\nCost grows quadratically with sequence length.',
-         ha='center', fontsize=9.5, color='#555')
+axA.text(0.5, 0.94,
+         f"N = {N} tokens   ->   {edges} attention edges  =  N(N-1)/2",
+         ha="center", fontsize=10.5, color=INK)
+axA.text(0.5, 0.04,
+         "Every token attends to every previous token.\n"
+         "Cost grows quadratically with sequence length.",
+         ha="center", va="bottom", fontsize=9.5, color=INK_SOFT,
+         style="italic")
 
-# ------------------------------------------------------------------
-# Panel B: phi-lattice navigation - same sign-flip vector for every pair
-# ------------------------------------------------------------------
-ax2.set_xlim(-0.5, 10.5); ax2.set_ylim(-0.2, 6.2)
-ax2.axis('off')
-ax2.text(5, 5.9, r'$\phi$-Lattice Navigation: $O(1)$ per step',
-         fontsize=13, fontweight='bold', ha='center')
+# =========================================================================
+# Panel B : phi-lattice navigation
+# =========================================================================
+panel_label(axB, "B")
+axB.set_xlim(-0.5, 11); axB.set_ylim(-0.4, 6.6)
+axB.axis("off")
+axB.set_title(r"phi-lattice navigation:  $O(1)$ per step",
+              fontsize=12, color=INK, pad=8)
 
-# Faint lattice grid suggesting the crystalline phi-structure
-for gx in np.arange(0, 10.1, 0.5):
-    ax2.axvline(gx, color='#BDC3C7', alpha=0.25, linewidth=0.5, zorder=0)
-for gy in np.arange(0, 5.1, 0.5):
-    ax2.axhline(gy, xmin=0.04, xmax=0.96,
-                color='#BDC3C7', alpha=0.25, linewidth=0.5, zorder=0)
+# faint lattice grid
+for gx in np.arange(0, 11.1, 0.5):
+    axB.axvline(gx, color=GRID, lw=0.4, alpha=0.5, zorder=0)
+for gy in np.arange(0, 6.1, 0.5):
+    axB.axhline(gy, color=GRID, lw=0.4, alpha=0.5, zorder=0)
 
-# Word positions.  Gender pairs on the left share a horizontal flip;
-# temperature pairs on the right share a vertical flip.  The two
-# relationships live on orthogonal crystal planes.
 words = {
-    'king':   (0.6, 4.2),  'queen':  (3.6, 4.2),
-    'man':    (0.6, 2.7),  'woman':  (3.6, 2.7),
-    'uncle':  (0.6, 1.2),  'aunt':   (3.6, 1.2),
-    'hot':    (6.2, 1.2),  'cold':   (6.2, 4.2),
-    'warm':   (9.0, 1.2),  'cool':   (9.0, 4.2),
+    "king":  (0.6, 4.6), "queen":  (3.6, 4.6),
+    "man":   (0.6, 3.0), "woman":  (3.6, 3.0),
+    "uncle": (0.6, 1.4), "aunt":   (3.6, 1.4),
+    "hot":   (6.4, 1.4), "cold":   (6.4, 4.6),
+    "warm":  (9.4, 1.4), "cool":   (9.4, 4.6),
 }
-
 for w, (x, y) in words.items():
-    ax2.scatter(x, y, s=55, color='#2C3E50', zorder=4)
-    ax2.text(x, y - 0.35, w, ha='center', va='top',
-             fontsize=9.5, color='#222', zorder=4)
+    axB.scatter(x, y, s=58, color=INK, zorder=4)
+    axB.text(x, y - 0.42, w, ha="center", va="top",
+             fontsize=10, color=INK, zorder=4)
 
-# Gender flip arrows - all identical vectors (horizontal, length 3).
-gender_pairs = [('king', 'queen'), ('man', 'woman'), ('uncle', 'aunt')]
-for a, b in gender_pairs:
+# gender-flip arrows (red, horizontal)
+for a, b in [("king", "queen"), ("man", "woman"), ("uncle", "aunt")]:
     xa, ya = words[a]; xb, yb = words[b]
-    ax2.annotate('', xy=(xb - 0.22, yb), xytext=(xa + 0.22, ya),
-                 arrowprops=dict(arrowstyle='->', color='#E74C3C',
-                                 lw=2.2, shrinkA=0, shrinkB=0),
-                 zorder=3)
+    axB.add_patch(FancyArrowPatch((xa + 0.22, ya), (xb - 0.22, yb),
+                                  arrowstyle="-|>", color=RED,
+                                  lw=2.0, mutation_scale=12, zorder=3))
 
-# Temperature flip arrows - all identical vectors (vertical, length 3).
-temp_pairs = [('hot', 'cold'), ('warm', 'cool')]
-for a, b in temp_pairs:
+# temperature-flip arrows (violet, vertical)
+for a, b in [("hot", "cold"), ("warm", "cool")]:
     xa, ya = words[a]; xb, yb = words[b]
-    ax2.annotate('', xy=(xb, yb - 0.22), xytext=(xa, ya + 0.22),
-                 arrowprops=dict(arrowstyle='->', color='#9B59B6',
-                                 lw=2.2, shrinkA=0, shrinkB=0),
-                 zorder=3)
+    axB.add_patch(FancyArrowPatch((xa, ya + 0.22), (xb, yb - 0.22),
+                                  arrowstyle="-|>", color=VIOLET,
+                                  lw=2.0, mutation_scale=12, zorder=3))
 
-# Relationship labels
-ax2.text(2.1, 4.75, 'gender flip', color='#E74C3C',
-         fontsize=10, fontweight='bold', ha='center')
-ax2.text(2.1, 4.5, '(same sign-bits flip for every pair)',
-         color='#E74C3C', fontsize=8.5, ha='center')
+axB.text(2.1, 5.6, "gender flip", color=RED,
+         fontsize=11, fontweight="bold", ha="center")
+axB.text(2.1, 5.3, "(same sign-bits flip for every pair)",
+         color=RED, fontsize=8.5, ha="center", style="italic")
+axB.text(7.9, 5.6, "temperature flip", color=VIOLET,
+         fontsize=11, fontweight="bold", ha="center")
+axB.text(7.9, 5.3, "(orthogonal crystal plane)",
+         color=VIOLET, fontsize=8.5, ha="center", style="italic")
 
-ax2.text(7.6, 4.9, 'temperature flip', color='#9B59B6',
-         fontsize=10, fontweight='bold', ha='center')
-ax2.text(7.6, 4.65, '(orthogonal crystal plane)',
-         color='#9B59B6', fontsize=8.5, ha='center')
+axB.text(5.0, 0.05,
+         "Each relationship is a fixed direction in the lattice.\n"
+         r"Traverse it once, apply to any word:  960$\times$ compression, $O(1)$ lookup.",
+         ha="center", va="bottom", fontsize=9.5, color=INK_SOFT,
+         style="italic")
 
-ax2.text(5, 0.05,
-         'Each relationship is a fixed direction in the lattice.\n'
-         'Traverse it once -> apply to any word: 960x compression, $O(1)$ lookup.',
-         ha='center', fontsize=9.5, color='#555')
+fig.suptitle("Navigation replaces inference",
+             fontsize=15, fontweight="bold", y=1.02)
 
-plt.suptitle('Navigation Replaces Inference', fontsize=15, fontweight='bold', y=1.02)
-plt.tight_layout()
-plt.savefig('../fig9_1_navigation_vs_inference.png', dpi=200, bbox_inches='tight')
-plt.close()
-print("fig9_1 saved")
+save_fig("fig9_1_navigation_vs_inference")

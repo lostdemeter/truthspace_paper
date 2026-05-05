@@ -1,62 +1,128 @@
 #!/usr/bin/env python3
 """
-Figure 5.1: ENCODE = DECODE Symmetry
-Panel A: The symmetry diagram — encode and decode as same phi-operation
-Panel B: Critical strip information limit (sigma = 0.5)
+Figure 5.1 - The ENCODE = DECODE master symmetry.
+
+Panel A: A token enters, is multiplied by phi (encode), then by 1/phi
+         (decode), and emerges identical.  The two arcs are mirror images.
+Panel B: The critical line sigma = 0.5 with simulated zeta-like zeros along
+         it - the universal balance between under- and over-determined.
 """
 import numpy as np
-import matplotlib
-matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-from matplotlib.patches import FancyArrowPatch
+from matplotlib.patches import FancyArrowPatch, Circle
+from figstyle import (apply_style, save_fig, panel_label,
+                      INK, INK_SOFT, GOLD, RED, TEAL, VIOLET,
+                      GRID, PHI, MUTED)
 
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
+apply_style()
 
-# Panel A: Symmetry diagram
-ax1.axis('off')
-ax1.arrow(-0.5, 0.3, 3.0, 0, head_width=0.08, head_length=0.08, fc='#333', ec='#333', linewidth=1.5)
-circle = plt.Circle((0.5, 0.3), 0.3, fill=True, alpha=0.3, facecolor='#2196F3', edgecolor='#1565C0', linewidth=2)
-ax1.add_patch(circle)
-ax1.text(0.5, 0.3, r'$\phi$', fontsize=20, fontweight='bold', ha='center', va='center', color='#1565C0')
+fig, (axA, axB) = plt.subplots(1, 2, figsize=(13, 5.2),
+                               gridspec_kw={"width_ratios": [1.2, 1]})
 
-ax1.add_patch(FancyArrowPatch((0.1, 0.55), (0.35, 0.35),
-                              arrowstyle='->', color='#FF6B6B', linewidth=3,
-                              connectionstyle='arc3,rad=-0.3'))
-ax1.text(0.15, 0.65, 'ENCODE', fontsize=14, fontweight='bold', color='#FF6B6B', ha='center')
-ax1.text(0.15, 0.58, r'$x \times \phi$', fontsize=11, color='#FF6B6B', ha='center')
+# =========================================================================
+# Panel A : encode/decode symmetry diagram
+# =========================================================================
+panel_label(axA, "A")
+axA.set_xlim(-0.1, 5.1); axA.set_ylim(-0.4, 3.3)
+axA.set_aspect("equal"); axA.axis("off")
 
-ax1.add_patch(FancyArrowPatch((0.65, 0.35), (0.9, 0.55),
-                              arrowstyle='->', color='#4CAF50', linewidth=3,
-                              connectionstyle='arc3,rad=-0.3'))
-ax1.text(0.85, 0.65, 'DECODE', fontsize=14, fontweight='bold', color='#4CAF50', ha='center')
-ax1.text(0.85, 0.58, r'$x \div \phi$', fontsize=11, color='#4CAF50', ha='center')
+# input and output dots on a horizontal axis
+yline = 1.2
+axA.plot([-0.05, 5.05], [yline, yline], color=INK, lw=1.0, alpha=0.6)
 
-ax1.text(-0.2, 0.3, 'Input', fontsize=12, ha='center', va='center', color='#333')
-ax1.text(1.1, 0.3, 'Output', fontsize=12, ha='center', va='center', color='#333')
-ax1.text(0.5, -0.1, r'$\phi \times 1/\phi = 1$', fontsize=16, fontweight='bold', ha='center')
-ax1.text(0.5, -0.2, 'The transformation IS the understanding', fontsize=11, color='#555', ha='center')
-ax1.set_xlim(-0.5, 1.5); ax1.set_ylim(-0.3, 0.8)
+axA.add_patch(Circle((0.4, yline), 0.18, facecolor=GOLD,
+                     edgecolor=INK, lw=1.2, zorder=3))
+axA.text(0.4, yline - 0.45, "input  $x$", ha="center", va="top",
+         fontsize=11, color=INK)
 
-# Panel B: Critical strip
-ax2.axis('off')
-x_vals = np.linspace(0, 1, 100)
-y_vals = np.linspace(-2, 2, 100)
-X, Y = np.meshgrid(x_vals, y_vals)
-Z = np.sinc(5 * (X - 0.5)) * np.exp(-Y**2 / 4)
-ax2.imshow(Z, extent=[0, 1, -2, 2], origin='lower', aspect='auto', cmap='viridis', alpha=0.7)
-ax2.axvline(x=0.5, color='red', linewidth=3, linestyle='-', alpha=0.8, label=r'Critical line $\sigma=0.5$')
-ax2.axvline(x=0, color='#555', linewidth=1.5, linestyle='--', alpha=0.5)
-ax2.axvline(x=1, color='#555', linewidth=1.5, linestyle='--', alpha=0.5)
-ax2.text(0.25, 1.8, 'Under-determined', fontsize=9, ha='center', color='#555')
-ax2.text(0.75, 1.8, 'Over-constrained', fontsize=9, ha='center', color='#555')
-ax2.text(0.5, -1.8, r'$\sigma=0.5$: Universal Information Limit', fontsize=11, fontweight='bold', ha='center', color='red')
-ax2.set_xlabel(r'$\sigma$ (real part)', fontsize=11)
-ax2.set_ylabel(r'$t$ (imaginary part)', fontsize=11)
-ax2.set_title(r'Critical Strip: $\sigma = 0.5$', fontsize=13, fontweight='bold')
-ax2.legend(fontsize=9, loc='upper right')
+axA.add_patch(Circle((4.6, yline), 0.18, facecolor=GOLD,
+                     edgecolor=INK, lw=1.2, zorder=3))
+axA.text(4.6, yline - 0.45, "output  $x$", ha="center", va="top",
+         fontsize=11, color=INK)
 
-plt.suptitle('ENCODE = DECODE: The Master Symmetry', fontsize=15, fontweight='bold', y=1.02)
-plt.tight_layout()
-plt.savefig('../fig5_1_encode_decode.png', dpi=200, bbox_inches='tight')
-plt.close()
-print("fig5_1 saved")
+# central phi node
+axA.add_patch(Circle((2.5, yline), 0.32, facecolor="white",
+                     edgecolor=INK, lw=1.4, zorder=3))
+axA.text(2.5, yline, r"$\phi$", ha="center", va="center",
+         fontsize=20, color=INK, fontweight="bold")
+
+# encode arc (above)
+arc1 = FancyArrowPatch((0.6, yline + 0.05), (2.2, yline + 0.05),
+                       connectionstyle="arc3,rad=-0.45",
+                       arrowstyle="-|>", color=RED, lw=2.4,
+                       mutation_scale=14, zorder=4)
+axA.add_patch(arc1)
+axA.text(1.4, yline + 0.95, "ENCODE", color=RED,
+         fontsize=12, fontweight="bold", ha="center")
+axA.text(1.4, yline + 0.7, r"$x \;\mapsto\; x \cdot \phi$",
+         color=RED, fontsize=11, ha="center")
+
+# decode arc (above, mirror)
+arc2 = FancyArrowPatch((2.8, yline + 0.05), (4.4, yline + 0.05),
+                       connectionstyle="arc3,rad=-0.45",
+                       arrowstyle="-|>", color=TEAL, lw=2.4,
+                       mutation_scale=14, zorder=4)
+axA.add_patch(arc2)
+axA.text(3.6, yline + 0.95, "DECODE", color=TEAL,
+         fontsize=12, fontweight="bold", ha="center")
+axA.text(3.6, yline + 0.7, r"$y \;\mapsto\; y \,/\, \phi$",
+         color=TEAL, fontsize=11, ha="center")
+
+# bottom equation
+axA.text(2.5, -0.05, r"$\phi \,\times\, \dfrac{1}{\phi} \;=\; 1$",
+         ha="center", va="center", fontsize=15, color=INK)
+axA.text(2.5, 2.65, "the transformation IS the inverse",
+         ha="center", fontsize=11, color=INK_SOFT, style="italic")
+
+axA.set_title("Encoding and decoding share one operation", fontsize=12)
+
+# =========================================================================
+# Panel B : critical line sigma = 0.5
+# =========================================================================
+panel_label(axB, "B")
+axB.set_xlim(0, 1); axB.set_ylim(-12, 12)
+
+# heat-map background: distance to sigma=0.5
+sigma = np.linspace(0, 1, 200)
+t = np.linspace(-12, 12, 200)
+S, T = np.meshgrid(sigma, t)
+heat = np.exp(-((S - 0.5) ** 2) * 18) * (0.5 + 0.5 * np.cos(T * 0.7))
+axB.imshow(heat, extent=[0, 1, -12, 12], origin="lower",
+           aspect="auto", cmap="YlGnBu", alpha=0.45, zorder=0)
+
+# critical line
+axB.axvline(0.5, color=RED, lw=2.4, zorder=4,
+            label=r"critical line  $\sigma = 1/2$")
+
+# simulated zeta-like zero positions on the critical line
+zero_t = np.array([14.13, 21.02, 25.01, 30.42, 32.94, 37.59, 40.92,
+                   43.33, 48.00, 49.77]) - 30
+# fold positive/negative
+zero_t = np.concatenate([zero_t, -zero_t])
+axB.scatter([0.5] * len(zero_t), zero_t, color=RED, s=42,
+            edgecolors=INK, linewidths=0.6, zorder=5,
+            label="zeros on the critical line")
+
+# region labels
+axB.text(0.18, 11, "under-determined\n(too few constraints)",
+         color=INK, fontsize=9, ha="center", va="top",
+         bbox=dict(boxstyle="round,pad=0.25", fc="white",
+                   ec=GRID, alpha=0.9))
+axB.text(0.82, 11, "over-determined\n(too many constraints)",
+         color=INK, fontsize=9, ha="center", va="top",
+         bbox=dict(boxstyle="round,pad=0.25", fc="white",
+                   ec=GRID, alpha=0.9))
+
+axB.set_xlabel(r"$\sigma$  (information-balance axis)")
+axB.set_ylabel(r"$t$")
+axB.set_title(r"Universal information limit at  $\sigma = 1/2$",
+              fontsize=12)
+axB.legend(loc="lower right", fontsize=9,
+           facecolor="white", framealpha=0.9)
+axB.set_xticks([0, 0.25, 0.5, 0.75, 1])
+axB.spines["left"].set_color(INK); axB.spines["bottom"].set_color(INK)
+
+fig.suptitle("ENCODE = DECODE: the master symmetry",
+             fontsize=15, fontweight="bold", y=1.02)
+
+save_fig("fig5_1_encode_decode")

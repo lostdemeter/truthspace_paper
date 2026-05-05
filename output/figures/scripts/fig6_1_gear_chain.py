@@ -1,55 +1,120 @@
 #!/usr/bin/env python3
 """
-Figure 6.1: Gear Chain Architecture
-Top: Gear pipeline with quaternion accumulation
-Bottom: 5-step emergent pattern lifecycle
+Figure 6.1 - Gear-chain architecture and the emergent 5-step lifecycle.
+
+Panel A: Input -> Gear1 -> Gear2 -> Gear3 -> Output, with the running
+         quaternion product Q_total accumulating across the chain.
+Panel B: The recurring Structure -> Bootstrap -> Match -> Compose -> Learn
+         lifecycle that emerges across the codebase.
 """
-import matplotlib
-matplotlib.use('Agg')
+import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib.patches import Rectangle, FancyBboxPatch
+from matplotlib.patches import FancyBboxPatch, FancyArrowPatch
+from figstyle import (apply_style, save_fig, panel_label,
+                      INK, INK_SOFT, GOLD, RED, TEAL, VIOLET,
+                      GRID, MUTED)
 
-fig, ax = plt.subplots(figsize=(10, 3.5))
-ax.axis('off')
+apply_style()
 
-stages = [('Input\nState', '#95A5A6'), ('Gear 1\nAction', '#FF6B6B'), ('Gear 2\nRole', '#4ECDC4'),
-          ('Gear 3\nOutput', '#45B7D1'), ('Final\nState', '#95A5A6')]
-y_pos = 0.5
-x_positions = [0.08, 0.25, 0.42, 0.59, 0.78]
-for i, (label, color) in enumerate(stages):
-    x = x_positions[i]
-    box = FancyBboxPatch((x-0.06, y_pos-0.3), 0.12, 0.6,
-                          boxstyle="round,pad=0.04", facecolor=color, alpha=0.7,
-                          edgecolor='#333', linewidth=2)
-    ax.add_patch(box)
-    ax.text(x, y_pos, label, ha='center', va='center', fontsize=9, fontweight='bold', color='white')
+fig, (axA, axB) = plt.subplots(2, 1, figsize=(13, 6),
+                               gridspec_kw={"height_ratios": [1.4, 1]})
 
-for i in range(len(stages)-1):
-    x1 = x_positions[i] + 0.06; x2 = x_positions[i+1] - 0.06
-    ax.annotate('', xy=(x2, y_pos), xytext=(x1, y_pos),
-                arrowprops=dict(arrowstyle='->', color='#333', linewidth=2.5))
+# =========================================================================
+# Panel A : the gear chain
+# =========================================================================
+panel_label(axA, "A", y=1.06)
+axA.set_xlim(0, 14); axA.set_ylim(0, 4.0)
+axA.set_aspect("auto"); axA.axis("off")
 
-ax.annotate('', xy=(0.78, 0.1), xytext=(0.08, 0.1),
-            arrowprops=dict(arrowstyle='->', color='#9B59B6', linewidth=2, linestyle='--'))
-ax.text(0.43, 0.06, r'$Q_{total} = Q_1 \times Q_2 \times \cdots \times Q_n$',
-        ha='center', va='center', fontsize=11, color='#9B59B6')
+stages = [
+    ("Input\nstate",  MUTED,  False),
+    ("Gear 1\nAction", RED,    True),
+    ("Gear 2\nRole",   TEAL,   True),
+    ("Gear 3\nOutput", VIOLET, True),
+    ("Final\nstate",   MUTED,  False),
+]
 
-emergent_steps = ['1.STRUCTURE', '2.BOOTSTRAP', '3.MATCH', '4.COMPOSE', '5.LEARN']
-emergent_colors = ['#E74C3C', '#E67E22', '#F1C40F', '#2ECC71', '#3498DB']
-for i, (step, c) in enumerate(zip(emergent_steps, emergent_colors)):
-    x = 0.08 + i * 0.185
-    rect = Rectangle((x, -0.35), 0.16, 0.22, fill=True, alpha=0.85,
-                     facecolor=c, edgecolor='#333', linewidth=1.5)
-    ax.add_patch(rect)
-    ax.text(x+0.08, -0.24, step, ha='center', va='center', fontsize=7.5, fontweight='bold', color='white')
-    if i < 4:
-        ax.annotate('', xy=(x+0.185, -0.24), xytext=(x+0.16, -0.24),
-                    arrowprops=dict(arrowstyle='->', color='#333', linewidth=1.5))
+w = 2.2; h = 1.6; gap = 0.45
+x = 0.2
+positions = []
+for label, color, is_gear in stages:
+    fc = color if is_gear else "#E1E5EC"
+    txt_color = "white" if is_gear else INK
+    axA.add_patch(FancyBboxPatch((x, 1.4), w, h,
+                                 boxstyle="round,pad=0.04,rounding_size=0.18",
+                                 facecolor=fc, edgecolor=INK, lw=1.2,
+                                 alpha=0.95, zorder=3))
+    axA.text(x + w / 2, 1.4 + h / 2, label,
+             ha="center", va="center", color=txt_color,
+             fontsize=11.5, fontweight="bold", zorder=4)
+    positions.append(x + w / 2)
+    x += w + gap
 
-ax.set_xlim(0, 1); ax.set_ylim(-0.5, 0.9)
-ax.set_title('Gear Chain Architecture + Emergent Pattern', fontsize=14, fontweight='bold', pad=10)
+# arrows between stages
+for i in range(len(stages) - 1):
+    a = FancyArrowPatch((positions[i] + w / 2 - 0.05, 2.2),
+                        (positions[i + 1] - w / 2 + 0.05, 2.2),
+                        arrowstyle="-|>", color=INK, lw=1.6,
+                        mutation_scale=14)
+    axA.add_patch(a)
 
+# quaternion accumulation underneath
+qs = [r"$Q_1$", r"$Q_1\!\cdot\!Q_2$", r"$Q_1\!\cdot\!Q_2\!\cdot\!Q_3$"]
+for i, q in enumerate(qs):
+    cx = (positions[i + 1] + positions[i + 2]) / 2
+    axA.text(cx, 1.05, q, ha="center", va="top",
+             fontsize=10, color=INK_SOFT)
+
+axA.annotate("", xy=(positions[-1] + 0.6, 0.45),
+             xytext=(positions[1] - 0.6, 0.45),
+             arrowprops=dict(arrowstyle="->", color=GOLD, lw=1.8,
+                             linestyle="--"))
+axA.text((positions[1] + positions[-1]) / 2, 0.18,
+         r"$Q_{\mathrm{total}} \;=\; Q_1 \cdot Q_2 \cdots Q_n$"
+         "    -    quaternion path through the chain",
+         ha="center", va="top", fontsize=11, color=GOLD)
+
+axA.set_title("Gear chain  -  state flows, quaternion accumulates",
+              fontsize=12, color=INK, pad=4, loc="left")
+
+# =========================================================================
+# Panel B : 5-step lifecycle
+# =========================================================================
+panel_label(axB, "B", y=1.08)
+axB.set_xlim(0, 14); axB.set_ylim(0, 1.6)
+axB.axis("off")
+
+steps = [
+    ("1. STRUCTURE", "define the space",       "#3F6FB3"),
+    ("2. BOOTSTRAP", "seed with examples",     "#D67D2C"),
+    ("3. MATCH",     "find nearest structure", "#D4B019"),
+    ("4. COMPOSE",   "adapt to request",       "#3FA67E"),
+    ("5. LEARN",     "self-improve",           VIOLET),
+]
+sw = 2.4; sh = 1.0; sgap = 0.2
+x = 0.4
+for i, (head, sub, color) in enumerate(steps):
+    axB.add_patch(FancyBboxPatch((x, 0.3), sw, sh,
+                                 boxstyle="round,pad=0.04,rounding_size=0.14",
+                                 facecolor=color, edgecolor=INK,
+                                 lw=1.0, alpha=0.95))
+    axB.text(x + sw / 2, 0.3 + sh * 0.62, head,
+             ha="center", va="center", color="white",
+             fontsize=10.5, fontweight="bold")
+    axB.text(x + sw / 2, 0.3 + sh * 0.28, sub,
+             ha="center", va="center", color="white",
+             fontsize=9, style="italic")
+    if i < len(steps) - 1:
+        a = FancyArrowPatch((x + sw + 0.02, 0.8),
+                            (x + sw + sgap - 0.02, 0.8),
+                            arrowstyle="-|>", color=INK,
+                            lw=1.3, mutation_scale=12)
+        axB.add_patch(a)
+    x += sw + sgap
+
+axB.set_title("The emergent 5-step lifecycle",
+              fontsize=12, color=INK, pad=4, loc="left")
+
+fig.suptitle("Gear architecture", fontsize=15, fontweight="bold", y=1.02)
 plt.tight_layout()
-plt.savefig('../fig6_1_gear_chain.png', dpi=200, bbox_inches='tight')
-plt.close()
-print("fig6_1 saved")
+save_fig("fig6_1_gear_chain")

@@ -1,42 +1,83 @@
 #!/usr/bin/env python3
 """
-Figure 12.1: Implications — The Path Forward
-Five key directions flowing from the geometric theory foundation
+Figure 12.1 - The path forward for geometric AI.
+
+A 5-stage road of consequences building on the foundation:
+phi-Lattice  |  phi-Computer  |  Irreducible Shape
 """
 import numpy as np
-import matplotlib
-matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-from matplotlib.patches import FancyBboxPatch
+from matplotlib.patches import FancyBboxPatch, FancyArrowPatch
+from figstyle import (apply_style, save_fig,
+                      INK, INK_SOFT, GOLD, GOLD_SOFT, RED, TEAL,
+                      VIOLET, GRID, MUTED, PAPER)
 
-fig, ax = plt.subplots(figsize=(10, 4))
-ax.axis('off')
+apply_style()
 
-concepts = [
-    ('Trivial AI\nO(log N)', '#2196F3'),
-    ('Platonic\nIdeals', '#9B59B6'),
-    ('Recursive\nBootstrap', '#E67E22'),
-    ('Self-Describing\nGeometry', '#2ECC71'),
-    ('Human-AI\nAlignment', '#E74C3C'),
+fig, ax = plt.subplots(figsize=(13, 5.2))
+ax.set_xlim(0, 14); ax.set_ylim(0, 4.6)
+ax.axis("off")
+
+# ----------------------------------------------------------------- foundation
+foundations = ["phi-Lattice", "phi-Computer", "Irreducible Shape"]
+fw = 3.4; fy = 0.45
+for i, f in enumerate(foundations):
+    fx = 1.2 + i * (fw + 0.6)
+    ax.add_patch(FancyBboxPatch((fx, fy), fw, 0.85,
+                                boxstyle="round,pad=0.04,rounding_size=0.18",
+                                facecolor=GOLD_SOFT, edgecolor=GOLD,
+                                lw=1.4))
+    ax.text(fx + fw / 2, fy + 0.42, f,
+            ha="center", va="center", fontsize=11,
+            fontweight="bold", color=INK)
+
+ax.text(7, 0.18, "FOUNDATION  ( proven )", ha="center", va="bottom",
+        fontsize=9.5, color=INK_SOFT, style="italic")
+
+# ----------------------------------------------------------------- arrows up
+for i in range(3):
+    fx = 1.2 + i * (fw + 0.6) + fw / 2
+    a = FancyArrowPatch((fx, 1.4), (fx + 0.3, 2.2),
+                        arrowstyle="-|>", color=GOLD,
+                        lw=1.0, mutation_scale=10, alpha=0.5)
+    ax.add_patch(a)
+
+# ----------------------------------------------------------------- path forward
+stages = [
+    ("Trivial AI",         "$O(\\log N)$\ncomplexity",   "#3F6FB3"),
+    ("Platonic Ideals",    "~100 fixed-points\nin phi-space", VIOLET),
+    ("Recursive\nBootstrap", "discover how\nto discover",  "#D67D2C"),
+    ("Self-describing\ngeometry", "model = map\nof its own state", TEAL),
+    ("Human-AI\nalignment", "shared coordinates,\nshared understanding", RED),
 ]
-x_pos = np.linspace(0.05, 0.95, len(concepts))
-for i, (label, color) in enumerate(concepts):
-    x = x_pos[i]
-    box = FancyBboxPatch((x-0.07, 0.15), 0.14, 0.5, boxstyle="round,pad=0.04",
-                          facecolor=color, alpha=0.8, edgecolor='#333', linewidth=1.5)
-    ax.add_patch(box)
-    ax.text(x, 0.4, label, ha='center', va='center', fontsize=9, fontweight='bold', color='white')
+sw = 2.2; sh = 1.6; sgap = 0.45
+total_w = len(stages) * sw + (len(stages) - 1) * sgap
+x0 = (14 - total_w) / 2
+sy = 2.5
+for i, (head, sub, color) in enumerate(stages):
+    sx = x0 + i * (sw + sgap)
+    ax.add_patch(FancyBboxPatch((sx, sy), sw, sh,
+                                boxstyle="round,pad=0.04,rounding_size=0.16",
+                                facecolor=color, edgecolor=INK, lw=1.1,
+                                alpha=0.95))
+    ax.text(sx + sw / 2, sy + sh * 0.68, head,
+            ha="center", va="center", color="white",
+            fontsize=10.5, fontweight="bold")
+    ax.text(sx + sw / 2, sy + sh * 0.28, sub,
+            ha="center", va="center", color="white",
+            fontsize=8.5, style="italic")
+    if i < len(stages) - 1:
+        a = FancyArrowPatch((sx + sw + 0.04, sy + sh / 2),
+                            (sx + sw + sgap - 0.04, sy + sh / 2),
+                            arrowstyle="-|>", color=INK,
+                            lw=1.4, mutation_scale=12)
+        ax.add_patch(a)
 
-for i in range(len(concepts)-1):
-    x1 = x_pos[i] + 0.07; x2 = x_pos[i+1] - 0.07
-    ax.annotate('', xy=(x2, 0.4), xytext=(x1, 0.4),
-                arrowprops=dict(arrowstyle='->', color='#333', linewidth=2))
+ax.text(7, sy + sh + 0.25, "PATH FORWARD  ( consequences of the proof )",
+        ha="center", va="bottom", fontsize=9.5, color=INK_SOFT,
+        style="italic")
 
-ax.text(0.5, -0.1, 'Foundation:  phi-Lattice  |  phi-Computer  |  Irreducible Shape',
-        ha='center', fontsize=11, fontweight='bold', color='#555')
-ax.set_title('Implications: The Path Forward for Geometric AI', fontsize=14, fontweight='bold')
+ax.set_title("The path forward for geometric AI",
+             fontsize=15, fontweight="bold", color=INK, pad=14, loc="center")
 
-plt.tight_layout()
-plt.savefig('../fig12_1_implications.png', dpi=200, bbox_inches='tight')
-plt.close()
-print("fig12_1 saved")
+save_fig("fig12_1_implications")

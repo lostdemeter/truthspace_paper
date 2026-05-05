@@ -1,51 +1,91 @@
 #!/usr/bin/env python3
 """
-Figure 3.1: Geometric Model Hypothesis
-Panel A: 3D phi-structured weight manifold with signal (69%) and noise (31%)
-Panel B: Training fidelity curve — shape discovery over time
+Figure 3.1 - Weights are coordinates of a shape, not learned statistics.
+
+Panel A: 2D projection of weights showing structured 'signal' lying on a
+         clear phi-curve and 'noise' (31% removable) scattered around it.
+Panel B: Training-time shape-fidelity curve approaching 1.0.
 """
 import numpy as np
-import matplotlib
-matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+from figstyle import (apply_style, save_fig, panel_label,
+                      INK, INK_SOFT, GOLD, RED, TEAL, GRID, PHI, MUTED)
 
-PHI = (1 + np.sqrt(5)) / 2
+apply_style()
+rng = np.random.default_rng(3)
 
-fig = plt.figure(figsize=(12, 5))
-ax1 = fig.add_subplot(121, projection='3d')
+fig, (axA, axB) = plt.subplots(1, 2, figsize=(13, 5))
 
-np.random.seed(42)
-n = 300
-t = np.random.uniform(0, 2*np.pi, n)
-s = np.random.uniform(0, np.pi, n)
-X = np.cos(t)*np.sin(s)*(0.5+0.5*np.sin(s*np.log(PHI)))
-Y = np.sin(t)*np.sin(s)*(0.5+0.5*np.sin(s*np.log(PHI)))
-Z = np.cos(s)*(0.5+0.3*np.sin(t*np.log(PHI)))
-noise_mask = np.random.choice([True, False], n, p=[0.31, 0.69])
-Xn, Yn, Zn = X.copy(), Y.copy(), Z.copy()
-Xn[noise_mask] += np.random.normal(0, 0.15, noise_mask.sum())
-Yn[noise_mask] += np.random.normal(0, 0.15, noise_mask.sum())
-Zn[noise_mask] += np.random.normal(0, 0.15, noise_mask.sum())
-sig = ~noise_mask
-ax1.scatter(X[sig], Y[sig], Z[sig], c=t[sig], cmap='viridis', alpha=0.6, s=15, label='Signal (69%)')
-ax1.scatter(Xn[noise_mask], Yn[noise_mask], Zn[noise_mask], c='red', alpha=0.2, s=10, label='Noise (31%)')
-ax1.set_xlabel('dim 1', fontsize=9); ax1.set_ylabel('dim 2', fontsize=9); ax1.set_zlabel('dim 3', fontsize=9)
-ax1.set_title('Weights as phi-Coordinates of a Shape', fontsize=12, fontweight='bold')
-ax1.legend(fontsize=8, loc='upper right')
+# =========================================================================
+# Panel A : structured signal vs removable noise in weight space
+# =========================================================================
+panel_label(axA, "A")
+# the shape: a logarithmic spiral with phi growth   r = phi^(theta/(2*pi))
+theta_sig = np.linspace(0, 4 * np.pi, 220)
+r_sig = PHI ** (theta_sig / (2 * np.pi)) * 0.55
+sx = r_sig * np.cos(theta_sig)
+sy = r_sig * np.sin(theta_sig)
+# small jitter so it looks like sampled weights
+sx_n = sx + rng.normal(0, 0.06, sx.shape)
+sy_n = sy + rng.normal(0, 0.06, sy.shape)
 
-ax2 = fig.add_subplot(122)
-epochs = np.array([0, 1, 5, 20, 50, 100, 200])
-fidelity = 1 - np.exp(-epochs/30)
-noise = 0.3 * np.exp(-epochs/20) + 0.02
-ax2.plot(epochs, fidelity, 'o-', color='#2196F3', linewidth=2.5, markersize=8)
-ax2.fill_between(epochs, 0, fidelity, alpha=0.15, color='#2196F3')
-ax2.fill_between(epochs, fidelity-noise, fidelity+noise, alpha=0.2, color='#FF6B6B')
-ax2.axhline(y=1.0, color='green', linestyle='--', alpha=0.5, label='phi-shape (discovered)')
-ax2.set_xlabel('Training Steps', fontsize=11); ax2.set_ylabel('Shape Fidelity', fontsize=11)
-ax2.set_title('Training Discovers the phi-Shape, It Does Not Create It', fontsize=11, fontweight='bold')
-ax2.legend(fontsize=9); ax2.grid(True, alpha=0.3); ax2.set_ylim(-0.05, 1.15)
+# noise: 31% of weights, scattered over the same region
+n_signal = len(sx_n)
+n_noise = int(round(n_signal * 0.31 / 0.69))
+nx = rng.uniform(sx_n.min() - 0.3, sx_n.max() + 0.3, n_noise)
+ny = rng.uniform(sy_n.min() - 0.3, sy_n.max() + 0.3, n_noise)
 
-plt.tight_layout()
-plt.savefig('../fig3_1_shape_coordinates.png', dpi=200, bbox_inches='tight')
-plt.close()
-print("fig3_1 saved")
+axA.scatter(nx, ny, s=22, color=RED, alpha=0.32, edgecolors="none",
+            label="Removable noise (31%)", zorder=2)
+axA.scatter(sx_n, sy_n, s=22, color=GOLD, alpha=0.95,
+            edgecolors=INK, linewidths=0.3,
+            label="Signal: phi-shape (69%)", zorder=3)
+# overlay the underlying phi-spiral
+axA.plot(sx, sy, color=INK, lw=1.4, alpha=0.85, zorder=4,
+         label="Discovered phi-shape")
+
+axA.set_aspect("equal")
+axA.set_xlabel("weight coordinate $w_1$")
+axA.set_ylabel("weight coordinate $w_2$")
+axA.set_title("Weights cluster on a phi-shape", fontsize=12)
+axA.legend(loc="lower right", fontsize=9)
+axA.grid(True, color=GRID, linewidth=0.5, alpha=0.5)
+axA.set_axisbelow(True)
+axA.spines["left"].set_color(INK); axA.spines["bottom"].set_color(INK)
+
+# =========================================================================
+# Panel B : shape fidelity vs training steps
+# =========================================================================
+panel_label(axB, "B", x=-0.07)
+steps = np.array([0, 5, 20, 50, 100, 200, 400, 800])
+fid = 1.0 - np.exp(-steps / 60.0)
+fid[0] = 0.0
+band = 0.05 * np.exp(-steps / 80.0)
+
+axB.fill_between(steps, fid - band, fid + band, color=GOLD, alpha=0.22)
+axB.plot(steps, fid, color=GOLD, lw=2.4, marker="o",
+         mfc=GOLD, mec=INK, mew=0.6, ms=6, zorder=4)
+
+axB.axhline(1.0, color=TEAL, ls="--", lw=1.2, alpha=0.85, zorder=3)
+axB.text(steps[-1] * 0.99, 1.005, "discovered phi-shape  (target)",
+         ha="right", va="bottom", color=TEAL, fontsize=9.5, style="italic")
+
+axB.set_xlim(0, steps[-1] * 1.02); axB.set_ylim(0, 1.1)
+axB.set_xlabel("Training steps")
+axB.set_ylabel("Shape fidelity")
+axB.set_title("Training discovers the shape, it does not create it",
+              fontsize=12)
+axB.grid(True, color=GRID, linewidth=0.5, alpha=0.6)
+axB.set_axisbelow(True)
+axB.spines["left"].set_color(INK); axB.spines["bottom"].set_color(INK)
+
+# annotation arrow
+axB.annotate("plateau at the\nphi-lattice fixed point",
+             xy=(steps[-2], fid[-2]), xytext=(steps[-2] * 0.55, 0.55),
+             fontsize=9.5, color=INK_SOFT, ha="center",
+             arrowprops=dict(arrowstyle="->", color=INK_SOFT, lw=0.9))
+
+fig.suptitle("Geometric Model Hypothesis: weights are shape coordinates",
+             fontsize=15, fontweight="bold", y=1.02)
+
+save_fig("fig3_1_shape_coordinates")
