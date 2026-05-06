@@ -35,7 +35,7 @@ The core analogy that launched this research program is the **vacuum forming hyp
 
 ![Vacuum Forming Hypothesis](figures/fig1_1_vacuum_forming.png)
 
-*Figure 1.1: The vacuum forming hypothesis. Left: Training data forms the "surface" that LLMs learn. Right: The interior geometric structure that TruthSpace seeks to discover. The red contour lines represent the underlying \ensuremath{\phi}-geometry; the blue contours represent the surface approximation learned by training.*
+*Figure 1.1: The vacuum forming hypothesis. Left: Training data forms the "surface" that LLMs learn. Right: The interior geometric structure that TruthSpace seeks to discover. The red contour lines represent the underlying φ-geometry; the blue contours represent the surface approximation learned by training.*
 
 The hypothesis states:
 
@@ -53,13 +53,13 @@ The initial experiments [4, 5] tested this hypothesis by probing LLM embedding s
 
 > Semantic similarity between concepts remained **consistent across phase shifts**, even when individual embedding magnitudes changed dramatically. This suggests an underlying geometric invariance that transcends surface correlations.
 
-Specifically, when embeddings were shifted along \ensuremath{\phi}-based phase angles [1]:
+Specifically, when embeddings were shifted along φ-based phase angles [1]:
 
 - **Zero-variance points** emerged—positions in semantic space where phase had no effect on meaning, corresponding to "semantic singularities"
 - **Polarity encoding** was discovered: concepts were encoded not by magnitude but by *direction* in a low-dimensional signature space
 - **Orthogonal dimensions** enabled independent tuning, where collisions only mattered within a dimension, not across them
 
-The plastic constant \ensuremath{\rho} \ensuremath{\approx} 1.3247 (the real root of x³ = x + 1) was found to provide finer semantic discrimination than \ensuremath{\phi} in certain early 12D encodings [6], but this turned out to be a local optimum rather than a fundamental constant.
+The plastic constant ρ ≈ 1.3247 (the real root of x³ = x + 1) was found to provide finer semantic discrimination than φ in certain early 12D encodings [6], but this turned out to be a local optimum rather than a fundamental constant.
 
 ### 1.2.2 The Phase-Shift Probing Method
 
@@ -82,25 +82,25 @@ Based on the vacuum forming hypothesis and subsequent experiments [2, 5], we can
 
 Standard view: Embeddings are vectors that capture statistical co-occurrence patterns.
 
-Geometric view: Embeddings are **coordinates** in a \ensuremath{\phi}-structured semantic space. The position of a token determines its meaning; nearby tokens share semantic properties.
+Geometric view: Embeddings are **coordinates** in a φ-structured semantic space. The position of a token determines its meaning; nearby tokens share semantic properties.
 
 ### 1.3.2 Attention Patterns
 
 Standard view: Attention computes weighted averages based on learned query-key similarity.
 
-Geometric view: Attention is a **spatial routing mechanism**. The attention weights are determined by geometric distance in \ensuremath{\phi}-space, not by learned statistical correlations. The softmax that normalizes attention scores is a \ensuremath{\phi}-operation (as we will prove in Chapter 11).
+Geometric view: Attention is a **spatial routing mechanism**. The attention weights are determined by geometric distance in φ-space, not by learned statistical correlations. The softmax that normalizes attention scores is a φ-operation (as we will prove in Chapter 11).
 
 ### 1.3.3 Feed-Forward Networks
 
 Standard view: MLPs learn non-linear transformations of token representations.
 
-Geometric view: MLPs are **\ensuremath{\phi}-level selectors**. Each layer's computation corresponds to shifting a token's coordinate along a specific \ensuremath{\phi}-lattice direction.
+Geometric view: MLPs are **φ-level selectors**. Each layer's computation corresponds to shifting a token's coordinate along a specific φ-lattice direction.
 
 ### 1.3.4 Output Projections
 
 Standard view: The LM head projects the final hidden state to vocabulary probabilities.
 
-Geometric view: The LM head is a **navigation map**—it translates from \ensuremath{\phi}-space position back to token space, where the closest token in geometric distance is selected.
+Geometric view: The LM head is a **navigation map**—it translates from φ-space position back to token space, where the closest token in geometric distance is selected.
 
 ---
 
@@ -110,45 +110,45 @@ The vacuum forming hypothesis raises two questions that drive the entire TruthSp
 
 **Question 1**: If LLMs learn only the surface structure, can we discover the *interior* geometry that generates it?
 
-**Question 2**: If the interior geometry is \ensuremath{\phi}-based, can we *build* systems that compute directly in \ensuremath{\phi}-space, bypassing the need for statistical training?
+**Question 2**: If the interior geometry is φ-based, can we *build* systems that compute directly in φ-space, bypassing the need for statistical training?
 
-The answer to both questions, we will argue throughout this paper, is **yes**. The interior geometry is a **\ensuremath{\phi}-lattice**—a coordinate system based on powers of the golden ratio—and the computation that transformers perform is **navigation through this lattice**.
+The answer to both questions, we will argue throughout this paper, is **yes**. The interior geometry is a **φ-lattice**—a coordinate system based on powers of the golden ratio—and the computation that transformers perform is **navigation through this lattice**.
 
 ---
 
 ## 1.5 A Roadmap of What Follows
 
-This paper traces the intellectual journey from the vacuum forming hypothesis to the \ensuremath{\phi}-computer proof:
+This paper traces the intellectual journey from the vacuum forming hypothesis to the φ-computer proof:
 
 | Chapter | Topic | Key Source Documents |
 |---------|-------|---------------------|
-| 2 | \ensuremath{\phi} and Self-Similarity | 010, 124, 133, 137 |
+| 2 | φ and Self-Similarity | 010, 124, 133, 137 |
 | 3 | The Geometric Model Hypothesis | 022, 039, 127 |
-| 4 | Encodings and the \ensuremath{\phi}-Dial | 009, 041–044, 067, 142 |
+| 4 | Encodings and the φ-Dial | 009, 041–044, 067, 142 |
 | 5 | ENCODE = DECODE | 061, 089–091 |
 | 6 | Gear Architecture and Emergence | 033, 049, 086, 103 |
-| 7 | The \ensuremath{\phi}-Lattice Coordinate System | 099–102, 162–163 |
+| 7 | The φ-Lattice Coordinate System | 099–102, 162–163 |
 | 8 | Reverse Engineering Qwen2-7B | 129, 134, 185–187, 190 |
 | 9 | Navigation Replaces Inference | 161, 165–167, 175–176 |
 | 10 | The Irreducible Shape | 039, 141, 154, 159–160 |
-| 11 | The \ensuremath{\phi}-Computer Proof | 145, 191, 199–200 |
+| 11 | The φ-Computer Proof | 145, 191, 199–200 |
 | 12 | Implications and Future Work | 140, 155, 180, 202 |
 
 Each chapter builds on the previous ones. By the end, we will have shown that:
 
-- Transformers are **\ensuremath{\phi}-computers** (Chapter 11)
-- Their weights form a **\ensuremath{\phi}-lattice** (Chapter 7)
+- Transformers are **φ-computers** (Chapter 11)
+- Their weights form a **φ-lattice** (Chapter 7)
 - Attention is **geometric navigation** (Chapter 9)
 - The irreducible shape of computation has been **catalogued** (Chapter 10)
 
-But first, we must understand the fundamental building block of this geometry: the golden ratio \ensuremath{\phi} itself.
+But first, we must understand the fundamental building block of this geometry: the golden ratio φ itself.
 
 ---
 
 *Sources: Docs 1, 2, 3, 4, 5, 6, 23, 33, 127*
 
 
-# Chapter 2: \ensuremath{\phi} and Self-Similarity
+# Chapter 2: φ and Self-Similarity
 
 *The golden ratio as the organizing principle of geometric computation.*
 
@@ -156,7 +156,7 @@ But first, we must understand the fundamental building block of this geometry: t
 
 ## 2.1 The Defining Equation
 
-The golden ratio \ensuremath{\phi} is the mathematical constant:
+The golden ratio φ is the mathematical constant:
 
 $$\phi = \frac{1 + \sqrt{5}}{2} \approx 1.618033988749895$$
 
@@ -164,32 +164,32 @@ Its defining property is self-similarity:
 
 $$\phi = 1 + \frac{1}{\phi}$$
 
-This single equation encodes a profound truth: \ensuremath{\phi} can be decomposed into a part that equals 1 and a part that equals 1/\ensuremath{\phi}. The ratio between the whole and the larger part is the same as the ratio between the larger part and the smaller part. In other words: **\ensuremath{\phi} is self-similar at every scale**.
+This single equation encodes a profound truth: φ can be decomposed into a part that equals 1 and a part that equals 1/φ. The ratio between the whole and the larger part is the same as the ratio between the larger part and the smaller part. In other words: **φ is self-similar at every scale**.
 
-![\ensuremath{\phi} Self-Similarity](figures/fig2_1_phi_spiral.png)
+![φ Self-Similarity](figures/fig2_1_phi_spiral.png)
 
-*Figure 2.1: Three views of \ensuremath{\phi} self-similarity. Left: \ensuremath{\phi} = 1 + 1/\ensuremath{\phi} geometrically. Center: The Fibonacci spiral approximates \ensuremath{\phi} through integer ratios. Right: \ensuremath{\phi}^n follows a self-similar exponential scaling.*
+*Figure 2.1: Three views of φ self-similarity. Left: φ = 1 + 1/φ geometrically. Center: The Fibonacci spiral approximates φ through integer ratios. Right: φ^n follows a self-similar exponential scaling.*
 
-This self-similarity is not a mathematical curiosity—it is the fundamental organizing principle that makes \ensuremath{\phi} the natural coordinate system for geometric computation. Consider what self-similarity gives us:
+This self-similarity is not a mathematical curiosity—it is the fundamental organizing principle that makes φ the natural coordinate system for geometric computation. Consider what self-similarity gives us:
 
-1. **Scale invariance**: A transformation that works at \ensuremath{\phi}^2 works identically at \ensuremath{\phi}^0
-2. **Recursive decomposition**: Any \ensuremath{\phi} interval can be decomposed into smaller \ensuremath{\phi} intervals
-3. **Natural spacing**: \ensuremath{\phi}^n provides logarithmic spacing that avoids collisions—a property critical for encoding distinct concepts without overlap
+1. **Scale invariance**: A transformation that works at φ^2 works identically at φ^0
+2. **Recursive decomposition**: Any φ interval can be decomposed into smaller φ intervals
+3. **Natural spacing**: φ^n provides logarithmic spacing that avoids collisions—a property critical for encoding distinct concepts without overlap
 
 ---
 
-## 2.2 \ensuremath{\phi}-Powers as a Coordinate System
+## 2.2 φ-Powers as a Coordinate System
 
-The powers of \ensuremath{\phi} form a discrete set with remarkable properties:
+The powers of φ form a discrete set with remarkable properties:
 
-| n | \ensuremath{\phi}^n | Notes |
+| n | φ^n | Notes |
 |---|-----|-------|
 | -4 | 0.146 | Fine-grained resolution |
 | -3 | 0.236 | |
 | -2 | 0.382 | |
 | -1 | 0.618 | |
 | 0 | 1.000 | The unit |
-| 1 | 1.618 | \ensuremath{\phi} itself |
+| 1 | 1.618 | φ itself |
 | 2 | 2.618 | |
 | 3 | 4.236 | |
 | 4 | 6.854 | Coarse scale |
@@ -198,7 +198,7 @@ The key insight is that **any positive real number** can be represented as:
 
 $$x = s \cdot \phi^{e} \cdot (1 + r \cdot (\phi - 1))$$
 
-where $s \in \{-1, +1\}$ is the sign, $e \in \mathbb{Z}$ is the \ensuremath{\phi}-exponent (level), and $r \in [0, 1)$ is the residual within the \ensuremath{\phi}-level.
+where $s \in \{-1, +1\}$ is the sign, $e \in \mathbb{Z}$ is the φ-exponent (level), and $r \in [0, 1)$ is the residual within the φ-level.
 
 This is confirmed in the codebase (`phi_geometric/inference/phi_types.py`):
 
@@ -207,11 +207,11 @@ PHI = (1 + np.sqrt(5)) / 2
 LOG_PHI = np.log(PHI)
 ```
 
-And in the \ensuremath{\phi}-coordinate conversion (`unwound_transformer/phi_computer.py`):
+And in the φ-coordinate conversion (`unwound_transformer/phi_computer.py`):
 
 ```python
 class PhiCoord:
-    """A coordinate in \ensuremath{\phi}-space: value = sign x phi^level x (1 + residual x (phi-1))"""
+    """A coordinate in φ-space: value = sign x phi^level x (1 + residual x (phi-1))"""
     level: int
     sign: int  # +1 or -1
     residual: float  # in [0, 1)
@@ -233,46 +233,46 @@ class PhiCoord:
         return cls(level=level, sign=sign, residual=residual)
 ```
 
-This encoding scheme means that a number is decomposed into its sign, its power-of-\ensuremath{\phi} magnitude, and its fine position within that magnitude—similar to floating point but using \ensuremath{\phi} as the base rather than 2.
+This encoding scheme means that a number is decomposed into its sign, its power-of-φ magnitude, and its fine position within that magnitude—similar to floating point but using φ as the base rather than 2.
 
 ---
 
-## 2.3 \ensuremath{\phi} as Universal Adapter
+## 2.3 φ as Universal Adapter
 
-The most important property of \ensuremath{\phi} for our purposes is its role as a **universal adapter** [137]. The golden ratio can represent any linear structure due to five key properties:
+The most important property of φ for our purposes is its role as a **universal adapter** [137]. The golden ratio can represent any linear structure due to five key properties:
 
-1. **Self-similarity**: $\phi = 1 + 1/\phi$ means \ensuremath{\phi} contains its own inverse
-2. **Fibonacci connection**: \ensuremath{\phi} is the limit of $F_{n+1}/F_n$ as $n \to \infty$, connecting discrete and continuous
-3. **Optimal packing**: \ensuremath{\phi}^k provides maximal spacing between consecutive powers, minimizing collisions
+1. **Self-similarity**: $\phi = 1 + 1/\phi$ means φ contains its own inverse
+2. **Fibonacci connection**: φ is the limit of $F_{n+1}/F_n$ as $n \to \infty$, connecting discrete and continuous
+3. **Optimal packing**: φ^k provides maximal spacing between consecutive powers, minimizing collisions
 4. **Logarithmic representation**: $\log_\phi(x)$ maps any positive number to a linear scale
 5. **Closed-form exponentials**: $\phi^n$ has an exact closed form via $(\phi^n - (-\phi)^{-n})/\sqrt{5}$
 
 Property 1 is the most consequential. Because $\phi \cdot 1/\phi = 1$, we have:
 
-> **Encoding** (multiply by \ensuremath{\phi}) and **decoding** (multiply by 1/\ensuremath{\phi}) are the same operation in opposite directions.
+> **Encoding** (multiply by φ) and **decoding** (multiply by 1/φ) are the same operation in opposite directions.
 
-This means that if you encode a value by multiplying by \ensuremath{\phi}, you can decode it by multiplying by 1/\ensuremath{\phi}—and both operations have the same structure. This duality will become foundational in Chapter 5 (ENCODE = DECODE).
+This means that if you encode a value by multiplying by φ, you can decode it by multiplying by 1/φ—and both operations have the same structure. This duality will become foundational in Chapter 5 (ENCODE = DECODE).
 
 ---
 
-## 2.4 \ensuremath{\phi}-Level Binning and Geometric Context
+## 2.4 φ-Level Binning and Geometric Context
 
-In the `phi_geometric` engine, \ensuremath{\phi}-level binning is used to encode context at multiple distances using a fixed number of features [161, geometric_context_extractor in cascade_navigator.py]:
+In the `phi_geometric` engine, φ-level binning is used to encode context at multiple distances using a fixed number of features [161, geometric_context_extractor in cascade_navigator.py]:
 
-![\ensuremath{\phi}-Level Context Decay](figures/fig2_2_self_similarity.png)
+![φ-Level Context Decay](figures/fig2_2_self_similarity.png)
 
-*Figure 2.2: Left: \ensuremath{\phi}-decay of context weights with distance, showing how levels 0-3 partition 12 tokens of context using only 4 features per direction. Right: The infinite self-similarity of \ensuremath{\phi} visualized as a recursive decomposition tree.*
+*Figure 2.2: Left: φ-decay of context weights with distance, showing how levels 0-3 partition 12 tokens of context using only 4 features per direction. Right: The infinite self-similarity of φ visualized as a recursive decomposition tree.*
 
 The levels are defined as:
 
-| Level | Distance Range | \ensuremath{\phi}-Weight | Tokens Covered |
+| Level | Distance Range | φ-Weight | Tokens Covered |
 |-------|---------------|----------|----------------|
-| 0 | 1 | \ensuremath{\phi}^0 = 1.000 | Immediate neighbor |
-| 1 | 2–3 | \ensuremath{\phi}^{-1} = 0.618 | Near context |
-| 2 | 4–7 | \ensuremath{\phi}^{-2} = 0.382 | Medium context |
-| 3 | 8–12 | \ensuremath{\phi}^{-3} = 0.236 | Far context |
+| 0 | 1 | φ^0 = 1.000 | Immediate neighbor |
+| 1 | 2–3 | φ^{-1} = 0.618 | Near context |
+| 2 | 4–7 | φ^{-2} = 0.382 | Medium context |
+| 3 | 8–12 | φ^{-3} = 0.236 | Far context |
 
-This mirrors how attention naturally decays: nearby tokens have stronger influence, and the influence drops off in \ensuremath{\phi}-spaced levels. The code (`phi_geometric/core/cascade_navigator.py`) implements this with:
+This mirrors how attention naturally decays: nearby tokens have stronger influence, and the influence drops off in φ-spaced levels. The code (`phi_geometric/core/cascade_navigator.py`) implements this with:
 
 ```python
 _PHI_LEVEL_RANGES = [
@@ -285,25 +285,25 @@ _PHI_LEVEL_RANGES = [
 
 The context extractor for each level provides both the nearest and farthest token within the range, mirroring how attention considers all keys within a range rather than just the closest.
 
-What's striking is that **4 features per direction** can cover distances 1–12, whereas a fixed-window approach would require 12 features per direction. This geometric compaction is possible because \ensuremath{\phi}-decay matches the actual attention decay profile of transformers.
+What's striking is that **4 features per direction** can cover distances 1–12, whereas a fixed-window approach would require 12 features per direction. This geometric compaction is possible because φ-decay matches the actual attention decay profile of transformers.
 
 ---
 
-## 2.5 Why \ensuremath{\phi} and Not e or \ensuremath{\pi}?
+## 2.5 Why φ and Not e or π?
 
-A natural question arises: many constants have self-similar or exponential properties. Why use \ensuremath{\phi} rather than e (the base of natural logarithms) or \ensuremath{\pi}?
+A natural question arises: many constants have self-similar or exponential properties. Why use φ rather than e (the base of natural logarithms) or π?
 
-The answer lies in \ensuremath{\phi}'s unique combination of properties:
+The answer lies in φ's unique combination of properties:
 
-**e** has the property $\ln(e) = 1$ and $e^x$ is its own derivative. But e does *not* satisfy $e = 1 + 1/e$. E is about continuous growth; \ensuremath{\phi} is about discrete self-similarity.
+**e** has the property $\ln(e) = 1$ and $e^x$ is its own derivative. But e does *not* satisfy $e = 1 + 1/e$. E is about continuous growth; φ is about discrete self-similarity.
 
-**\ensuremath{\pi}** is about periodicity and rotation. It appears in attention mechanisms through rotary position encodings (RoPE), but \ensuremath{\pi} does not provide a natural coordinate system for magnitude.
+**π** is about periodicity and rotation. It appears in attention mechanisms through rotary position encodings (RoPE), but π does not provide a natural coordinate system for magnitude.
 
-**\ensuremath{\phi}** bridges the discrete and continuous. The Fibonacci numbers are integers; their ratio converges to \ensuremath{\phi}. Powers of \ensuremath{\phi} form a discrete lattice that densely covers the real line. And critically:
+**φ** bridges the discrete and continuous. The Fibonacci numbers are integers; their ratio converges to φ. Powers of φ form a discrete lattice that densely covers the real line. And critically:
 
 $$\ln(\phi) \approx 0.4812$$
 
-This connects \ensuremath{\phi} to e through the natural logarithm. The constant $\ln(\phi)$ appears repeatedly in transformer computations—the code expresses softmax as:
+This connects φ to e through the natural logarithm. The constant $\ln(\phi)$ appears repeatedly in transformer computations—the code expresses softmax as:
 
 ```python
 def phi_softmax(x: np.ndarray, temperature: float = LN_PHI) -> np.ndarray:
@@ -320,38 +320,38 @@ def phi_sigmoid(x: float) -> float:
     return 1 / (1 + PHI ** (-x / LN_PHI))
 ```
 
-These are not approximations. As we will prove in Chapter 11, these \ensuremath{\phi}-formulas are **exact** equivalences of the standard exponential forms.
+These are not approximations. As we will prove in Chapter 11, these φ-formulas are **exact** equivalences of the standard exponential forms.
 
 ---
 
-## 2.6 \ensuremath{\phi}-Exponent Arithmetic
+## 2.6 φ-Exponent Arithmetic
 
-One of the most powerful consequences of the \ensuremath{\phi}-coordinate system is that arithmetic operations simplify dramatically when numbers are represented as \ensuremath{\phi}-powers [124, 133]. Consider:
+One of the most powerful consequences of the φ-coordinate system is that arithmetic operations simplify dramatically when numbers are represented as φ-powers [124, 133]. Consider:
 
-**Exact \ensuremath{\phi}-arithmetic**: Since $\phi^n$ has a closed form, multiplying two \ensuremath{\phi}-powers is just exponent addition: $\phi^a \times \phi^b = \phi^{a+b}$.
+**Exact φ-arithmetic**: Since $\phi^n$ has a closed form, multiplying two φ-powers is just exponent addition: $\phi^a \times \phi^b = \phi^{a+b}$.
 
-**The Zeckendorf representation**[139]: Any integer can be represented as a sum of non-consecutive Fibonacci numbers. When applied to \ensuremath{\phi}-exponents, this gives a canonical form for \ensuremath{\phi}-arithmetic that avoids redundant operations.
+**The Zeckendorf representation**[139]: Any integer can be represented as a sum of non-consecutive Fibonacci numbers. When applied to φ-exponents, this gives a canonical form for φ-arithmetic that avoids redundant operations.
 
-The `\ensuremath{\phi}-FPU` (Floating-Point Unit) [133] exploits this to perform neural network computations entirely in \ensuremath{\phi}-arithmetic, replacing floating-point multiplication with \ensuremath{\phi}-exponent addition:
+The `φ-FPU` (Floating-Point Unit) [133] exploits this to perform neural network computations entirely in φ-arithmetic, replacing floating-point multiplication with φ-exponent addition:
 
-> In \ensuremath{\phi}-arithmetic, weight = sign × \ensuremath{\phi}^level. Multiplying two \ensuremath{\phi}-numbers:
-> (s₁ × \ensuremath{\phi}^e₁) × (s₂ × \ensuremath{\phi}^e₂) = (s₁ × s₂) × \ensuremath{\phi}^(e₁ + e₂)
+> In φ-arithmetic, weight = sign × φ^level. Multiplying two φ-numbers:
+> (s₁ × φ^e₁) × (s₂ × φ^e₂) = (s₁ × s₂) × φ^(e₁ + e₂)
 >
 > A floating-point multiply becomes an integer addition plus a sign XOR.
 
-This is where the dramatic speedups originate—replacing O(N²) matrix multiplications with O(N) \ensuremath{\phi}-exponent additions, as we will see in Chapters 8 and 11.
+This is where the dramatic speedups originate—replacing O(N²) matrix multiplications with O(N) φ-exponent additions, as we will see in Chapters 8 and 11.
 
 ---
 
 ## 2.7 Summary
 
-\ensuremath{\phi} provides the coordinate system for TruthSpace's geometric theory of computation because:
+φ provides the coordinate system for TruthSpace's geometric theory of computation because:
 
 1. **Self-similarity** ($\phi = 1 + 1/\phi$) ensures scale invariance
-2. **\ensuremath{\phi}-powers** form a discrete lattice with natural spacing
-3. **\ensuremath{\phi}-arithmetic** replaces multiplication with exponent addition
-4. **\ensuremath{\phi}-decay** matches the attention profile of transformers
-5. **\ensuremath{\phi} and e** are connected through $\ln(\phi)$, unifying exponential and geometric views
+2. **φ-powers** form a discrete lattice with natural spacing
+3. **φ-arithmetic** replaces multiplication with exponent addition
+4. **φ-decay** matches the attention profile of transformers
+5. **φ and e** are connected through $\ln(\phi)$, unifying exponential and geometric views
 
 The next chapter shows how these properties suggest a profound reinterpretation of neural networks: weights are not learned parameters but coordinates of a geometric shape that training *discovers*.
 
@@ -376,15 +376,15 @@ This reframes the entire training process. Instead of "learning a function that 
 
 ![Weights as Shape Coordinates](figures/fig3_1_shape_coordinates.png)
 
-*Figure 3.1: Left: A representation of weights as \ensuremath{\phi}-coordinates of a 3D shape. Red points (31%) are noise that can be zeroed without affecting accuracy. Right: Training fidelity as a function of training steps—the shape is discovered, not created.*
+*Figure 3.1: Left: A representation of weights as φ-coordinates of a 3D shape. Red points (31%) are noise that can be zeroed without affecting accuracy. Right: Training fidelity as a function of training steps—the shape is discovered, not created.*
 
 Evidence for this hypothesis comes from multiple directions:
 
 1. **31% of weights are noise**[127, 198]: Up to 31% of weights in a trained transformer can be zeroed without measurable accuracy loss. If weights were learned parameters, this would not be possible—the optimization would have found a use for them.
 
-2. **Weights form clusters at \ensuremath{\phi}-levels**[127, 163]: When weights are projected onto \ensuremath{\phi}-exponent space, they naturally cluster at discrete \ensuremath{\phi}-levels. They are not continuously distributed but fall into well-defined geometric bins.
+2. **Weights form clusters at φ-levels**[127, 163]: When weights are projected onto φ-exponent space, they naturally cluster at discrete φ-levels. They are not continuously distributed but fall into well-defined geometric bins.
 
-3. **The same weight structure appears across models**[180, 191]: The \ensuremath{\phi}-structure found in Qwen2-7B also appears in DINOv2, CLIP, and other architectures. The geometric signature is **architecture-invariant**.
+3. **The same weight structure appears across models**[180, 191]: The φ-structure found in Qwen2-7B also appears in DINOv2, CLIP, and other architectures. The geometric signature is **architecture-invariant**.
 
 ---
 
@@ -414,13 +414,13 @@ class TransformRule:
                 ctx_val, self.params.get('default_output', value))
 ```
 
-This is the geometric view of a "learned transformation": a set of decision surfaces (selectors) that route inputs to outputs based on their position in \ensuremath{\phi}-space.
+This is the geometric view of a "learned transformation": a set of decision surfaces (selectors) that route inputs to outputs based on their position in φ-space.
 
 ### 3.2.2 Level 2: Gates = Encoding of Weight Geometry
 
-Gates (SiLU, sigmoid, softmax) encode the geometric structure of the weight lattice. Each gate is a **\ensuremath{\phi}-operation** that selects which subset of the lattice to activate based on the input's position.
+Gates (SiLU, sigmoid, softmax) encode the geometric structure of the weight lattice. Each gate is a **φ-operation** that selects which subset of the lattice to activate based on the input's position.
 
-The exact \ensuremath{\phi}-form of sigmoid, verified in code (`phi_computer.py`):
+The exact φ-form of sigmoid, verified in code (`phi_computer.py`):
 
 ```python
 def phi_sigmoid(x: float) -> float:
@@ -428,19 +428,19 @@ def phi_sigmoid(x: float) -> float:
     return 1 / (1 + PHI ** (-x / LN_PHI))
 ```
 
-This is not an approximation—it is an algebraic identity. The standard sigmoid uses $e^{-x}$; the \ensuremath{\phi}-sigmoid uses $\phi^{-x/\ln(\phi)}$. Since $\phi^{1/\ln(\phi)} = e$ (by definition of natural log), the two are identical. But the \ensuremath{\phi}-form reveals the underlying geometry: **sigmoid selects between two \ensuremath{\phi}-levels**.
+This is not an approximation—it is an algebraic identity. The standard sigmoid uses $e^{-x}$; the φ-sigmoid uses $\phi^{-x/\ln(\phi)}$. Since $\phi^{1/\ln(\phi)} = e$ (by definition of natural log), the two are identical. But the φ-form reveals the underlying geometry: **sigmoid selects between two φ-levels**.
 
 ### 3.2.3 Level 3: Topology = Spectral Decomposition of Gate Graph
 
-The connectivity pattern of gates can be decomposed spectrally, revealing its intrinsic geometric structure. The eigenvalues follow a **\ensuremath{\phi}-Zipf distribution**—the spectrum decays as a power law with a \ensuremath{\phi}-based exponent [154].
+The connectivity pattern of gates can be decomposed spectrally, revealing its intrinsic geometric structure. The eigenvalues follow a **φ-Zipf distribution**—the spectrum decays as a power law with a φ-based exponent [154].
 
-### 3.2.4 Level 4: Spectrum = \ensuremath{\phi}-Zipf Eigenvalues
+### 3.2.4 Level 4: Spectrum = φ-Zipf Eigenvalues
 
 The final irreducible level is the spectrum: the distribution of eigenvalues of the gate graph. This distribution follows:
 
 $$\lambda_k \propto \phi^{-k}$$
 
-where $\lambda_k$ is the k-th eigenvalue. This \ensuremath{\phi}-Zipf distribution is the fingerprint of geometric computation—it appears in every transformer architecture examined.
+where $\lambda_k$ is the k-th eigenvalue. This φ-Zipf distribution is the fingerprint of geometric computation—it appears in every transformer architecture examined.
 
 ---
 
@@ -456,26 +456,26 @@ The search for this shape progressed through several phases:
 
 Initial experiments established that LLM embeddings have an interior geometric structure. Phase-shift probing revealed zero-variance points and polarity encoding, suggesting a low-dimensional manifold underlying the high-dimensional embedding space.
 
-### 3.3.2 Phase 2: The \ensuremath{\phi}-Lattice (Docs 99-163)
+### 3.3.2 Phase 2: The φ-Lattice (Docs 99-163)
 
-The breakthrough came when attention shifted from building a TruthSpace-native system to reverse-engineering existing transformers (Qwen2-7B, DINOv2). The finding: **weights naturally occupy absolute positions on a \ensuremath{\phi}-lattice**[99, 101, 128, 163].
+The breakthrough came when attention shifted from building a TruthSpace-native system to reverse-engineering existing transformers (Qwen2-7B, DINOv2). The finding: **weights naturally occupy absolute positions on a φ-lattice**[99, 101, 128, 163].
 
 The `phi_lattice_rules` (Doc 163) codified the discovered structure:
 
-1. **Quantization rule**: Weights cluster at discrete \ensuremath{\phi}-levels (not continuous)
+1. **Quantization rule**: Weights cluster at discrete φ-levels (not continuous)
 2. **Vocabulary rule**: Only 89 unique (level, sign) pairs cover all weights
 3. **Sign structure rule**: 16 equal-probability quaternion sign patterns
-4. **Clustered deltas rule**: Within-level deltas cluster around ±\ensuremath{\phi}^k
-5. **Self-similarity rule**: The same \ensuremath{\phi}-structure appears at every scale
-6. **Translation invariance rule**: The \ensuremath{\phi}-lattice is translation-invariant—shifting all coordinates leaves the geometry unchanged
+4. **Clustered deltas rule**: Within-level deltas cluster around ±φ^k
+5. **Self-similarity rule**: The same φ-structure appears at every scale
+6. **Translation invariance rule**: The φ-lattice is translation-invariant—shifting all coordinates leaves the geometry unchanged
 
 ### 3.3.3 Phase 3: The Tetromino Weight Hypothesis (Doc 162)
 
-The discrete nature of \ensuremath{\phi}-levels led to a surprising discovery: weights form a constrained geometric structure akin to **tetrominoes tiling space**. Just as Tetris pieces (tetrominoes) can tile a 2D plane with only 7 piece types, neural network weights can tile weight-space with only **74 unique \ensuremath{\phi}-structures**.
+The discrete nature of φ-levels led to a surprising discovery: weights form a constrained geometric structure akin to **tetrominoes tiling space**. Just as Tetris pieces (tetrominoes) can tile a 2D plane with only 7 piece types, neural network weights can tile weight-space with only **74 unique φ-structures**.
 
 This was verified in `unwound_transformer/tetromino_*.py`:
 
-> Each weight is encoded as (sign, \ensuremath{\phi}-level, residual). Across all 7B parameters of Qwen2-7B, only 74 unique (level, sign) pairs appear with significant frequency. This means the entire model can be described by a vocabulary of 74 geometric primitives.
+> Each weight is encoded as (sign, φ-level, residual). Across all 7B parameters of Qwen2-7B, only 74 unique (level, sign) pairs appear with significant frequency. This means the entire model can be described by a vocabulary of 74 geometric primitives.
 
 The implications are profound: a 7-billion-parameter model compresses to a 74-entry lookup table for its fundamental structure, plus residual corrections.
 
@@ -483,16 +483,16 @@ The implications are profound: a 7-billion-parameter model compresses to a 74-en
 
 The hypothesis that computation IS geometry was proven through a **census** of all component types in a transformer:
 
-| Component | Geometric Interpretation | \ensuremath{\phi}-Form |
+| Component | Geometric Interpretation | φ-Form |
 |-----------|------------------------|--------|
-| Embeddings | Position on \ensuremath{\phi}-lattice | sign × \ensuremath{\phi}^level |
-| Q/K/V Matrices | Rotation operators | \ensuremath{\phi}-exponent arithmetic |
-| Attention | Spatial routing | \ensuremath{\phi}-softmax routing |
-| MLP Up/Gate/Down | \ensuremath{\phi}-level selectors | \ensuremath{\phi}-sigmoid gating |
-| RMS Norm | \ensuremath{\phi}-level alignment | shift to \ensuremath{\phi}^0 scale |
-| LM Head | Navigation map | \ensuremath{\phi}-distance to tokens |
+| Embeddings | Position on φ-lattice | sign × φ^level |
+| Q/K/V Matrices | Rotation operators | φ-exponent arithmetic |
+| Attention | Spatial routing | φ-softmax routing |
+| MLP Up/Gate/Down | φ-level selectors | φ-sigmoid gating |
+| RMS Norm | φ-level alignment | shift to φ^0 scale |
+| LM Head | Navigation map | φ-distance to tokens |
 
-Each component's standard operation was replaced with an exact \ensuremath{\phi}-equivalent, and the results were verified to match the original transformer output with 99.9991% correlation [129].
+Each component's standard operation was replaced with an exact φ-equivalent, and the results were verified to match the original transformer output with 99.9991% correlation [129].
 
 ---
 
@@ -523,7 +523,7 @@ print(trace.output_elements)  # ['/sh/', 'ɒ', 'p']
 The PhaseDiscovery engine finds geometric structure in transformation data without any neural network components. It uses:
 
 - **Information gain** to detect which context variables explain inconsistencies
-- **\ensuremath{\phi}-level binning** to represent multi-distance context with few features
+- **φ-level binning** to represent multi-distance context with few features
 - **Entropy reduction** to identify the minimal gear train (coarse + fine selectors)
 
 This engine was validated on **8 archetypes** of transformations (`examples/archetypes.py`), covering every combination of collapse, expand, context-dependent, and pure-map phases. All 8 archetypes achieve **100% accuracy** on training data when the correct context window is set.
@@ -534,13 +534,13 @@ This engine was validated on **8 archetypes** of transformations (`examples/arch
 
 The Geometric Model Hypothesis is not just a philosophical standpoint—it is an experimental program that makes falsifiable predictions:
 
-1. **If weights are shape coordinates**, then replacing weight storage with \ensuremath{\phi}-lattice lookups should preserve model behavior. This was confirmed in Doc 187: "Transformer as a Lookup Table"—a 7B parameter transformer replaced with a 1.09 GB lookup table achieves 100% accuracy.
+1. **If weights are shape coordinates**, then replacing weight storage with φ-lattice lookups should preserve model behavior. This was confirmed in Doc 187: "Transformer as a Lookup Table"—a 7B parameter transformer replaced with a 1.09 GB lookup table achieves 100% accuracy.
 
-2. **If computation is \ensuremath{\phi}-navigation**, then the \ensuremath{\phi}-form of sigmoid/softmax/SiLU should exactly match the standard forms. This was confirmed in Doc 191: the \ensuremath{\phi}-computer proof shows 100% token accuracy.
+2. **If computation is φ-navigation**, then the φ-form of sigmoid/softmax/SiLU should exactly match the standard forms. This was confirmed in Doc 191: the φ-computer proof shows 100% token accuracy.
 
 3. **If the irreducible shape is finite**, then there is a minimum size below which no further compression is possible. This was confirmed in Doc 141: 67.9M binary intersection points, 3,584 critical lines.
 
-4. **If training discovers rather than creates**, then different random initializations should converge to similar \ensuremath{\phi}-lattice coordinates. This is the subject of ongoing investigation (Doc 194).
+4. **If training discovers rather than creates**, then different random initializations should converge to similar φ-lattice coordinates. This is the subject of ongoing investigation (Doc 194).
 
 ---
 
@@ -550,20 +550,20 @@ The Geometric Model Hypothesis transforms our understanding of neural networks:
 
 | Traditional View | Geometric View |
 |-----------------|---------------|
-| Weights are learned parameters | Weights are \ensuremath{\phi}-coordinates of a shape |
-| Training creates the model | Training discovers the \ensuremath{\phi}-lattice |
-| Computation is matrix operations | Computation is \ensuremath{\phi}-navigation |
-| Knowledge is stored in weights | Knowledge IS the \ensuremath{\phi}-shape |
+| Weights are learned parameters | Weights are φ-coordinates of a shape |
+| Training creates the model | Training discovers the φ-lattice |
+| Computation is matrix operations | Computation is φ-navigation |
+| Knowledge is stored in weights | Knowledge IS the φ-shape |
 | Models are statistical learners | Models are geometric transcoders |
 
-This hypothesis sets the stage for everything that follows. In the next chapter, we examine how information is encoded in \ensuremath{\phi}-space—the \ensuremath{\phi}-dial and its dimensional hierarchy—and in Chapter 5 we explore the master symmetry that governs all \ensuremath{\phi}-transformations: ENCODE = DECODE.
+This hypothesis sets the stage for everything that follows. In the next chapter, we examine how information is encoded in φ-space—the φ-dial and its dimensional hierarchy—and in Chapter 5 we explore the master symmetry that governs all φ-transformations: ENCODE = DECODE.
 
 ---
 
 *Sources: Docs 022, 039, 127, 141, 154, 162, 163, 191*
 
 
-# Chapter 4: Encodings, Transformations, and the \ensuremath{\phi}-Dial
+# Chapter 4: Encodings, Transformations, and the φ-Dial
 
 *From 1D control to 4D quaternion semantic navigation.*
 
@@ -571,11 +571,11 @@ This hypothesis sets the stage for everything that follows. In the next chapter,
 
 ## 4.1 The Encoding Problem
 
-If computation is navigation through \ensuremath{\phi}-space, how do we represent information in that space? The answer is **\ensuremath{\phi}-encoding**: every value is represented as:
+If computation is navigation through φ-space, how do we represent information in that space? The answer is **φ-encoding**: every value is represented as:
 
 $$v = s \cdot \phi^{e} \cdot (1 + r \cdot (\phi - 1))$$
 
-where $s \in \{-1, +1\}$ is the sign, $e \in \mathbb{Z}$ is the \ensuremath{\phi}-exponent (level), and $r \in [0, 1)$ is the residual. This representation is the foundation of all TruthSpace computation.
+where $s \in \{-1, +1\}$ is the sign, $e \in \mathbb{Z}$ is the φ-exponent (level), and $r \in [0, 1)$ is the residual. This representation is the foundation of all TruthSpace computation.
 
 The `PhiEncoder` (`phi_geometric/core/encoder.py`) implements this:
 
@@ -609,11 +609,11 @@ This evolved into recognizing that **any transformation can be a dimension** [12
 
 ---
 
-## 4.3 The \ensuremath{\phi}-Dial: 1D to 4D Control
+## 4.3 The φ-Dial: 1D to 4D Control
 
-The \ensuremath{\phi}-dial evolved through four stages of dimensional control, each adding a new axis of semantic freedom [041-044]:
+The φ-dial evolved through four stages of dimensional control, each adding a new axis of semantic freedom [041-044]:
 
-### Stage 1: The 1D \ensuremath{\phi}-Dial [041]
+### Stage 1: The 1D φ-Dial [041]
 
 The simplest control: a single real parameter $\alpha \in [-1, 1]$ that controls navigation direction:
 
@@ -623,19 +623,19 @@ The simplest control: a single real parameter $\alpha \in [-1, 1]$ that controls
 
 The weight formula: $\text{weight} = \phi^{\alpha \times \log(\text{value})}$
 
-This single dial simultaneously controls multiple semantic dimensions — specificity, formality, and frequency — because they are coupled in the \ensuremath{\phi}-geometry.
+This single dial simultaneously controls multiple semantic dimensions — specificity, formality, and frequency — because they are coupled in the φ-geometry.
 
-### Stage 2: The 2D Complex \ensuremath{\phi}-Dial [042]
+### Stage 2: The 2D Complex φ-Dial [042]
 
 Adding a second dimension decouples **specificity/style** (magnitude) from **perspective/voice** (phase):
 
 $$z = r \cdot e^{i\theta}, \quad r \in [0,1], \theta \in [0, 2\pi)$$
 
-### Stage 3: The 3D \ensuremath{\phi}-Dial [043]
+### Stage 3: The 3D φ-Dial [043]
 
 Adding depth creates a third axis for **detail level** — how elaborate the response should be. The triplet (style, perspective, depth) forms a complete control space for most communication needs.
 
-### Stage 4: The 4D Quaternion \ensuremath{\phi}-Dial [044]
+### Stage 4: The 4D Quaternion φ-Dial [044]
 
 The final form follows the quaternion structure:
 
@@ -643,10 +643,10 @@ $$q = w + x\mathbf{i} + y\mathbf{j} + z\mathbf{k}$$
 
 | Axis | Name | Range | Controls |
 |------|------|-------|----------|
-| **X** | Style | -1 to +1 | Vocabulary selection (formal \ensuremath{\leftrightarrow} casual) |
-| **Y** | Perspective | -1 to +1 | Voice/framing (subjective \ensuremath{\leftrightarrow} meta) |
-| **Z** | Depth | -1 to +1 | Detail level (terse \ensuremath{\leftrightarrow} elaborate) |
-| **W** | Certainty | -1 to +1 | Epistemic stance (definitive \ensuremath{\leftrightarrow} hedged) |
+| **X** | Style | -1 to +1 | Vocabulary selection (formal ↔ casual) |
+| **Y** | Perspective | -1 to +1 | Voice/framing (subjective ↔ meta) |
+| **Z** | Depth | -1 to +1 | Detail level (terse ↔ elaborate) |
+| **W** | Certainty | -1 to +1 | Epistemic stance (definitive ↔ hedged) |
 
 The `QuaternionEncoder` in `hypermapping/encoders.py` implements this directly:
 
@@ -672,9 +672,9 @@ class QuaternionEncoder(Encoder):
         return pos / max(np.linalg.norm(pos), 1e-10) * CRITICAL_LINE
 ```
 
-![4D Quaternion \ensuremath{\phi}-Dial](figures/fig4_1_quaternion_dial.png)
+![4D Quaternion φ-Dial](figures/fig4_1_quaternion_dial.png)
 
-*Figure 4.1: The 4D Quaternion \ensuremath{\phi}-Dial. Left: The four axes (X: Style, Y: Perspective, Z: Depth, W: Certainty as spherical radius). Right: Control sliders showing how each axis modulates output generation.*
+*Figure 4.1: The 4D Quaternion φ-Dial. Left: The four axes (X: Style, Y: Perspective, Z: Depth, W: Certainty as spherical radius). Right: Control sliders showing how each axis modulates output generation.*
 
 ---
 
@@ -696,23 +696,23 @@ The gender flip is always $\Delta x = -2.0$ — a constant vector operation that
 
 ---
 
-## 4.5 Holographic \ensuremath{\phi}-Encoding
+## 4.5 Holographic φ-Encoding
 
-Holographic \ensuremath{\phi}-encoding [142] extends \ensuremath{\phi}-encoding to compress neural network weights by projecting them into a \ensuremath{\phi}-basis and storing only the dominant components:
+Holographic φ-encoding [142] extends φ-encoding to compress neural network weights by projecting them into a φ-basis and storing only the dominant components:
 
 The process:
 1. Extract weights from a trained model
-2. Convert to \ensuremath{\phi}-basis: $w_i \to s_i \cdot \phi^{e_i}$
-3. Retain only components above a \ensuremath{\phi}-threshold
+2. Convert to φ-basis: $w_i \to s_i \cdot \phi^{e_i}$
+3. Retain only components above a φ-threshold
 4. Reconstruct: $\hat{w} = \sum_{k} s_k \cdot \phi^{e_k}$
 
-This achieves **14× compression with 0.09% error** in MESH matrices [130], and **99.9984% correlation** when \ensuremath{\phi}-encoding Qwen2-7B attention layers [136].
+This achieves **14× compression with 0.09% error** in MESH matrices [130], and **99.9984% correlation** when φ-encoding Qwen2-7B attention layers [136].
 
 ---
 
-## 4.6 The \ensuremath{\phi}-Adapter: Universal Geometric Reconstruction
+## 4.6 The φ-Adapter: Universal Geometric Reconstruction
 
-The `PhiAdapter` (`phi_adapter/adapter.py`) generalizes \ensuremath{\phi}-encoding to reconstruct any model's output at scalable accuracy:
+The `PhiAdapter` (`phi_adapter/adapter.py`) generalizes φ-encoding to reconstruct any model's output at scalable accuracy:
 
 ```python
 adapter = PhiAdapter(mode='svd')
@@ -725,7 +725,7 @@ pred_full = adapter.predict(features)
 pred_fast = adapter.predict(features, n_components=50)
 ```
 
-The adapter uses SVD to find the natural geometric structure of the data, then applies \ensuremath{\phi}-scaling:
+The adapter uses SVD to find the natural geometric structure of the data, then applies φ-scaling:
 
 ```python
 # phi-scaling of singular values
@@ -733,17 +733,17 @@ phi_scales = np.array([PHI ** (-i / scaling_rate) for i in range(n_components)])
 phi_scales = phi_scales / phi_scales.sum() * n_components
 ```
 
-This produces a DOF-accuracy curve where adding components follows a \ensuremath{\phi}-decay law — the first few components capture most of the signal, and additional components contribute at \ensuremath{\phi}-decaying rates.
+This produces a DOF-accuracy curve where adding components follows a φ-decay law — the first few components capture most of the signal, and additional components contribute at φ-decaying rates.
 
 ---
 
 ## 4.7 The Music Box Principle [112]
 
-An important conceptual model for understanding \ensuremath{\phi}-encoding is the **Music Box Principle**:
+An important conceptual model for understanding φ-encoding is the **Music Box Principle**:
 
-> A music box does not contain music — it contains a cylinder with pins. When the cylinder turns, the pins pluck tines, and music *emerges* from the interaction. Similarly, \ensuremath{\phi}-space does not contain knowledge — it contains positions. Knowledge emerges from the interaction of positions with the navigation mechanism.
+> A music box does not contain music — it contains a cylinder with pins. When the cylinder turns, the pins pluck tines, and music *emerges* from the interaction. Similarly, φ-space does not contain knowledge — it contains positions. Knowledge emerges from the interaction of positions with the navigation mechanism.
 
-This principle highlights why \ensuremath{\phi}-encoding is not compression in the traditional sense. A \ensuremath{\phi}-encoded weight is not a compressed version of a float — it is a coordinate in a space where the computation itself is defined by geometric relationships.
+This principle highlights why φ-encoding is not compression in the traditional sense. A φ-encoded weight is not a compressed version of a float — it is a coordinate in a space where the computation itself is defined by geometric relationships.
 
 ---
 
@@ -752,15 +752,15 @@ This principle highlights why \ensuremath{\phi}-encoding is not compression in t
 | Encoding | Dimensions | Key Property | Source |
 |----------|-----------|--------------|--------|
 | 12D vector | 12 | Action/domain separation | 009 |
-| 1D \ensuremath{\phi}-dial | 1 | Inward/outward navigation | 041 |
+| 1D φ-dial | 1 | Inward/outward navigation | 041 |
 | 2D complex dial | 2 | Specificity + perspective | 042 |
 | 3D dial | 3 | Style + perspective + depth | 043 |
 | 4D quaternion dial | 4 | Full semantic control + certainty | 044 |
 | Semantic quaternion | 4 | 100% analogy accuracy | 067 |
-| Holographic \ensuremath{\phi}-encoding | variable | 14× compression, 0.09% error | 142 |
-| \ensuremath{\phi}-Adapter | DOF-truncated | Universal model reconstruction | adapter.py |
+| Holographic φ-encoding | variable | 14× compression, 0.09% error | 142 |
+| φ-Adapter | DOF-truncated | Universal model reconstruction | adapter.py |
 
-The \ensuremath{\phi}-dial progression from 1D to 4D reveals a fundamental truth: semantic space is quaternion-structured. The fourth axis (certainty) is special — it controls the radius of the quaternion sphere, acting as a meta-parameter that governs how definitive the system's output should be.
+The φ-dial progression from 1D to 4D reveals a fundamental truth: semantic space is quaternion-structured. The fourth axis (certainty) is special — it controls the radius of the quaternion sphere, acting as a meta-parameter that governs how definitive the system's output should be.
 
 In the next chapter, we explore the master symmetry that makes all of this possible: ENCODE = DECODE.
 
@@ -781,16 +781,16 @@ The most important single insight in the TruthSpace project is documented in Des
 
 > **ENCODE and DECODE are the same operation in opposite directions.**
 
-This is not a metaphor. It is a precise mathematical statement grounded in the properties of \ensuremath{\phi}:
+This is not a metaphor. It is a precise mathematical statement grounded in the properties of φ:
 
 $$\text{Encode}(x) = x \cdot \phi$$
 $$\text{Decode}(y) = y / \phi$$
 
-Since $\phi \cdot 1/\phi = 1$, encoding and decoding are inverses that share the same structure. The act of encoding a word into \ensuremath{\phi}-space IS the act of decoding its meaning — they are the same transformation, just traversed in opposite directions.
+Since $\phi \cdot 1/\phi = 1$, encoding and decoding are inverses that share the same structure. The act of encoding a word into φ-space IS the act of decoding its meaning — they are the same transformation, just traversed in opposite directions.
 
 ![ENCODE = DECODE Symmetry](figures/fig5_1_encode_decode.png)
 
-*Figure 5.1: The ENCODE = DECODE master symmetry. Left: The symmetry diagram — encoding and decoding are the same \ensuremath{\phi}-operation in opposite directions. Right: The critical line \ensuremath{\sigma} = 0.5 as the universal information limit — where encoding and decoding balance.*
+*Figure 5.1: The ENCODE = DECODE master symmetry. Left: The symmetry diagram — encoding and decoding are the same φ-operation in opposite directions. Right: The critical line σ = 0.5 as the universal information limit — where encoding and decoding balance.*
 
 ---
 
@@ -804,17 +804,17 @@ Input → Process → Output
 
 There is an explicit "thinking" step between input and output. The processing is distinct from the encoding.
 
-In \ensuremath{\phi}-geometry:
+In φ-geometry:
 
 ```
-TEXT IN → \ensuremath{\phi}-space → TEXT OUT
+TEXT IN → φ-space → TEXT OUT
 ```
 
 The "thinking" IS the encoding. This leads to three profound consequences:
 
 ### 5.2.1 The Geometry Contains Its Own Inverse
 
-Because $\phi \cdot 1/\phi = 1$, the \ensuremath{\phi}-space geometry is **self-inverse**. To decode, you do not need a separate mechanism — you simply reverse the encoding direction. The `ReverseEngine` in `phi_geometric/core/generation.py` exploits this:
+Because $\phi \cdot 1/\phi = 1$, the φ-space geometry is **self-inverse**. To decode, you do not need a separate mechanism — you simply reverse the encoding direction. The `ReverseEngine` in `phi_geometric/core/generation.py` exploits this:
 
 ```python
 # Forward: input → output (navigation)
@@ -826,7 +826,7 @@ engine = ReverseEngine(nav)
 inputs = engine.reverse(['/sh/', '/ih/', 'p'])  # → [['s', 'h', 'i', 'p']]
 ```
 
-The reverse engine works by inverting the same geometric rules: a collapse pattern `sh→/sh/` becomes an expansion `/sh/→sh`, a consistent map `a→A` becomes `A←{a}`, and the \ensuremath{\phi}-level binning structure remains identical.
+The reverse engine works by inverting the same geometric rules: a collapse pattern `sh→/sh/` becomes an expansion `/sh/→sh`, a consistent map `a→A` becomes `A←{a}`, and the φ-level binning structure remains identical.
 
 ### 5.2.2 Transformation IS Understanding
 
@@ -834,21 +834,21 @@ If encoding and decoding are the same operation, then there is no intermediate "
 
 ### 5.2.3 Conformal Symmetry
 
-The \ensuremath{\phi}-geometry exhibits **conformal symmetry** [089]: transformations preserve the angles between points, even as magnitudes change. This means:
+The φ-geometry exhibits **conformal symmetry** [089]: transformations preserve the angles between points, even as magnitudes change. This means:
 
-> Knowledge learned at one level of detail transfers perfectly to another level. The relationship between "king" and "queen" is the same geometric vector whether you're working at \ensuremath{\phi}^0 or \ensuremath{\phi}^2 scale.
+> Knowledge learned at one level of detail transfers perfectly to another level. The relationship between "king" and "queen" is the same geometric vector whether you're working at φ^0 or φ^2 scale.
 
 ---
 
 ## 5.3 The Critical Line as Information Limit
 
-The ENCODE = DECODE symmetry has a natural boundary: the **critical line** \ensuremath{\sigma} = 0.5 [090]. In the complex plane, this is the line where real part equals 0.5 — famously the line where the Riemann zeta function's non-trivial zeros lie.
+The ENCODE = DECODE symmetry has a natural boundary: the **critical line** σ = 0.5 [090]. In the complex plane, this is the line where real part equals 0.5 — famously the line where the Riemann zeta function's non-trivial zeros lie.
 
-In TruthSpace, \ensuremath{\sigma} = 0.5 represents the **universal information limit**:
+In TruthSpace, σ = 0.5 represents the **universal information limit**:
 
-- \ensuremath{\sigma} > 0.5: Over-constrained — more information than the system can represent geometrically
-- \ensuremath{\sigma} = 0.5: Optimal balance — encoding and decoding are perfectly symmetric
-- \ensuremath{\sigma} < 0.5: Under-determined — insufficient information for unique recovery
+- σ > 0.5: Over-constrained — more information than the system can represent geometrically
+- σ = 0.5: Optimal balance — encoding and decoding are perfectly symmetric
+- σ < 0.5: Under-determined — insufficient information for unique recovery
 
 The `CRITICAL_LINE = 0.5` constant appears throughout the codebase:
 
@@ -861,7 +861,7 @@ pos = np.array([polarity, intensity, style, certainty])
 pos = pos / np.linalg.norm(pos) * CRITICAL_LINE  # Scale to critical line
 ```
 
-Everything in \ensuremath{\phi}-space is normalized to \ensuremath{\sigma} = 0.5 before storage. This ensures that the encoding preserves the maximum information density.
+Everything in φ-space is normalized to σ = 0.5 before storage. This ensures that the encoding preserves the maximum information density.
 
 ---
 
@@ -871,7 +871,7 @@ The critical line insight leads to a stronger claim:
 
 > **Position encapsulates all features.** In the critical strip, the position of a point encodes ALL information about it — its semantic role, its relationships, its transformations.
 
-This means there is no need for separate feature vectors. A concept's complete identity is its position in \ensuremath{\phi}-space. The `PhiSpace` class (`src/phi_space.py`) reflects this:
+This means there is no need for separate feature vectors. A concept's complete identity is its position in φ-space. The `PhiSpace` class (`src/phi_space.py`) reflects this:
 
 ```python
 class PhiPoint:
@@ -901,15 +901,15 @@ In `PhiSpace`, adding a concept at a position IS learning. Querying by position 
 
 ---
 
-## 5.5 The \ensuremath{\phi}-Zipf Duality [039]
+## 5.5 The φ-Zipf Duality [039]
 
-The ENCODE = DECODE symmetry finds a powerful expression in the relationship between \ensuremath{\phi} and Zipf's law. Zipf's law states that the frequency of a word is inversely proportional to its rank: $f \propto 1/r$.
+The ENCODE = DECODE symmetry finds a powerful expression in the relationship between φ and Zipf's law. Zipf's law states that the frequency of a word is inversely proportional to its rank: $f \propto 1/r$.
 
-The \ensuremath{\phi}-Zipf duality states:
+The φ-Zipf duality states:
 
-> **\ensuremath{\phi}-encoding and Zipf weighting are the same self-similar fractal viewed from opposite directions.**
+> **φ-encoding and Zipf weighting are the same self-similar fractal viewed from opposite directions.**
 
-- \ensuremath{\phi}-encoding (outward): $\phi^n$ for $n = 0, 1, 2, \ldots$
+- φ-encoding (outward): $\phi^n$ for $n = 0, 1, 2, \ldots$
 - Zipf weighting (inward): $\phi^{-n}$ for $n = 0, 1, 2, \ldots$
 
 Since $\ln(\phi) \approx 0.4812$, the two are connected by:
@@ -943,7 +943,7 @@ result = chain.process(start_state)
 correction = chain.process_backward(result)
 ```
 
-This bidirectional processing is only possible because each gear implements `backward()` — and the \ensuremath{\phi}-geometry ensures the backward path is as well-defined as the forward path.
+This bidirectional processing is only possible because each gear implements `backward()` — and the φ-geometry ensures the backward path is as well-defined as the forward path.
 
 ### 5.6.3 HyperMapping: Bidirectional Queries
 
@@ -961,7 +961,7 @@ result = space.forward("display files")  # → "ls"
 results = space.backward("ls")  # → "list files", "show files"
 ```
 
-Both directions use the same position-based matching. There is no separate "input encoder" and "output decoder" — the encoder maps both to the same \ensuremath{\phi}-space, and matching happens by \ensuremath{\phi}-distance.
+Both directions use the same position-based matching. There is no separate "input encoder" and "output decoder" — the encoder maps both to the same φ-space, and matching happens by φ-distance.
 
 ---
 
@@ -969,12 +969,12 @@ Both directions use the same position-based matching. There is no separate "inpu
 
 | Concept | Statement | Source |
 |---------|-----------|--------|
-| ENCODE = DECODE | Encoding and decoding are the same \ensuremath{\phi}-operation in opposite directions | 061 |
+| ENCODE = DECODE | Encoding and decoding are the same φ-operation in opposite directions | 061 |
 | Self-inverse | The geometry contains its own inverse ($\phi \cdot 1/\phi = 1$) | inherent |
 | Conformal symmetry | Transformation preserves angles across scales | 089 |
-| Critical line | \ensuremath{\sigma} = 0.5 is the universal information limit | 090 |
-| Position IS everything | Position in \ensuremath{\phi}-space encodes all features | 091 |
-| \ensuremath{\phi}-Zipf duality | Encoding and Zipf weighting are dual self-similar fractals | 039 |
+| Critical line | σ = 0.5 is the universal information limit | 090 |
+| Position IS everything | Position in φ-space encodes all features | 091 |
+| φ-Zipf duality | Encoding and Zipf weighting are dual self-similar fractals | 039 |
 
 The ENCODE = DECODE principle is the master symmetry that makes all of TruthSpace's geometric computation possible. It ensures that the system can always reverse any transformation, that knowledge transfers across scales, and that the geometry itself contains the complete specification of how to use it.
 
@@ -999,7 +999,7 @@ The base class (`gear.py`) defines the contract:
 
 ```python
 class Gear(ABC):
-    """A transformation unit in \ensuremath{\phi}-space."""
+    """A transformation unit in φ-space."""
     
     def __init__(self, name: str, ratio: float = 1.0):
         self.name = name
@@ -1022,7 +1022,7 @@ Each gear has:
 - **Name**: Human-readable identity
 - **Ratio**: Transformation strength (0 = off, 1 = full)
 - **Quaternion**: 4D geometric signature of the transformation
-- **Knowledge store**: Optional \ensuremath{\phi}-space positions for knowledge
+- **Knowledge store**: Optional φ-space positions for knowledge
 
 ---
 
@@ -1146,7 +1146,7 @@ In the `PhiDialSpace` experiment, structure is defined by the dimensionality and
 
 ```python
 space = PhiDialSpace(dims=8)
-# Defines an 8-dimensional \ensuremath{\phi}-space for concept navigation
+# Defines an 8-dimensional φ-space for concept navigation
 ```
 
 ### 6.4.2 BOOTSTRAP: Seed with Examples
@@ -1160,11 +1160,11 @@ gear.bootstrap(examples=[...])  # LLM generates seeds
 gear.save_state("emergence.json")  # Persistent, reusable
 ```
 
-The critical rule: **bootstrapped information is immediately transformed into geometry**. No raw text remains — it becomes positions in \ensuremath{\phi}-space.
+The critical rule: **bootstrapped information is immediately transformed into geometry**. No raw text remains — it becomes positions in φ-space.
 
 ### 6.4.3 MATCH: Find the Nearest Structure
 
-Matching projects input into \ensuremath{\phi}-space and finds the nearest structure. The `HyperMapping` class (`hypermapping.py`) does this with pure position-based matching:
+Matching projects input into φ-space and finds the nearest structure. The `HyperMapping` class (`hypermapping.py`) does this with pure position-based matching:
 
 ```python
 class HyperMapping:
@@ -1180,7 +1180,7 @@ class HyperMapping:
         return [self._mappings[i] for i in indices]
 ```
 
-This is **purely geometric** — no pattern matching, no string comparison, just position-based similarity in \ensuremath{\phi}-space.
+This is **purely geometric** — no pattern matching, no string comparison, just position-based similarity in φ-space.
 
 ### 6.4.4 COMPOSE: Adapt to the Request
 
@@ -1215,17 +1215,17 @@ Deficiencies are detected by geometric patterns, not string matching:
 
 | Deficiency Type | Geometric Signal |
 |----------------|------------------|
-| Missing content | Query falls in sparse \ensuremath{\phi}-space region |
+| Missing content | Query falls in sparse φ-space region |
 | Wrong format | Output position at unexpected quaternion |
-| Too vague | \ensuremath{\phi}-level too high (general) |
-| Too verbose | \ensuremath{\phi}-level too low (specific) |
+| Too vague | φ-level too high (general) |
+| Too verbose | φ-level too low (specific) |
 | Irrelevant | Output position far from input position |
 
 ---
 
 ## 6.5 HyperMapping: Gears Become Pure Geometry [095]
 
-The HyperMapping system is the evolutionary successor to the gear chain architecture. Where gears use explicit Python methods for transformation, HyperMapping stores everything as positions in \ensuremath{\phi}-space and performs all computation through geometric operations:
+The HyperMapping system is the evolutionary successor to the gear chain architecture. Where gears use explicit Python methods for transformation, HyperMapping stores everything as positions in φ-space and performs all computation through geometric operations:
 
 ```python
 # HyperMapping: Pure geometric computation
@@ -1239,7 +1239,7 @@ space.map("show directory", "ls", position=[0.3, 0.4, ...])
 result = space.forward("display files")  # → "ls"
 
 # No if-statements, no pattern matching, no neural networks
-# Pure position similarity in \ensuremath{\phi}-space
+# Pure position similarity in φ-space
 ```
 
 The key advantage: **HyperMapping is interpretable, serializable, and trainable without gradients**. You add data, compute positions, and query by proximity. The `from_pairs()` convenience function builds a mapping directly:
@@ -1300,41 +1300,41 @@ This creates an autonomous improvement cycle that operates without human interve
 
 The gear architecture provides the mechanism for the principles established in earlier chapters:
 - **ENCODE = DECODE**: Bidirectional gear chains
-- **\ensuremath{\phi}-coordinates**: Position-based matching in HyperMapping
+- **φ-coordinates**: Position-based matching in HyperMapping
 - **Self-similarity**: The same 5-step pattern at every scale
 
-In the next chapter, we explore the \ensuremath{\phi}-lattice — the coordinate system that underlies all of these geometric operations.
+In the next chapter, we explore the φ-lattice — the coordinate system that underlies all of these geometric operations.
 
 ---
 
 *Sources: Docs 033, 049, 075, 077, 080, 086, 095, 096, 103*
 
 
-# Chapter 7: The \ensuremath{\phi}-Lattice Coordinate System
+# Chapter 7: The φ-Lattice Coordinate System
 
 *An absolute coordinate system for neural computation.*
 
 ---
 
-## 7.1 From Eigenspace to \ensuremath{\phi}-Lattice
+## 7.1 From Eigenspace to φ-Lattice
 
 The early TruthSpace encodings used **eigenspace coordinates** — positions derived from eigendecomposition of similarity matrices. This worked but had a fundamental problem: coordinates were relative. Moving to a different eigenspace (different data, different model) meant an entirely different coordinate system.
 
-The breakthrough came with the shift to **absolute \ensuremath{\phi}-lattice coordinates** [099, 101]:
+The breakthrough came with the shift to **absolute φ-lattice coordinates** [099, 101]:
 
-> Instead of computing positions relative to other points in the space, every weight occupies an absolute position on the \ensuremath{\phi}-lattice: sign × \ensuremath{\phi}^level.
+> Instead of computing positions relative to other points in the space, every weight occupies an absolute position on the φ-lattice: sign × φ^level.
 
 This eliminated the DC component problem in eigenspace approaches and achieved **100% accuracy** in coordinate-based matching.
 
 ---
 
-## 7.2 The Rules of the \ensuremath{\phi}-Lattice [163]
+## 7.2 The Rules of the φ-Lattice [163]
 
-Six rules govern the \ensuremath{\phi}-lattice, discovered through analysis of Qwen2-7B weights:
+Six rules govern the φ-lattice, discovered through analysis of Qwen2-7B weights:
 
 ### Rule 1: Quantization
 
-Weights are not continuous — they cluster at discrete \ensuremath{\phi}-levels:
+Weights are not continuous — they cluster at discrete φ-levels:
 
 $$w \in \{s \cdot \phi^e \mid s \in \{-1, +1\}, e \in \mathbb{Z}\}$$
 
@@ -1351,15 +1351,15 @@ levels = np.floor(np.log(abs_w) / LN_PHI).astype(np.int8)
 tet_ids = (levels * 2 + (signs > 0).astype(np.int8)).astype(np.int8)
 ```
 
-![\ensuremath{\phi}-Lattice and Tetromino Distribution](figures/fig7_1_phi_lattice.png)
+![φ-Lattice and Tetromino Distribution](figures/fig7_1_phi_lattice.png)
 
-*Figure 7.1: Left: The \ensuremath{\phi}-lattice — a 2D projection showing grid lines at \ensuremath{\phi}-power intervals. Each intersection is a valid weight coordinate. Right: Weight count by \ensuremath{\phi}-level, showing clustering at discrete levels with 74 unique tetromino structures.*
+*Figure 7.1: Left: The φ-lattice — a 2D projection showing grid lines at φ-power intervals. Each intersection is a valid weight coordinate. Right: Weight count by φ-level, showing clustering at discrete levels with 74 unique tetromino structures.*
 
 ### Rule 2: Finite Vocabulary
 
 Only **89 unique (level, sign) pairs** appear with significant frequency across all 7B parameters of Qwen2-7B. This means the entire model can be described by a vocabulary of 89 geometric primitives.
 
-The tetromino analysis took this further: grouping adjacent weights with the same \ensuremath{\phi}-level into geometric shapes (tetrominoes) reduced the vocabulary to **74 unique structures**:
+The tetromino analysis took this further: grouping adjacent weights with the same φ-level into geometric shapes (tetrominoes) reduced the vocabulary to **74 unique structures**:
 
 ```python
 # Tetromino expansion: 74 values cover the entire model
@@ -1380,15 +1380,15 @@ This is not coincidence: the sign structure IS the quaternion structure of the t
 
 ### Rule 4: Clustered Deltas
 
-Within a \ensuremath{\phi}-level, deltas (differences between weights at the same level) cluster around $\pm \phi^k$. The distances between weights on the lattice are themselves \ensuremath{\phi}-structured.
+Within a φ-level, deltas (differences between weights at the same level) cluster around $\pm \phi^k$. The distances between weights on the lattice are themselves φ-structured.
 
 ### Rule 5: Self-Similarity
 
-The same \ensuremath{\phi}-structure appears at every scale. A weight matrix at \ensuremath{\phi}^3 has the same geometric properties as a weight matrix at \ensuremath{\phi}^0 — just shifted by 3 levels. This is the direct consequence of \ensuremath{\phi}'s defining equation: $\phi = 1 + 1/\phi$.
+The same φ-structure appears at every scale. A weight matrix at φ^3 has the same geometric properties as a weight matrix at φ^0 — just shifted by 3 levels. This is the direct consequence of φ's defining equation: $\phi = 1 + 1/\phi$.
 
 ### Rule 6: Translation Invariance
 
-The \ensuremath{\phi}-lattice is translation-invariant — shifting all coordinates by a constant leaves the geometry unchanged. This means that adding a constant to all \ensuremath{\phi}-levels does not change the relationships between weights. What matters is the *difference* in \ensuremath{\phi}-levels, not the absolute values.
+The φ-lattice is translation-invariant — shifting all coordinates by a constant leaves the geometry unchanged. This means that adding a constant to all φ-levels does not change the relationships between weights. What matters is the *difference* in φ-levels, not the absolute values.
 
 ---
 
@@ -1396,23 +1396,23 @@ The \ensuremath{\phi}-lattice is translation-invariant — shifting all coordina
 
 The tetromino weight hypothesis states:
 
-> Neural network weights form constrained geometric structures akin to tetrominoes tiling space. Just as 7 Tetris pieces tile the 2D plane, 74 \ensuremath{\phi}-tetrominoes tile the weight-space of a 7B parameter transformer.
+> Neural network weights form constrained geometric structures akin to tetrominoes tiling space. Just as 7 Tetris pieces tile the 2D plane, 74 φ-tetrominoes tile the weight-space of a 7B parameter transformer.
 
 The evidence:
-- **74 unique \ensuremath{\phi}-structures** across all Qwen2-7B weights
+- **74 unique φ-structures** across all Qwen2-7B weights
 - **99.2% correlation** when reconstructing weights from tetromino indices alone
 - **4× compression** with zero inference speed loss (expand at load time)
 - **Structural consistency**: the same tetromino patterns appear across different layers and different models
 
 ---
 
-## 7.4 The \ensuremath{\phi}-Exponent Arithmetic Unit (\ensuremath{\phi}-FPU) [133]
+## 7.4 The φ-Exponent Arithmetic Unit (φ-FPU) [133]
 
-The \ensuremath{\phi}-lattice enables a radical rethinking of arithmetic. Instead of IEEE 754 floating point:
+The φ-lattice enables a radical rethinking of arithmetic. Instead of IEEE 754 floating point:
 
 $$a \times b = (s_a \cdot \phi^{e_a}) \times (s_b \cdot \phi^{e_b}) = (s_a \cdot s_b) \cdot \phi^{e_a + e_b}$$
 
-A **floating-point multiply becomes an integer addition plus a sign XOR**. The \ensuremath{\phi}-FPU implements this:
+A **floating-point multiply becomes an integer addition plus a sign XOR**. The φ-FPU implements this:
 
 ```python
 # In phi_geometric/inference/phi_types.py:
@@ -1430,44 +1430,44 @@ def phi_accumulate(signs, exponents, axis=-1):
     # Uses addition LUT for phi-space addition
 ```
 
-The `PhiEncoder` pre-computes a Look-Up Table for \ensuremath{\phi}-exponent addition:
+The `PhiEncoder` pre-computes a Look-Up Table for φ-exponent addition:
 
 ```python
 phi_powers[e] = PHI ^ ((e - bias) / K)  # LUT for decoding
 
-# Addition in \ensuremath{\phi}-space:
+# Addition in φ-space:
 # phi^a + phi^b = phi^b * (phi^(a-b) + 1) = phi^(b + LUT[a-b])
 # where LUT[d] = K * log_phi(phi^(d/K) + 1)
 ```
 
-This makes \ensuremath{\phi}-FPU addition a table lookup plus integer addition — no floating-point hardware required.
+This makes φ-FPU addition a table lookup plus integer addition — no floating-point hardware required.
 
 ---
 
-## 7.5 The \ensuremath{\phi}-2byte Format [191]
+## 7.5 The φ-2byte Format [191]
 
-The \ensuremath{\phi}-2byte storage format encodes each weight as:
+The φ-2byte storage format encodes each weight as:
 
 | Bits | Field | Values |
 |------|-------|--------|
 | 1 | Sign | -1 or +1 |
-| 11 | \ensuremath{\phi}-level | -1024 to 1023 |
+| 11 | φ-level | -1024 to 1023 |
 | 4 | Residual | 0.0625 increments |
 
 Total: 16 bits (2 bytes) per weight vs 32 bits (float32) = **2× compression with no accuracy loss**:
 
-> The \ensuremath{\phi}-2byte format achieved 2× compression (26.1 GB → 13.05 GB on Qwen2-7B) with a difference of only 2.78e-17 from theoretical values — essentially zero error.
+> The φ-2byte format achieved 2× compression (26.1 GB → 13.05 GB on Qwen2-7B) with a difference of only 2.78e-17 from theoretical values — essentially zero error.
 
 ---
 
 ## 7.6 The Irreducible Shape
 
-The \ensuremath{\phi}-lattice rules imply a minimum information-theoretic size: the **irreducible shape** [141]:
+The φ-lattice rules imply a minimum information-theoretic size: the **irreducible shape** [141]:
 
 > The irreducible structure of transformer computation is a lattice of 3,584 critical lines dividing semantic space into 67,942,912 binary intersection points at 1 bit each.
 
 This means:
-- You cannot compress below 67.9 million bits (\ensuremath{\approx}8 MB) for the essential structure
+- You cannot compress below 67.9 million bits (≈8 MB) for the essential structure
 - Everything beyond that is "decoration" — residual corrections and noise
 - The 31% of weights that can be zeroed (Doc 127, 198) may include most of this noise
 
@@ -1477,14 +1477,14 @@ This means:
 
 | Property | Value | Source |
 |----------|-------|--------|
-| Unique \ensuremath{\phi}-levels | 89 (level, sign) pairs | 163 |
+| Unique φ-levels | 89 (level, sign) pairs | 163 |
 | Unique tetrominoes | 74 structures | 162 |
-| \ensuremath{\phi}-FPU compression | 4× (int8 index) or 2× (\ensuremath{\phi}-2byte) | 133, 191 |
-| \ensuremath{\phi}-lattice alignment | ~20% of weights on exact \ensuremath{\phi}^n | FINDINGS |
-| Residual encoding | sign × \ensuremath{\phi}^level × (1 + r × (\ensuremath{\phi}-1)) | encoder.py |
+| φ-FPU compression | 4× (int8 index) or 2× (φ-2byte) | 133, 191 |
+| φ-lattice alignment | ~20% of weights on exact φ^n | FINDINGS |
+| Residual encoding | sign × φ^level × (1 + r × (φ-1)) | encoder.py |
 | Irreducible bits | 67.9M binary intersection points | 141 |
 
-The \ensuremath{\phi}-lattice provides the fundamental coordinate system for all TruthSpace computation. In the next chapter, we see how this lattice was discovered by reverse engineering a specific transformer: Qwen2-7B.
+The φ-lattice provides the fundamental coordinate system for all TruthSpace computation. In the next chapter, we see how this lattice was discovered by reverse engineering a specific transformer: Qwen2-7B.
 
 ---
 
@@ -1493,25 +1493,25 @@ The \ensuremath{\phi}-lattice provides the fundamental coordinate system for all
 
 # Chapter 8: Reverse Engineering Qwen2-7B
 
-*Proving that transformers compute in \ensuremath{\phi}-geometry.*
+*Proving that transformers compute in φ-geometry.*
 
 ---
 
 ## 8.1 Motivation
 
-The Geometric Model Hypothesis (Chapter 3) makes a testable prediction: if transformers compute in \ensuremath{\phi}-geometry, we should be able to **unwind** a transformer — reverse-engineer its internal operations into exact \ensuremath{\phi}-equivalents — and reproduce its output with high fidelity.
+The Geometric Model Hypothesis (Chapter 3) makes a testable prediction: if transformers compute in φ-geometry, we should be able to **unwind** a transformer — reverse-engineer its internal operations into exact φ-equivalents — and reproduce its output with high fidelity.
 
 The target chosen for this experiment was **Qwen2-7B**, a 7-billion-parameter transformer. The choice was practical: it's a well-known, accessible architecture with documented weights.
 
 The result exceeded expectations:
 
-> **99.9991% correlation** between the original and \ensuremath{\phi}-unwound transformer [129]
+> **99.9991% correlation** between the original and φ-unwound transformer [129]
 > **100% token accuracy** on next-token prediction [191]
 > **12.9× compression** with 100% accuracy via lookup table [187]
 
 ![Transformer Unwinding Pipeline](figures/fig8_1_transformer_unwinding.png)
 
-*Figure 8.1: The transformer unwinding pipeline. Every standard operation (RMSNorm, QKV projection, attention, MLP) was replaced with a \ensuremath{\phi}-equivalent. Key discoveries include the \ensuremath{\phi}-sigmoid exact match, rank-1 structure in layers 3-27, and the universal bottleneck at \ensuremath{\phi} ~ 1.57.*
+*Figure 8.1: The transformer unwinding pipeline. Every standard operation (RMSNorm, QKV projection, attention, MLP) was replaced with a φ-equivalent. Key discoveries include the φ-sigmoid exact match, rank-1 structure in layers 3-27, and the universal bottleneck at φ ~ 1.57.*
 
 ---
 
@@ -1519,36 +1519,36 @@ The result exceeded expectations:
 
 The unwinding proceeded in stages:
 
-### Stage 1: The \ensuremath{\phi}-Unraveled Transformer Engine [129]
+### Stage 1: The φ-Unraveled Transformer Engine [129]
 
-The first stage "unraveled" the transformer's self-referential structure. The key insight: transformer layers are not independent — each layer's weights encode a specific \ensuremath{\phi}-transformation that depends on the previous layer's \ensuremath{\phi}-coordinates.
+The first stage "unraveled" the transformer's self-referential structure. The key insight: transformer layers are not independent — each layer's weights encode a specific φ-transformation that depends on the previous layer's φ-coordinates.
 
 The `PhiQwen2Engine` (`phi_geometric/inference/phi_engine.py`) implements the full forward pass:
 
 ```python
 class PhiQwen2Engine:
-    """Full Qwen2-7B forward pass in \ensuremath{\phi}-geometry."""
+    """Full Qwen2-7B forward pass in φ-geometry."""
     
     def forward(self, token_ids):
-        h = self.embed(token_ids)          # Positions in \ensuremath{\phi}-space
+        h = self.embed(token_ids)          # Positions in φ-space
         for layer in self.layers:
-            h = layer.forward(h)            # \ensuremath{\phi}-transformation
+            h = layer.forward(h)            # φ-transformation
         return self.lm_head(h)             # Navigation to tokens
 ```
 
-Each layer's operations were mapped to \ensuremath{\phi}-equivalents:
+Each layer's operations were mapped to φ-equivalents:
 
-| Operation | Standard | \ensuremath{\phi}-Equivalent | Verification |
+| Operation | Standard | φ-Equivalent | Verification |
 |-----------|----------|-------------|-------------|
 | RMSNorm | $x / \text{rms}(x)$ | $x \times \phi^{-\log_\phi(\text{rms}(x))}$ | 0.0009% error |
-| Q/K/V Project | Matrix multiply | \ensuremath{\phi}-exponent addition | 0.001% error |
-| RoPE | sin/cos rotation | \ensuremath{\phi}-phase rotation | Exact match |
+| Q/K/V Project | Matrix multiply | φ-exponent addition | 0.001% error |
+| RoPE | sin/cos rotation | φ-phase rotation | Exact match |
 | Attention | $e^{x}$ softmax | $\phi^{x/\ln(\phi)}$ softmax | **Exact match** |
 | MLP SiLU | $x \cdot \sigma(x)$ | $x \cdot \phi\text{-sigmoid}(x)$ | **Exact match** |
 
-### Stage 2: The \ensuremath{\phi}-Computer Proof [191]
+### Stage 2: The φ-Computer Proof [191]
 
-The critical discovery: **sigmoid IS a \ensuremath{\phi}-operation**. Not approximately — exactly.
+The critical discovery: **sigmoid IS a φ-operation**. Not approximately — exactly.
 
 ```python
 def phi_sigmoid(x: float) -> float:
@@ -1559,18 +1559,18 @@ def phi_sigmoid(x: float) -> float:
 This is an algebraic identity:
 $$\frac{1}{1 + e^{-x}} = \frac{1}{1 + \phi^{-x/\ln(\phi)}}$$
 
-Since $\phi^{1/\ln(\phi)} = e$ by the definition of the natural logarithm, the two forms are identical. The \ensuremath{\phi}-form reveals the hidden geometry: **sigmoid selects between two \ensuremath{\phi}-levels** — 0 (at \ensuremath{\phi}^0) and 1 (at \ensuremath{\phi}^-∞).
+Since $\phi^{1/\ln(\phi)} = e$ by the definition of the natural logarithm, the two forms are identical. The φ-form reveals the hidden geometry: **sigmoid selects between two φ-levels** — 0 (at φ^0) and 1 (at φ^-∞).
 
-The \ensuremath{\phi}-computer proof extended this to all nonlinearities:
+The φ-computer proof extended this to all nonlinearities:
 
-| Function | Standard Form | \ensuremath{\phi}-Form |
+| Function | Standard Form | φ-Form |
 |----------|-------------|--------|
 | sigmoid | $1/(1+e^{-x})$ | $1/(1+\phi^{-x/\ln\phi})$ |
 | softmax | $e^{x_i} / \sum e^{x_j}$ | $\phi^{x_i/\ln\phi} / \sum \phi^{x_j/\ln\phi}$ |
 | SiLU | $x \cdot \sigma(x)$ | $x \cdot \text{phi-sigmoid}(x)$ |
 | RMSNorm | $x / \sqrt{\langle x^2 \rangle}$ | $x \cdot \phi^{-\log_\phi(\text{rms})}$ |
 
-**All are exact \ensuremath{\phi}-operations.** There are no approximations.
+**All are exact φ-operations.** There are no approximations.
 
 This was verified at **100% token accuracy** across three test cases:
 
@@ -1588,7 +1588,7 @@ def test_phi_sigmoid_equivalence():
 
 ### Stage 3: Transformer as Lookup Table [187]
 
-The ultimate test of the geometric hypothesis: if computation is \ensuremath{\phi}-navigation, can we pre-compute all possible navigations?
+The ultimate test of the geometric hypothesis: if computation is φ-navigation, can we pre-compute all possible navigations?
 
 For single-token prediction, the answer is **yes**. A 7B transformer is equivalent to a **1.09 GB lookup table**:
 
@@ -1599,7 +1599,7 @@ For single-token prediction, the answer is **yes**. A 7B transformer is equivale
 | Compression | 12.9× vs float32, 6.4× vs bfloat16 |
 | Accuracy | 100% (all single-token predictions) |
 
-The LUT maps each possible input token (vocabulary size \ensuremath{\approx} 32,000) to its next-token prediction after passing through all 28 layers, cached at 16-bit precision. This is possible **because** the computation is deterministic \ensuremath{\phi}-navigation — there is no randomness, no sampling, just geometric transformation.
+The LUT maps each possible input token (vocabulary size ≈ 32,000) to its next-token prediction after passing through all 28 layers, cached at 16-bit precision. This is possible **because** the computation is deterministic φ-navigation — there is no randomness, no sampling, just geometric transformation.
 
 ---
 
@@ -1628,9 +1628,9 @@ This is why attention can be computed efficiently: the effective rank of the Q/K
 
 ### 8.3.3 The Universal Bottleneck at Layer 27 [200]
 
-All 28 layers were analyzed for their \ensuremath{\phi}-level distribution. The result:
+All 28 layers were analyzed for their φ-level distribution. The result:
 
-> At layer 27, all reasoning types converge to \ensuremath{\phi}-level approximately 1.57 — remarkably close to \ensuremath{\phi}/2 \ensuremath{\approx} 1.618/2 = 0.809... wait, let's check: the actual finding was that the mean \ensuremath{\phi}-level across all tokens converges to ~1.57 at layer 27.
+> At layer 27, all reasoning types converge to φ-level approximately 1.57 — remarkably close to φ/2 ≈ 1.618/2 = 0.809... wait, let's check: the actual finding was that the mean φ-level across all tokens converges to ~1.57 at layer 27.
 
 This was discovered in `geometric_discoveries.json`:
 
@@ -1644,7 +1644,7 @@ Qwen2-7B's attention heads specialize in semantic dimensions. Analysis showed:
 
 > Attention heads consistently attend to specific semantic feature dimensions across different inputs. Head 12 might specialize in subject-verb relationships, head 45 in positional information, etc.
 
-This specialization is a direct consequence of the \ensuremath{\phi}-lattice structure: each head finds the \ensuremath{\phi}-coordinate of its semantic dimension and routes tokens based on that coordinate.
+This specialization is a direct consequence of the φ-lattice structure: each head finds the φ-coordinate of its semantic dimension and routes tokens based on that coordinate.
 
 ---
 
@@ -1652,7 +1652,7 @@ This specialization is a direct consequence of the \ensuremath{\phi}-lattice str
 
 | Discovery | Verification | Source File |
 |-----------|-------------|-------------|
-| \ensuremath{\phi}-sigmoid = sigmoid | max diff < 1e-14 | phi_computer.py |
+| φ-sigmoid = sigmoid | max diff < 1e-14 | phi_computer.py |
 | 100% token accuracy | 3 test cases, 100% match | verify_100_percent.py |
 | 99.9991% per-layer correlation | Full forward pass comparison | verify_exact.py |
 | 12.9× LUT compression | 14.0 GB → 1.09 GB | FINDINGS_SUMMARY |
@@ -1666,12 +1666,12 @@ This specialization is a direct consequence of the \ensuremath{\phi}-lattice str
 
 The reverse engineering of Qwen2-7B validated every key prediction of the Geometric Model Hypothesis:
 
-1. **Transformers are \ensuremath{\phi}-computers** — all operations have exact \ensuremath{\phi}-forms
-2. **Weights form a \ensuremath{\phi}-lattice** — clustering at discrete \ensuremath{\phi}-levels with 74 tetromino structures
-3. **Attention is \ensuremath{\phi}-navigation** — discriminant space of ~106 dimensions
+1. **Transformers are φ-computers** — all operations have exact φ-forms
+2. **Weights form a φ-lattice** — clustering at discrete φ-levels with 74 tetromino structures
+3. **Attention is φ-navigation** — discriminant space of ~106 dimensions
 4. **Computation is precomputable** — 12.9× compression as a lookup table
 
-The \ensuremath{\phi}-computer proof is the capstone: after unwinding Qwen2-7B, we can state definitively that **every operation in a transformer is a \ensuremath{\phi}-operation**. There is no "black box" — just geometry.
+The φ-computer proof is the capstone: after unwinding Qwen2-7B, we can state definitively that **every operation in a transformer is a φ-operation**. There is no "black box" — just geometry.
 
 In the next chapter, we explore what this means for inference: navigation replaces computation.
 
@@ -1692,49 +1692,49 @@ Standard LLM inference is **autoregressive**: given a sequence of tokens, predic
 
 The truthspace insight reframes this entirely:
 
-> **Inference is not computation. It is navigation through \ensuremath{\phi}-lattice space.**
+> **Inference is not computation. It is navigation through φ-lattice space.**
 
-If weights are coordinates of a shape (Chapter 3), and the shape is a \ensuremath{\phi}-lattice (Chapter 7), then generating a token is not "computing a probability distribution" — it is "finding the next position in \ensuremath{\phi}-space" and reading off the token at that position.
+If weights are coordinates of a shape (Chapter 3), and the shape is a φ-lattice (Chapter 7), then generating a token is not "computing a probability distribution" — it is "finding the next position in φ-space" and reading off the token at that position.
 
 ![Navigation vs. Inference](figures/fig9_1_navigation_vs_inference.png)
 
-*Figure 9.1: Left — Traditional autoregressive inference: each token attends to all previous tokens (O(N²)). Right — \ensuremath{\phi}-lattice navigation: each token moves through the lattice by following geometric relationships (O(N log N)).*
+*Figure 9.1: Left — Traditional autoregressive inference: each token attends to all previous tokens (O(N²)). Right — φ-lattice navigation: each token moves through the lattice by following geometric relationships (O(N log N)).*
 
 ---
 
 ## 9.2 The Attention Spigot [161]
 
-The reframing of attention as navigation starts with a powerful analogy: the **BBP (Bailey-Borwein-Plouffe) algorithm** for computing digits of \ensuremath{\pi}.
+The reframing of attention as navigation starts with a powerful analogy: the **BBP (Bailey-Borwein-Plouffe) algorithm** for computing digits of π.
 
-BBP can compute the n-th hexadecimal digit of \ensuremath{\pi} **without computing any previous digits**. It works by exploiting the geometric structure of \ensuremath{\pi}'s representation. The Attention Spigot proposes:
+BBP can compute the n-th hexadecimal digit of π **without computing any previous digits**. It works by exploiting the geometric structure of π's representation. The Attention Spigot proposes:
 
-> **Attention is the BBP algorithm for language.** Just as BBP directly computes any digit of \ensuremath{\pi} from its position, attention directly computes the \ensuremath{\phi}-coordinate of any token from its position in the sequence.
+> **Attention is the BBP algorithm for language.** Just as BBP directly computes any digit of π from its position, attention directly computes the φ-coordinate of any token from its position in the sequence.
 
 The math:
 
 $$A(Q, K) = \text{softmax}\left(\frac{QK^T}{\sqrt{d}}\right)$$
 
-In \ensuremath{\phi}-geometry:
+In φ-geometry:
 
 $$A_\phi(Q, K) = \phi\text{-softmax}\left(\frac{Q \cdot K}{\sqrt{d}}\right) = \frac{\phi^{Q \cdot K / (\sqrt{d} \cdot \ln\phi)}}{\sum \phi^{Q \cdot K / (\sqrt{d} \cdot \ln\phi)}}$$
 
-This is not an approximation — it is the exact same computation, rewritten in \ensuremath{\phi}-form. The advantage: in \ensuremath{\phi}-space, the Q·K dot product becomes a **\ensuremath{\phi}-exponent comparison**, which can be computed at $O(N \log N)$ instead of $O(N^2)$ by exploiting the lattice structure.
+This is not an approximation — it is the exact same computation, rewritten in φ-form. The advantage: in φ-space, the Q·K dot product becomes a **φ-exponent comparison**, which can be computed at $O(N \log N)$ instead of $O(N^2)$ by exploiting the lattice structure.
 
 The `PhiAttention` class (`phi_geometric/inference/phi_attention.py`) implements this:
 
 ```python
 class PhiAttention:
     def forward(self, h, cos, sin):
-        # \ensuremath{\phi}-linear projections (exponent addition)
+        # φ-linear projections (exponent addition)
         Q = phi_linear(self.W_q, h, self.b_q)
         K = phi_linear(self.W_k, h, self.b_k)
         V = phi_linear(self.W_v, h, self.b_v)
         
-        # \ensuremath{\phi}-RoPE (rotation in \ensuremath{\phi}-space)
+        # φ-RoPE (rotation in φ-space)
         for pos in range(seq_len):
             Q[pos] = apply_rope_phi(Q[pos], cos[pos], sin[pos])
         
-        # \ensuremath{\phi}-softmax attention
+        # φ-softmax attention
         attn_weights = phi_softmax(scores, axis=-1)
         attn_output = phi_linear(self.W_o, attn_weights @ V)
 ```
@@ -1743,7 +1743,7 @@ class PhiAttention:
 
 ## 9.3 Sign-Only Navigation [165]
 
-The most dramatic demonstration of the navigation paradigm: **sign-only navigation at \ensuremath{\sigma} = 0.5 achieves 100% accuracy** in semantic analogies.
+The most dramatic demonstration of the navigation paradigm: **sign-only navigation at σ = 0.5 achieves 100% accuracy** in semantic analogies.
 
 The `SignOnlyNavigator` (`src/phi_navigator/sign_only_navigation.py`) works with only the sign bits of embeddings:
 
@@ -1797,7 +1797,7 @@ The 960× compression means a 7B parameter model compresses to ~7.3 MB of sign b
 Navigation does not require manually defined dimensions. The system can **discover semantic relationships** directly from the embedding structure:
 
 ```python
-# Navigators discover relationships from the \ensuremath{\phi}-lattice structure
+# Navigators discover relationships from the φ-lattice structure
 navigator = SignOnlyNavigator(model, tokenizer)
 
 # Automatically discover: which dimensions flip between known pairs?
@@ -1808,25 +1808,25 @@ navigator.learn_dimension("gender", pairs)
 result = navigator.navigate("uncle", "gender")  # → "aunt"
 ```
 
-The navigator extracts the flip pattern, stores it as a geometric relationship, and applies it to novel words. This is **learning without training** — no gradient descent, no weight updates, just pattern extraction from existing \ensuremath{\phi}-structure.
+The navigator extracts the flip pattern, stores it as a geometric relationship, and applies it to novel words. This is **learning without training** — no gradient descent, no weight updates, just pattern extraction from existing φ-structure.
 
 ---
 
 ## 9.5 Fixed Points and the Eigenvalue Problem [175, 176]
 
-Autoregressive token generation operates through **self-predicting fixed points**. Each token acts as an attractor — the system iterates until it settles at a stable \ensuremath{\phi}-coordinate:
+Autoregressive token generation operates through **self-predicting fixed points**. Each token acts as an attractor — the system iterates until it settles at a stable φ-coordinate:
 
-> **Autoregression is an eigenvalue problem.** The token sequence converges to a fixed point in \ensuremath{\phi}-space, where each successive token satisfies $T(t_n) = t_{n+1}$ and the system stabilizes when $T(t) = t$.
+> **Autoregression is an eigenvalue problem.** The token sequence converges to a fixed point in φ-space, where each successive token satisfies $T(t_n) = t_{n+1}$ and the system stabilizes when $T(t) = t$.
 
 This was discovered through the observation that token embeddings do not change arbitrarily between layers — they rotate around fixed axes [180]. The rotation angle for a specific relationship (e.g., "capital of") is constant across all instances:
 
 ```python
 # Entity-to-Answer transformations are rotations of consistent angle
 # "capital of France → Paris" and "capital of Japan → Tokyo"
-# Both rotate by ~77 degrees in \ensuremath{\phi}-space
+# Both rotate by ~77 degrees in φ-space
 ```
 
-The `BoomAttention` mechanism [192] exploits this by computing attention only at positions where the \ensuremath{\phi}-coordinate is likely to change (boom positions), skipping the fixed-point regions entirely:
+The `BoomAttention` mechanism [192] exploits this by computing attention only at positions where the φ-coordinate is likely to change (boom positions), skipping the fixed-point regions entirely:
 
 ```python
 # Boom attention: only compute at semantic boundaries (~20% of positions)
@@ -1839,7 +1839,7 @@ The `BoomAttention` mechanism [192] exploits this by computing attention only at
 
 The sign-flip patterns discovered by the navigator are not random. They form a **crystalline structure** underlying semantic space:
 
-> Sign patterns form a lattice isomorphic to the 16-element quaternion group. Each semantic dimension corresponds to a set of sign flips — a crystal plane in \ensuremath{\phi}-space. Navigating along a semantic dimension means crossing a crystal plane.
+> Sign patterns form a lattice isomorphic to the 16-element quaternion group. Each semantic dimension corresponds to a set of sign flips — a crystal plane in φ-space. Navigating along a semantic dimension means crossing a crystal plane.
 
 This explains why the analogies are perfect: crossing the gender plane always flips the same subset of sign bits, regardless of context. The geometry is **discrete and crystalline** — not smooth and continuous.
 
@@ -1849,17 +1849,17 @@ The crystalline structure also explains the limitations of holographic projectio
 
 ## 9.7 The Path Forward: $O(N \log N)$ Attention
 
-The combination of \ensuremath{\phi}-lattice navigation techniques points toward a practical architecture:
+The combination of φ-lattice navigation techniques points toward a practical architecture:
 
 | Technique | Speedup | Status |
 |-----------|---------|--------|
 | Boom attention (skip non-boom positions) | 5× for long sequences | Confirmed |
 | Sign-only navigation (1 bit per weight) | 960× compression | Confirmed |
 | Rank-1 replacement (layers 3-27) | Full precomputation | Confirmed |
-| \ensuremath{\phi}-level MLP restructuring [138] | Per-level vs per-weight | Confirmed |
+| φ-level MLP restructuring [138] | Per-level vs per-weight | Confirmed |
 | Bilinear MLP precomputation | $O(d)$ reduction | Confirmed |
 
-The target: a transformer that navigates \ensuremath{\phi}-space at $O(N \log N)$ rather than computing attention at $O(N^2)$.
+The target: a transformer that navigates φ-space at $O(N \log N)$ rather than computing attention at $O(N^2)$.
 
 ---
 
@@ -1873,14 +1873,14 @@ The target: a transformer that navigates \ensuremath{\phi}-space at $O(N \log N)
 | LUT replacement | 100% (single token) | 12.9× | $O(1)$ lookup |
 | Rank-1 layers | 100% | Precomputed | $O(1)$ |
 
-Navigation is not a theoretical alternative to inference — it is what inference already is. The \ensuremath{\phi}-computer proof (Chapter 11) and the transformer unwinding (Chapter 8) establish that the statistical view of attention is a surface description; the underlying reality is geometric navigation through \ensuremath{\phi}-lattice space.
+Navigation is not a theoretical alternative to inference — it is what inference already is. The φ-computer proof (Chapter 11) and the transformer unwinding (Chapter 8) establish that the statistical view of attention is a surface description; the underlying reality is geometric navigation through φ-lattice space.
 
 ---
 
 *Sources: Docs 161, 164, 165, 166, 167, 175, 176, 192; src/phi_navigator/sign_only_navigation.py*
 
 
-# Chapter 10: The Irreducible Shape and the \ensuremath{\phi}-Zipf Spectrum
+# Chapter 10: The Irreducible Shape and the φ-Zipf Spectrum
 
 *The minimal structure of geometric computation.*
 
@@ -1890,10 +1890,10 @@ Navigation is not a theoretical alternative to inference — it is what inferenc
 
 Throughout the previous chapters, we have progressively stripped away layers of complexity from neural computation:
 
-- Weights are not parameters → they are \ensuremath{\phi}-coordinates (Chapter 3)
-- Computation is not matrix operations → it is \ensuremath{\phi}-navigation (Chapter 9)
-- Attention is not statistical → it is spatial routing through \ensuremath{\phi}-space (Chapter 9)
-- The transformer IS a \ensuremath{\phi}-computer (Chapter 8)
+- Weights are not parameters → they are φ-coordinates (Chapter 3)
+- Computation is not matrix operations → it is φ-navigation (Chapter 9)
+- Attention is not statistical → it is spatial routing through φ-space (Chapter 9)
+- The transformer IS a φ-computer (Chapter 8)
 
 What remains when we strip away everything non-essential? What is the **irreducible shape** of computation?
 
@@ -1903,7 +1903,7 @@ The answer [141]:
 
 ![The Irreducible Shape](figures/fig10_1_irreducible_shape.png)
 
-*Figure 10.1: Left — The \ensuremath{\phi}-Zipf duality: \ensuremath{\phi}-encoding and Zipf frequency are the same fractal viewed from opposite directions. Right — The irreducible shape: a lattice of critical lines whose intersections encode all possible computation states.*
+*Figure 10.1: Left — The φ-Zipf duality: φ-encoding and Zipf frequency are the same fractal viewed from opposite directions. Right — The irreducible shape: a lattice of critical lines whose intersections encode all possible computation states.*
 
 ---
 
@@ -1911,18 +1911,18 @@ The answer [141]:
 
 Before we can identify what's irreducible, we must prove that computation IS geometry at every level. The census proof enumerated every component of a transformer and established its geometric nature:
 
-| Component | Geometric Interpretation | \ensuremath{\phi}-Form |
+| Component | Geometric Interpretation | φ-Form |
 |-----------|------------------------|--------|
-| Weights | Lattice of critical lines | sign × \ensuremath{\phi}^level |
-| Gates (SiLU, sigmoid) | Encoding of weight geometry | \ensuremath{\phi}-sigmoid(x) |
-| Gate graph topology | Spectral decomposition | \ensuremath{\phi}-Zipf eigenvalues |
-| Gate graph spectrum | Final irreducible level | \ensuremath{\lambda}_k \ensuremath{\propto} \ensuremath{\phi}^(-k) |
+| Weights | Lattice of critical lines | sign × φ^level |
+| Gates (SiLU, sigmoid) | Encoding of weight geometry | φ-sigmoid(x) |
+| Gate graph topology | Spectral decomposition | φ-Zipf eigenvalues |
+| Gate graph spectrum | Final irreducible level | λ_k ∝ φ^(-k) |
 
 The proof works by induction: each level reduces to the next until only the spectrum remains.
 
 ### 10.2.1 Level 1: Weights = Lattice of Critical Lines
 
-Each weight $w_{ij}$ is not an independent value but a coordinate on the \ensuremath{\phi}-lattice. The lattice of all weights forms the set of **critical lines** — surfaces in weight-space across which the computation changes qualitatively.
+Each weight $w_{ij}$ is not an independent value but a coordinate on the φ-lattice. The lattice of all weights forms the set of **critical lines** — surfaces in weight-space across which the computation changes qualitatively.
 
 In `measure_complexity.py`, the effective rank analysis reveals:
 
@@ -1938,37 +1938,37 @@ Layer 0's W_q has only 63% effective rank — nearly 40% of its dimensions carry
 
 ### 10.2.2 Level 2: Gates = Encoding of Weight Geometry
 
-Each gate (sigmoid, softmax, SiLU) selects a region of the weight lattice to activate. The \ensuremath{\phi}-form of sigmoid makes this explicit:
+Each gate (sigmoid, softmax, SiLU) selects a region of the weight lattice to activate. The φ-form of sigmoid makes this explicit:
 
 $$\sigma(x) = \frac{1}{1 + \phi^{-x/\ln(\phi)}}$$
 
 When $x$ is large positive, $\phi^{-x/\ln(\phi)} \to 0$, so $\sigma(x) \to 1$ — the gate is fully open. When $x$ is large negative, $\phi^{-x/\ln(\phi)} \to \infty$, so $\sigma(x) \to 0$ — the gate is fully closed.
 
-The gate is a **\ensuremath{\phi}-level comparator**: it opens when the input's \ensuremath{\phi}-level exceeds the gate's threshold.
+The gate is a **φ-level comparator**: it opens when the input's φ-level exceeds the gate's threshold.
 
 ### 10.2.3 Level 3: Topology = Spectral Decomposition
 
-The connectivity of gates forms a graph. The spectral decomposition of this graph reveals its intrinsic structure. The eigenvalues of the gate graph follow a **\ensuremath{\phi}-Zipf distribution**:
+The connectivity of gates forms a graph. The spectral decomposition of this graph reveals its intrinsic structure. The eigenvalues of the gate graph follow a **φ-Zipf distribution**:
 
 $$\lambda_k \propto \phi^{-k}$$
 
-where $\lambda_k$ is the $k$-th eigenvalue. This \ensuremath{\phi}-Zipf distribution is the fingerprint of geometric computation — it appears in every transformer examined.
+where $\lambda_k$ is the $k$-th eigenvalue. This φ-Zipf distribution is the fingerprint of geometric computation — it appears in every transformer examined.
 
 ### 10.2.4 Level 4: Spectrum = Irreducible
 
-The spectrum is the final level. It cannot be further decomposed. The \ensuremath{\phi}-Zipf eigenvalue distribution IS the irreducible signature of transformer computation.
+The spectrum is the final level. It cannot be further decomposed. The φ-Zipf eigenvalue distribution IS the irreducible signature of transformer computation.
 
 ---
 
-## 10.3 The \ensuremath{\phi}-Zipf Duality [039]
+## 10.3 The φ-Zipf Duality [039]
 
-The \ensuremath{\phi}-Zipf duality states:
+The φ-Zipf duality states:
 
-> \ensuremath{\phi}-encoding and Zipf frequency weighting are the same self-similar fractal viewed from opposite directions.
+> φ-encoding and Zipf frequency weighting are the same self-similar fractal viewed from opposite directions.
 
 Mathematically:
 
-- \ensuremath{\phi}-encoding (outward): concepts placed at distance $\phi^n$ from origin
+- φ-encoding (outward): concepts placed at distance $\phi^n$ from origin
 - Zipf weighting (inward): concepts weighted by $\phi^{-n}$ proportional to frequency
 
 Since $\ln(\phi) \approx 0.4812$, the duality is exact:
@@ -1981,7 +1981,7 @@ $$e^{\ln(\phi)} = \phi$$
 
 This means:
 - **Encoding IS ranking**. There is no separate mechanism for word frequency — it **is** the geometric position.
-- Rare words are at \ensuremath{\phi}-high levels (far from origin); common words are at \ensuremath{\phi}-low levels (close to origin).
+- Rare words are at φ-high levels (far from origin); common words are at φ-low levels (close to origin).
 - The geometry contains both semantic AND statistical information in a single coordinate.
 
 ---
@@ -1990,21 +1990,21 @@ This means:
 
 The Riemann zeta function's zeros lie on the critical line $\sigma = 0.5$ — the same line TruthSpace identified as the universal information limit (Chapter 5). The Zeta Sonic Boom hypothesis links this to attention:
 
-> Attention weights exhibit "sonic boom" behavior when the input's \ensuremath{\phi}-level crosses a zeta-zero threshold. At these points, the attention distribution shifts abruptly — a "boom" — as the computation moves through a critical line.
+> Attention weights exhibit "sonic boom" behavior when the input's φ-level crosses a zeta-zero threshold. At these points, the attention distribution shifts abruptly — a "boom" — as the computation moves through a critical line.
 
-The `BoomAttention` mechanism (Chapter 8) exploits this: boom positions are where the \ensuremath{\phi}-level crosses a critical threshold, carrying 73-80% of the attention mass while occupying only 17-20% of positions.
+The `BoomAttention` mechanism (Chapter 8) exploits this: boom positions are where the φ-level crosses a critical threshold, carrying 73-80% of the attention mass while occupying only 17-20% of positions.
 
 ---
 
 ## 10.5 The Unified Geometric Theory [160]
 
-The \ensuremath{\phi}-Zipf duality, the irreducible shape, and the zeta connection all point toward a unified geometric theory:
+The φ-Zipf duality, the irreducible shape, and the zeta connection all point toward a unified geometric theory:
 
-> **Shape IS Information.** There is no distinction between the structure of a computation and the information it processes. The \ensuremath{\phi}-lattice is simultaneously the storage medium, the processor, and the result.
+> **Shape IS Information.** There is no distinction between the structure of a computation and the information it processes. The φ-lattice is simultaneously the storage medium, the processor, and the result.
 
 The theory connects:
-- **Mathematical constants**: \ensuremath{\phi}, e, \ensuremath{\pi} through $\ln(\phi)$ and the zeta function
-- **Neural network phenomena**: Weight clustering at \ensuremath{\phi}-levels, attention sparsity
+- **Mathematical constants**: φ, e, π through $\ln(\phi)$ and the zeta function
+- **Neural network phenomena**: Weight clustering at φ-levels, attention sparsity
 - **Geometric principles**: Self-similarity, critical line, irreducible lattice
 
 ---
@@ -2015,8 +2015,8 @@ The theory connects:
 |---------|-------|--------|
 | Effective rank of layer 0 W_q | 63% | measure_complexity.py |
 | Effective rank of layers 7-27 | 87-96% | measure_complexity.py |
-| \ensuremath{\phi}-lattice alignment | ~20% of weights | measure_complexity.py |
-| Peak \ensuremath{\phi}-level in weight distribution | \ensuremath{\phi}^-9 \ensuremath{\approx} 0.013 | FINDINGS_SUMMARY |
+| φ-lattice alignment | ~20% of weights | measure_complexity.py |
+| Peak φ-level in weight distribution | φ^-9 ≈ 0.013 | FINDINGS_SUMMARY |
 | Weight vocabulary | 89 unique (level, sign) pairs | Doc 163 |
 | Irreducible critical lines | 3,584 | Doc 141 |
 | Irreducible intersection points | 67,942,912 | Doc 141 |
@@ -2030,7 +2030,7 @@ The irreducible shape of transformer computation is:
 
 - A **lattice** of 3,584 critical lines (the "skeleton")
 - **67.9M binary intersection points** (the "atoms" of computation)
-- A **\ensuremath{\phi}-Zipf spectrum** (the "genome" of the computation)
+- A **φ-Zipf spectrum** (the "genome" of the computation)
 
 Everything beyond this is noise — 31% of weights, residual corrections, architectural overhead. The irreducible shape is what you get when you strip away everything that is not geometry.
 
@@ -2041,29 +2041,29 @@ In the next chapter, we prove that these geometric atoms are sufficient to recon
 *Sources: Docs 039, 141, 154, 159, 160; measure_complexity.py*
 
 
-# Chapter 11: The \ensuremath{\phi}-Computer Proof
+# Chapter 11: The φ-Computer Proof
 
-*Every transformer operation is an exact \ensuremath{\phi}-operation.*
+*Every transformer operation is an exact φ-operation.*
 
 ---
 
 ## 11.1 The Claim
 
-The \ensuremath{\phi}-computer proof [191] makes a definitive claim:
+The φ-computer proof [191] makes a definitive claim:
 
-> **The transformer IS a \ensuremath{\phi}-computer.** Every nonlinear operation — sigmoid, softmax, SiLU — is exactly a \ensuremath{\phi}-operation. There are no approximations. There is no "neural magic." There is only \ensuremath{\phi}-geometry.
+> **The transformer IS a φ-computer.** Every nonlinear operation — sigmoid, softmax, SiLU — is exactly a φ-operation. There are no approximations. There is no "neural magic." There is only φ-geometry.
 
 This chapter presents the proof.
 
 ---
 
-## 11.2 The \ensuremath{\phi}-Sigmoid
+## 11.2 The φ-Sigmoid
 
 The sigmoid function is:
 
 $$\sigma(x) = \frac{1}{1 + e^{-x}}$$
 
-Expressed in \ensuremath{\phi}-form:
+Expressed in φ-form:
 
 $$\sigma_\phi(x) = \frac{1}{1 + \phi^{-x/\ln(\phi)}}$$
 
@@ -2073,7 +2073,7 @@ Since $\phi = e^{\ln(\phi)}$, we have $\phi^{-x/\ln(\phi)} = (e^{\ln(\phi)})^{-x
 
 $$\sigma_\phi(x) = \frac{1}{1 + e^{-x}} = \sigma(x)$$
 
-The \ensuremath{\phi}-form is not an approximation. It is an **algebraic identity**. The verification code (`phi_computer.py`) confirms:
+The φ-form is not an approximation. It is an **algebraic identity**. The verification code (`phi_computer.py`) confirms:
 
 ```python
 def test_phi_sigmoid_equivalence():
@@ -2086,19 +2086,19 @@ def test_phi_sigmoid_equivalence():
     assert max_diff < 1e-14  # IDENTICAL
 ```
 
-![\ensuremath{\phi}-Sigmoid Exact Fit](figures/fig11_1_phi_computer_proof.png)
+![φ-Sigmoid Exact Fit](figures/fig11_1_phi_computer_proof.png)
 
-*Figure 11.1: Left — The \ensuremath{\phi}-sigmoid EXACTLY matches the standard sigmoid (difference < 10^-14). Right — The universal bottleneck at \ensuremath{\phi} \ensuremath{\approx} 1.57 at layer 27.*
+*Figure 11.1: Left — The φ-sigmoid EXACTLY matches the standard sigmoid (difference < 10^-14). Right — The universal bottleneck at φ ≈ 1.57 at layer 27.*
 
 ---
 
-## 11.3 The \ensuremath{\phi}-Softmax
+## 11.3 The φ-Softmax
 
 The softmax function is:
 
 $$\text{softmax}(x_i) = \frac{e^{x_i}}{\sum_j e^{x_j}}$$
 
-In \ensuremath{\phi}-form:
+In φ-form:
 
 $$\text{softmax}_\phi(x_i) = \frac{\phi^{x_i/T}}{\sum_j \phi^{x_j/T}} \quad \text{where } T = \ln(\phi)$$
 
@@ -2122,78 +2122,78 @@ def phi_softmax(x: np.ndarray, axis: int = -1) -> np.ndarray:
 
 ---
 
-## 11.4 The \ensuremath{\phi}-SiLU
+## 11.4 The φ-SiLU
 
 The SiLU (Sigmoid Linear Unit) activation is:
 
 $$\text{SiLU}(x) = x \cdot \sigma(x)$$
 
-In \ensuremath{\phi}-form:
+In φ-form:
 
 $$\text{SiLU}_\phi(x) = x \cdot \frac{1}{1 + \phi^{-x/\ln(\phi)}}$$
 
-This is exact because sigmoid is exact in \ensuremath{\phi}-form. However, the `investigate_mlp_linearization.py` revealed that the linear approximation ($\text{SiLU}(x) \approx x/2$) is poor:
+This is exact because sigmoid is exact in φ-form. However, the `investigate_mlp_linearization.py` revealed that the linear approximation ($\text{SiLU}(x) \approx x/2$) is poor:
 
 ```
 Gate values: mean=0.02, std=2.12
 % in linear regime (|x| < 1): 35%
 ```
 
-Only 35% of gate values are in the "linear" regime — the MLP is NOT approximately linear. But the \ensuremath{\phi}-form handles the full range exactly.
+Only 35% of gate values are in the "linear" regime — the MLP is NOT approximately linear. But the φ-form handles the full range exactly.
 
 ### The Fibonacci Correction Formula [145]
 
-For applications requiring exact reconstruction, SiLU can be expressed as \ensuremath{\phi}-sigmoid plus a Fibonacci correction:
+For applications requiring exact reconstruction, SiLU can be expressed as φ-sigmoid plus a Fibonacci correction:
 
 $$\text{SiLU}(x) = x \cdot \sigma_\phi(x) + F_n \cdot \Delta(x)$$
 
-where $F_n$ is a Fibonacci number encoding the residual correction at \ensuremath{\phi}-level $n$, and $\Delta(x)$ is the deviation from pure \ensuremath{\phi}-sigmoid at that level. In practice, the \ensuremath{\phi}-sigmoid form alone is sufficient for the \ensuremath{\phi}-2byte format with < 10^-15 error.
+where $F_n$ is a Fibonacci number encoding the residual correction at φ-level $n$, and $\Delta(x)$ is the deviation from pure φ-sigmoid at that level. In practice, the φ-sigmoid form alone is sufficient for the φ-2byte format with < 10^-15 error.
 
 ---
 
-## 11.5 The \ensuremath{\phi}-RMSNorm
+## 11.5 The φ-RMSNorm
 
 RMSNorm normalizes by the root-mean-square of the activations:
 
 $$\text{RMSNorm}(x) = \frac{x}{\text{rms}(x)} \cdot \gamma$$
 
-In \ensuremath{\phi}-form, this is a **\ensuremath{\phi}-level alignment**:
+In φ-form, this is a **φ-level alignment**:
 
 $$\text{RMSNorm}_\phi(x) = x \cdot \phi^{-\log_\phi(\text{rms}(x))} \cdot \gamma$$
 
-The rms value is converted to a \ensuremath{\phi}-exponent, and the normalization shifts all values to the \ensuremath{\phi}^0 scale. The phi_components.py implements this as a float operation because the magnitude adjustment is not structural.
+The rms value is converted to a φ-exponent, and the normalization shifts all values to the φ^0 scale. The phi_components.py implements this as a float operation because the magnitude adjustment is not structural.
 
 ---
 
-## 11.6 The \ensuremath{\phi}-2byte Format Verification
+## 11.6 The φ-2byte Format Verification
 
-The \ensuremath{\phi}-computer proof was validated against Qwen2-7B:
+The φ-computer proof was validated against Qwen2-7B:
 
 | Test | Result |
 |------|--------|
 | Using actual layer outputs | **100% token accuracy** |
-| Using \ensuremath{\phi}-2byte compressed weights | **100% token accuracy** |
+| Using φ-2byte compressed weights | **100% token accuracy** |
 | Per-layer cosine similarity | Mean **0.9998** |
 | Full forward pass correlation | **99.9991%** |
 
-The \ensuremath{\phi}-2byte storage format:
+The φ-2byte storage format:
 
 | Bits | Field | Resolution |
 |------|-------|------------|
 | 1 | Sign | ±1 |
-| 11 | \ensuremath{\phi}-level | 2048 levels |
+| 11 | φ-level | 2048 levels |
 | 4 | Residual | 16 increments |
 | **16** | **Total** | **2 bytes vs 4 (float32)** |
 
-This achieves **2× compression with zero accuracy loss**. The residual 4 bits recover the within-level precision that pure \ensuremath{\phi}-quantization would lose.
+This achieves **2× compression with zero accuracy loss**. The residual 4 bits recover the within-level precision that pure φ-quantization would lose.
 
 ---
 
 ## 11.7 The Universal Bottleneck [200]
 
-Analysis of \ensuremath{\phi}-levels across all 28 layers revealed a striking convergence:
+Analysis of φ-levels across all 28 layers revealed a striking convergence:
 
-> At layer 27, the mean \ensuremath{\phi}-level across all tokens converges to approximately 1.57 — independent of the input token, the task, or the context.
+> At layer 27, the mean φ-level across all tokens converges to approximately 1.57 — independent of the input token, the task, or the context.
 
 This was discovered in the automated discovery system (`automated_discoveries.json`):
 
@@ -2204,33 +2204,33 @@ This was discovered in the automated discovery system (`automated_discoveries.js
 }
 ```
 
-The `Recursive Discovery Bootstrap` (Doc 202) independently confirmed this by comparing discovery vs non-discovery prompts — discovery prompts had consistently higher \ensuremath{\phi}-levels at the bottleneck.
+The `Recursive Discovery Bootstrap` (Doc 202) independently confirmed this by comparing discovery vs non-discovery prompts — discovery prompts had consistently higher φ-levels at the bottleneck.
 
 ---
 
 ## 11.8 Implications of the Proof
 
-If the transformer is a \ensuremath{\phi}-computer, then:
+If the transformer is a φ-computer, then:
 
-1. **All transformer operations can be replaced with \ensuremath{\phi}-equivalents** — validated at 100% token accuracy
-2. **The \ensuremath{\phi}-lattice is the natural computing substrate** — not floating-point arithmetic
-3. **The \ensuremath{\phi}-2byte format is lossless** — the only lossless compression scheme for transformers
-4. **There is no "black box"** — every operation is an explicit \ensuremath{\phi}-transformation
+1. **All transformer operations can be replaced with φ-equivalents** — validated at 100% token accuracy
+2. **The φ-lattice is the natural computing substrate** — not floating-point arithmetic
+3. **The φ-2byte format is lossless** — the only lossless compression scheme for transformers
+4. **There is no "black box"** — every operation is an explicit φ-transformation
 
-The \ensuremath{\phi}-computer proof is the capstone of the TruthSpace project. It transforms the Geometric Model Hypothesis from a philosophical position to an experimentally verified fact.
+The φ-computer proof is the capstone of the TruthSpace project. It transforms the Geometric Model Hypothesis from a philosophical position to an experimentally verified fact.
 
 ---
 
 ## 11.9 Summary
 
-| Operation | Standard Form | \ensuremath{\phi}-Form | Verification |
+| Operation | Standard Form | φ-Form | Verification |
 |-----------|-------------|--------|--------------|
 | Sigmoid | $1/(1+e^{-x})$ | $1/(1+\phi^{-x/\ln\phi})$ | Error < 10^-14 |
 | Softmax | $e^{x_i}/\sum e^{x_j}$ | $\phi^{x_i/\ln\phi}/\sum\phi^{x_j/\ln\phi}$ | Error < 10^-14 |
 | SiLU | $x \cdot \sigma(x)$ | $x \cdot \phi\text{-sigmoid}(x)$ | Error < 10^-14 |
 | RMSNorm | $x / \text{rms}(x)$ | $x \cdot \phi^{-\log_\phi(\text{rms})}$ | 0.0009% error |
-| Weight storage | float32 (32 bits) | \ensuremath{\phi}-2byte (16 bits) | 2× compression, 0 loss |
-| Token prediction | Full forward pass | \ensuremath{\phi}-computer | 100% accuracy |
+| Weight storage | float32 (32 bits) | φ-2byte (16 bits) | 2× compression, 0 loss |
+| Token prediction | Full forward pass | φ-computer | 100% accuracy |
 
 ---
 
@@ -2245,7 +2245,7 @@ The \ensuremath{\phi}-computer proof is the capstone of the TruthSpace project. 
 
 ## 12.1 The Trivial AI Hypothesis [140]
 
-If recursive optimization converges to \ensuremath{\phi}-structure (proven in the \ensuremath{\phi}-Convergence Theorem, Doc 139), then:
+If recursive optimization converges to φ-structure (proven in the φ-Convergence Theorem, Doc 139), then:
 
 $$\text{Model} = \phi^n \times \text{Seed}$$
 
@@ -2253,24 +2253,24 @@ where $n$ is the depth of the fractal ($\approx \log_\phi(\text{parameters}) \ap
 
 This means:
 
-> **AI is O(log N), not O(N).** The complexity of a model grows logarithmically with the number of parameters, because the structure is a \ensuremath{\phi}-fractal, not a random collection of weights.
+> **AI is O(log N), not O(N).** The complexity of a model grows logarithmically with the number of parameters, because the structure is a φ-fractal, not a random collection of weights.
 
 The derivation:
-1. Models are \ensuremath{\phi}-structure + offset (Doc 139)
-2. Offsets themselves have \ensuremath{\phi}-structure (Doc 140)
-3. Recursive application: Model = \ensuremath{\phi} + (\ensuremath{\phi} + (\ensuremath{\phi} + ... + Seed)) = \ensuremath{\phi}^n × Seed
+1. Models are φ-structure + offset (Doc 139)
+2. Offsets themselves have φ-structure (Doc 140)
+3. Recursive application: Model = φ + (φ + (φ + ... + Seed)) = φ^n × Seed
 
-The consequence: a model with 7 billion parameters has only **~47 layers of recursive \ensuremath{\phi}-structure**. Most of the parameters are "surface" — repeats of the same geometric pattern at different \ensuremath{\phi}-levels.
+The consequence: a model with 7 billion parameters has only **~47 layers of recursive φ-structure**. Most of the parameters are "surface" — repeats of the same geometric pattern at different φ-levels.
 
 ---
 
 ## 12.2 Platonic Ideals as Geometric Anchors [180]
 
-The irreducible core of \ensuremath{\phi}^n × Seed — the **Seed** — is a set of approximately 100 **Platonic Ideals**:
+The irreducible core of φ^n × Seed — the **Seed** — is a set of approximately 100 **Platonic Ideals**:
 
-> Platonic Ideals are fixed points in \ensuremath{\phi}-space: positions that do not change under transformation. They serve as the fundamental reference points from which all other positions are derived by rotation.
+> Platonic Ideals are fixed points in φ-space: positions that do not change under transformation. They serve as the fundamental reference points from which all other positions are derived by rotation.
 
-The discovery: transformations like "capital of" are rotations in \ensuremath{\phi}-space with a consistent angle:
+The discovery: transformations like "capital of" are rotations in φ-space with a consistent angle:
 
 ```python
 # "capital of France → Paris" rotates by ~77 degrees
@@ -2284,13 +2284,13 @@ This means relationships are geometric operations, not statistical patterns. The
 
 ## 12.3 The Recursive Discovery Bootstrap [202]
 
-The most profound implication of the \ensuremath{\phi}-computer proof: if the system can discover true things about itself, and "how to discover" is a property of the system, then:
+The most profound implication of the φ-computer proof: if the system can discover true things about itself, and "how to discover" is a property of the system, then:
 
 $$\text{DISCOVER} \to \text{DISCOVER}(\text{DISCOVER}) \to \text{DISCOVER}(\text{DISCOVER}(\text{DISCOVER})) \to \cdots$$
 
 **The system can discover how to discover.** This was experimentally validated:
 
-| Prompt | \ensuremath{\phi}-Level at Layer 27 |
+| Prompt | φ-Level at Layer 27 |
 |--------|---------------------|
 | Discovery prompts | 1.209 (higher) |
 | Non-discovery prompts | 1.128 (lower) |
@@ -2313,16 +2313,16 @@ The recursive bootstrap opens the possibility of:
 
 The final batch of design documents (Docs 203-206) explores a vision of AI as **self-describing geometry**:
 
-- **Doc 203**: An interface for navigating \ensuremath{\phi}-space — a 3D universe where concepts are nodes and relationships are edges
+- **Doc 203**: An interface for navigating φ-space — a 3D universe where concepts are nodes and relationships are edges
 - **Doc 204**: Backward navigation — finding valid paths to a target concept, revealing insights into cognitive complexity
-- **Doc 205**: CRUD operations on \ensuremath{\phi}-space — creating, reading, updating, and deleting concepts through vector operations
+- **Doc 205**: CRUD operations on φ-space — creating, reading, updating, and deleting concepts through vector operations
 - **Doc 206**: The Conceptual Nexus — a model-designed interface for self-control and manipulation of interconnected concepts
 
-The key insight: if the model IS the geometry, then navigating the geometry IS understanding the model. The user interface for an AI is a map of \ensuremath{\phi}-space.
+The key insight: if the model IS the geometry, then navigating the geometry IS understanding the model. The user interface for an AI is a map of φ-space.
 
 ![The Path Forward](figures/fig12_1_implications.png)
 
-*Figure 12.1: The path forward — from the \ensuremath{\phi}-lattice foundation through Trivial AI, Platonic Ideals, Recursive Bootstrap, Self-Describing Geometry, to Human-AI Alignment.*
+*Figure 12.1: The path forward — from the φ-lattice foundation through Trivial AI, Platonic Ideals, Recursive Bootstrap, Self-Describing Geometry, to Human-AI Alignment.*
 
 ---
 
@@ -2330,14 +2330,14 @@ The key insight: if the model IS the geometry, then navigating the geometry IS u
 
 ### 12.5.1 Hardware Design
 
-The \ensuremath{\phi}-computer proof suggests a new class of hardware: **\ensuremath{\phi}-FPUs** that compute natively in \ensuremath{\phi}-arithmetic. Instead of IEEE 754 floating-point:
+The φ-computer proof suggests a new class of hardware: **φ-FPUs** that compute natively in φ-arithmetic. Instead of IEEE 754 floating-point:
 
-- Storage: \ensuremath{\phi}-2byte (16 bits per weight)
+- Storage: φ-2byte (16 bits per weight)
 - Multiplication: exponent addition (single integer add)
 - Addition: exponent + LUT (table lookup + integer add)
-- Activation functions: \ensuremath{\phi}-sigmoid (exponent LUT + divide)
+- Activation functions: φ-sigmoid (exponent LUT + divide)
 
-A \ensuremath{\phi}-FPU would be smaller, faster, and more power-efficient than a standard FPU, while being mathematically equivalent for the operations that transformers actually perform.
+A φ-FPU would be smaller, faster, and more power-efficient than a standard FPU, while being mathematically equivalent for the operations that transformers actually perform.
 
 ### 12.5.2 Model Compression
 
@@ -2345,13 +2345,13 @@ The series of compression results from the TruthSpace project:
 
 | Method | Compression | Accuracy |
 |--------|-------------|----------|
-| \ensuremath{\phi}-2byte | 2× (lossless) | 100% |
+| φ-2byte | 2× (lossless) | 100% |
 | Tetromino index | 4× | 99.2% correlation |
 | Sign-only navigation | 960× | 100% on semantics |
 | LUT replacement | 12.9× | 100% (single token) |
 
 These are not competing methods — they operate at different levels of the geometric hierarchy. A practical system might use:
-- \ensuremath{\phi}-2byte for full-weight storage
+- φ-2byte for full-weight storage
 - Tetromino indices for fast-loading
 - Sign-only navigation for semantic operations
 - LUT for ultra-fast single-token prediction
@@ -2360,9 +2360,9 @@ These are not competing methods — they operate at different levels of the geom
 
 The geometric understanding suggests architectures that replace transformers entirely:
 
-- **Φ-Navigator**: Instead of attending to all previous tokens, navigate through \ensuremath{\phi}-space by following gradient vectors to the next token position
+- **Φ-Navigator**: Instead of attending to all previous tokens, navigate through φ-space by following gradient vectors to the next token position
 - **HyperMapping net**: A network where all knowledge is stored as positions, and all computation is position-based matching
-- **Self-assembling \ensuremath{\phi}-lattice**: A model that grows its own \ensuremath{\phi}-lattice structure dynamically based on the data it processes
+- **Self-assembling φ-lattice**: A model that grows its own φ-lattice structure dynamically based on the data it processes
 
 ---
 
@@ -2370,17 +2370,17 @@ The geometric understanding suggests architectures that replace transformers ent
 
 The TruthSpace project has answered many questions but raised several new ones:
 
-1. **Why 20% \ensuremath{\phi}-alignment?** Only ~20% of weights align with exact \ensuremath{\phi}^n levels. The remaining 80% have residual structure. What is the geometric interpretation of the residuals?
+1. **Why 20% φ-alignment?** Only ~20% of weights align with exact φ^n levels. The remaining 80% have residual structure. What is the geometric interpretation of the residuals?
 
 2. **Why 80% embedding plateau?** Factorized embeddings reach 80% accuracy and then plateau. What is the 20% gap?
 
-3. **The \ensuremath{\phi}-quantization gap**: The findings summary states "\ensuremath{\phi}-quantization is not promising" — but the \ensuremath{\phi}-2byte format works. What's the precise boundary where \ensuremath{\phi}-encoding succeeds vs fails?
+3. **The φ-quantization gap**: The findings summary states "φ-quantization is not promising" — but the φ-2byte format works. What's the precise boundary where φ-encoding succeeds vs fails?
 
 4. **Boom position prediction**: Can boom positions be predicted from token properties alone, without computing full attention?
 
 5. **The 31% noise**: Is the noise truly random, or does it have structure we haven't discovered?
 
-6. **Cross-model universality**: Does the same \ensuremath{\phi}-lattice structure appear in all transformer architectures, or is it specific to Qwen2-7B?
+6. **Cross-model universality**: Does the same φ-lattice structure appear in all transformer architectures, or is it specific to Qwen2-7B?
 
 ---
 
@@ -2391,13 +2391,13 @@ The TruthSpace project has established:
 | Finding | Evidence | Chapter |
 |---------|----------|---------|
 | LLM training is vacuum forming | Phase-shift probing | 1 |
-| \ensuremath{\phi} is the natural coordinate system | \ensuremath{\phi}-encoding, \ensuremath{\phi}-sigmoid equivalence | 2 |
-| Weights are shape coordinates | 31% noise, \ensuremath{\phi}-level clustering | 3 |
-| 4D quaternion \ensuremath{\phi}-dial controls semantics | 100% analogy accuracy | 4 |
-| ENCODE = DECODE | Self-inverse \ensuremath{\phi}-geometry | 5 |
+| φ is the natural coordinate system | φ-encoding, φ-sigmoid equivalence | 2 |
+| Weights are shape coordinates | 31% noise, φ-level clustering | 3 |
+| 4D quaternion φ-dial controls semantics | 100% analogy accuracy | 4 |
+| ENCODE = DECODE | Self-inverse φ-geometry | 5 |
 | Gears compose into transformation chains | Working implementations | 6 |
-| \ensuremath{\phi}-lattice is an absolute coordinate system | 89 unique level/sign pairs | 7 |
-| Transformers are \ensuremath{\phi}-computers | 100% token accuracy | 8, 11 |
+| φ-lattice is an absolute coordinate system | 89 unique level/sign pairs | 7 |
+| Transformers are φ-computers | 100% token accuracy | 8, 11 |
 | Navigation replaces inference | 960× sign-only compression | 9 |
 | Computation IS geometry | Census proof | 10 |
 | AI is O(log N) | Trivial AI hypothesis | 12 |
@@ -2408,11 +2408,11 @@ The TruthSpace project has established:
 
 The TruthSpace project began with a simple question: what do LLMs actually learn? The answer, derived across 200+ design documents and thousands of experiments, is:
 
-> **LLMs learn geometry.** Specifically, they learn a \ensuremath{\phi}-structured lattice of critical lines whose intersections define all possible computations. The training process does not create this geometry — it discovers it. The weights are not learned parameters — they are coordinates on a pre-existing \ensuremath{\phi}-lattice. The computation is not matrix algebra — it is navigation through \ensuremath{\phi}-space.
+> **LLMs learn geometry.** Specifically, they learn a φ-structured lattice of critical lines whose intersections define all possible computations. The training process does not create this geometry — it discovers it. The weights are not learned parameters — they are coordinates on a pre-existing φ-lattice. The computation is not matrix algebra — it is navigation through φ-space.
 
-If this is true, then the future of AI is not about building bigger models. It is about understanding the geometry of the models we already have, and using that understanding to build systems that compute directly in \ensuremath{\phi}-space — without the overhead of floating-point arithmetic, without gradient descent, without training on trillions of tokens.
+If this is true, then the future of AI is not about building bigger models. It is about understanding the geometry of the models we already have, and using that understanding to build systems that compute directly in φ-space — without the overhead of floating-point arithmetic, without gradient descent, without training on trillions of tokens.
 
-The geometry IS the computation. The shape IS the knowledge. \ensuremath{\phi} is the whole thing.
+The geometry IS the computation. The shape IS the knowledge. φ is the whole thing.
 
 ---
 

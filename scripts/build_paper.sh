@@ -70,17 +70,10 @@ with open('paper.md', 'w') as out:
 with open('paper.md', 'r') as f:
     content = f.read()
 
+# xelatex + DejaVu Serif handle Greek letters and math symbols natively,
+# so we leave those as Unicode.  Only replace characters DejaVu Serif
+# does not cover (IPA, box-drawing).
 replacements = {
-    '\u03c6': r'\\ensuremath{\\phi}',
-    '\u03c3': r'\\ensuremath{\\sigma}',
-    '\u03c0': r'\\ensuremath{\\pi}',
-    '\u03bb': r'\\ensuremath{\\lambda}',
-    '\u03c1': r'\\ensuremath{\\rho}',
-    '\u03b1': r'\\ensuremath{\\alpha}',
-    '\u03b8': r'\\ensuremath{\\theta}',
-    '\u2248': r'\\ensuremath{\\approx}',
-    '\u221d': r'\\ensuremath{\\propto}',
-    '\u2194': r'\\ensuremath{\\leftrightarrow}',
     '\u0283': '/sh/',
     '\u026a': '/ih/',
     '\u00e6': '/ae/',
