@@ -476,7 +476,7 @@ is correct.
 |---|---|---|---|
 | 1 | Research synthesis + plan + verify open questions 1, 2 | This file with Q1, Q2 resolved | **Done** |
 | 2 | Draft figure placeholder scripts: `fig5_3` (Riemann–Siegel ↔ residual stream), `figB_1` (5 constraints), `figB_2` (21 empirical zeros). Run scripts to confirm rendering. | Three new `.py` files in `output/figures/scripts/`, three new `.png` files. | **Done** |
-| 3 | Draft refined §5.3 (~80 lines). Update Ch 5 summary table. | §5.3 in chapter file; build the paper to confirm no LaTeX errors. | Pending |
+| 3 | Draft refined §5.3 (~80 lines). Update Ch 5 summary table. | §5.3 in chapter file; build the paper to confirm no LaTeX errors. | **Done** |
 | 4 | Draft Appendix B sections B.1–B.4 (~150 lines, expanded scope per Q1). | Half of Appendix B; build paper. | Pending |
 | 5 | Draft Appendix B sections B.5–B.9 (~180 lines). Apply Ch 8/9/10/11 forward-reference touch-ups. | Full Appendix B; cross-references resolved. | Pending |
 | 6 | Finalise figures, integrate `figB_1` panel 4 with mpmath-reproduced data, integrate `figB_2` with parsed DC 296 results. Final build. Update README front matter and `REFINEMENT_NOTES.md`. | Final ≈140-page PDF (currently 124). | Pending |
@@ -522,6 +522,50 @@ for the empirical zeros). The placeholders are accurate enough that
 the paper's argument can be drafted against them in sessions 3–5
 without further adjustment.
 
+### Session 3 retrospective
+
+§5.3 of `output/chapters/05_encode_decode.md` rewritten from the old
+"information-limit" trichotomy into the refined "operating-regime"
+framing. The new section (~860 words, ~2 PDF pages) is organised as:
+
+- **Opening.** Riemann functional equation `ζ(s) = χ(s) ζ(1−s)` as
+  the formal content of §5.1's master symmetry; the critical line
+  σ = 1/2 is the fold axis where `s` and `1−s` coincide.
+- **The conditional-convergence regime.** Three-regime contrast
+  (σ > 1 absolute / σ < 0 divergent / σ = 1/2 conditional) framed
+  operationally — at σ = 1/2 every term matters and the value
+  emerges from oscillation and cancellation.
+- **The empirical anchor.** Qwen2-7B residual-stream cumulative
+  projection oscillates over 28 layers, hits its worst point at
+  L25 (−13.7), lands at +29.8 via the L26 (Δ +9.2) + L27 (Δ +34.3)
+  final correction. Cross-reference Ch 8 §8.3.3 (universal
+  bottleneck at L27) and §8.4 (F109).
+- **Figure 5.3** embedded with full caption.
+- **Synthesis paragraph** tying §9.5.1 (zeta sonic boom at the
+  80th zero) to the same operating-threshold framing as L27.
+- **Forward reference** to Appendix B (five constraints + 21
+  empirical zeros).
+- **Closing structural claim** as a block quote: critical line is
+  the operating regime where ENCODE and DECODE coincide, *not* a
+  normalisation parameter or balance threshold.
+
+Side-edits applied for consistency:
+
+- Figure 5.1 caption rewritten to drop "universal information limit
+  / balance" framing; new caption forward-references §5.3 and Appendix
+  B.
+- Ch 5 summary table row for "Critical line" replaced with the
+  refined operating-regime statement plus cross-references.
+
+The `CRITICAL_LINE = 0.5` Python snippet and the over-constrained /
+balance / under-determined trichotomy are removed. Verified via
+`grep -rni` across the chapters directory: no orphan references
+remain.
+
+Paper builds cleanly (`build_paper.sh --skip-figures`, 5.0 MB PDF);
+xelatex + DejaVu Serif render all the new Greek symbols (σ, χ, ζ,
+π, Γ, Δ, θ) and the math display equations without warnings.
+
 ---
 
 ## Provenance lookup (research-only, NOT paper citations)
@@ -549,13 +593,13 @@ without further adjustment.
 
 ---
 
-*End of working notes. Pickup point for session 3: draft the
-refined §5.3 (~80 lines) in `output/chapters/05_encode_decode.md`
-using the §5.3 outline above. The three figures (`fig5_3`, `figB_1`,
-`figB_2`) are ready and embedded as placeholders; §5.3 should embed
-`fig5_3` and forward-reference Appendix B for the deeper chain.
-Drop the `CRITICAL_LINE = 0.5` code snippet (it is unit-ball
-normalisation, not a ζ connection — see "Refined §5.3 outline" above).
-Drop the over-constrained / balance / under-determined trichotomy.
-Update the Ch 5 summary table (`output/chapters/05_encode_decode.md`
-end-of-chapter checklist) to reflect the refined claim.*
+*End of working notes. Pickup point for session 4: draft Appendix B
+sections B.1–B.4 (~150 lines, expanded scope per Q1) in a new file
+`output/chapters/13_appendix_b_critical_line.md`. The full outline
+for all of Appendix B (B.1–B.9) is above; sessions 4 covers the
+first half. Each section follows the *Setup → Statement → Empirical
+anchor → Connection to TruthSpace* pattern shown in the outline. Also
+update `scripts/build_paper.sh` to include the new appendix in the
+chapter list, and re-build the paper to confirm clean compilation.
+The three figures (`fig5_3`, `figB_1`, `figB_2`) are already ready
+to be referenced from Appendix B without further work.*

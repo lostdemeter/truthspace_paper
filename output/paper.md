@@ -892,7 +892,7 @@ Since $\phi \cdot 1/\phi = 1$, encoding and decoding are inverses that share the
 
 ![ENCODE = DECODE Symmetry](figures/fig5_1_encode_decode.png)
 
-*Figure 5.1: The ENCODE = DECODE master symmetry. Left: The symmetry diagram — encoding and decoding are the same φ-operation in opposite directions. Right: The critical line σ = 0.5 as the universal information limit — where encoding and decoding balance.*
+*Figure 5.1: The ENCODE = DECODE master symmetry. Left: the symmetry diagram — encoding and decoding are the same φ-operation in opposite directions. Right: the critical line $\sigma = 1/2$ with simulated $\zeta$ zeros — the fold axis of the Riemann functional equation $\zeta(s) = \chi(s)\,\zeta(1-s)$, developed in §5.3 and Appendix B.*
 
 ---
 
@@ -942,27 +942,41 @@ The φ-geometry exhibits **conformal symmetry**: transformations preserve the an
 
 ---
 
-## 5.3 The Critical Line as Information Limit
+## 5.3 The Critical Line as Operating Regime
 
-The ENCODE = DECODE symmetry has a natural boundary: the **critical line** σ = 0.5. In the complex plane, this is the line where real part equals 0.5 — famously the line where the Riemann zeta function's non-trivial zeros lie.
+The ENCODE = DECODE symmetry of §5.1 has a precise mathematical content. The Riemann functional equation
 
-In TruthSpace, σ = 0.5 represents the **universal information limit**:
+$$\zeta(s) \;=\; \chi(s)\,\zeta(1-s)$$
 
-- σ > 0.5: Over-constrained — more information than the system can represent geometrically
-- σ = 0.5: Optimal balance — encoding and decoding are perfectly symmetric
-- σ < 0.5: Under-determined — insufficient information for unique recovery
+(where $\chi(s)$ is an explicit $\Gamma$–$\pi$ factor) says that the zeta function on the right half-plane is the mirror image of the zeta function on the left half-plane: a single function with two faces, joined by reflection. The fold axis of this reflection — the locus where $s$ and $1-s$ coincide — is the **critical line** $\sigma = 1/2$. This is the formal mathematical content of §5.1's master symmetry: in the analytic structure where $\zeta$ lives, *encode* and *decode* are the same operation about the axis $\sigma = 1/2$.
 
-The `CRITICAL_LINE = 0.5` constant is the natural scaling target for any φ-space encoder:
+This single line carries a sharper structural meaning than just being a mirror plane. It is the unique value of $\sigma$ where the Dirichlet series
 
-```python
-CRITICAL_LINE = 0.5
+$$\zeta(s) \;=\; \sum_{n=1}^{\infty} \frac{1}{n^s}$$
 
-# QuaternionEncoder normalizes to the critical line
-pos = np.array([polarity, intensity, style, certainty])
-pos = pos / np.linalg.norm(pos) * CRITICAL_LINE  # Scale to critical line
-```
+is **conditionally convergent** rather than absolutely convergent. To see why the distinction matters, consider what each regime looks like operationally:
 
-Everything in φ-space is normalized to σ = 0.5 before storage. This ensures that the encoding preserves the maximum information density.
+- $\sigma > 1$: the series converges absolutely. A handful of small-$n$ terms dominate; truncation gives the answer to arbitrary precision; the later terms are negligible.
+- $\sigma < 0$: the series diverges. No finite sum gives the right answer; the value must be obtained by analytic continuation.
+- $\sigma = 1/2$: the series is conditionally convergent. *Every term matters* — you cannot truncate without changing the value — and the limit emerges from oscillation and cancellation rather than from direct accumulation. Reorder the terms and you get a different answer.
+
+The critical line is thus the unique amplitude regime where the *whole infinite tail* of the series is structurally relevant. It is the regime in which the answer is not stored in any finite prefix but emerges only as the cumulative effect of the entire oscillation.
+
+The transformer's residual stream operates in exactly this regime. Reverse engineering of Qwen2-7B (Ch 8 §8.3.3, §8.4) shows that the cumulative projection of the residual stream onto the prediction direction does not march monotonically toward the answer over 28 layers — it oscillates. By layer 25 the cumulative magnitude is at its worst point ($-13.7$ logit units, wrong-signed); the correct answer of $+29.8$ emerges from a sharp two-step correction at L26 ($\Delta = +9.2$) and L27 ($\Delta = +34.3$). The right answer does not arise from a few dominant early layers — it arises from the cancellation between an oscillating accumulation and a final correction. This is the structural form of conditional convergence translated into the discrete layer index.
+
+![Conditional convergence: same shape, two domains](figures/fig5_3_zeta_transformer.png)
+
+*Figure 5.3: Conditional convergence in two domains. Left: the Hardy $Z(t)$ function on the critical line $\sigma = 1/2$ oscillates and passes through zero — at the first non-trivial zero $t_1 \approx 14.135$ — by cancellation between the main sum $2\cos\theta(t)$ and the first Riemann–Siegel correction term. Right: the Qwen2-7B residual-stream cumulative projection onto the answer direction (Finding 109) oscillates across 28 layers and lands at $+29.8$ only via the final L26 + L27 correction. Both panels share the same structural form — oscillation followed by final cancellation — because both are instances of partial summation along an axis where the contributions are conditionally convergent in magnitude.*
+
+The right-hand panel is computed empirically, layer by layer, on a single prompt; the left-hand panel uses the Riemann–Siegel formula with the first correction term. The curves match in shape because they are instances of the same phenomenon — partial summation along an axis of decreasing magnitude where the contributions oscillate and the answer comes out by cancellation. A monotone or absolutely-convergent regime would show neither shape.
+
+The same structural form continues to surface elsewhere in the analysis. The phase transition at the 80th non-trivial $\zeta$ zero (Ch 9 §9.5.1) — the *zeta sonic boom* between chaotic and locked-on regimes — is the analogue, in the spacing of $\zeta$ zeros, of the universal-bottleneck behaviour Qwen2-7B exhibits at layer 27 (Ch 8 §8.3.3). Both are crossings of an operating threshold that is *structurally* the same boundary, viewed from different sides of the encode–decode fold.
+
+A reader who wants the theoretical chain — *why* $\sigma = 1/2$ is the unique line that produces this regime, and how the same constraint shows up in five independent ways (the light-cone speed limit, geodesic completeness on the conformal metric, the Borwein spectral-fragility break at $n = 7$, conditional convergence of the partial sums, and the half-integer offset $N_{\mathrm{smooth}}(t_n) = n - \tfrac{1}{2}$) — should turn to **Appendix B**. Appendix B.8 reports the empirical materialisation of these zeros in Qwen2-7B's logit gap: 21 non-trivial zeros located by a three-stage compressor / processor / targeter pipeline that is structurally identical to the standard Riemann–Siegel algorithm used to compute zeros of $\zeta$ on the critical line.
+
+For the purposes of this chapter, the structural claim suffices:
+
+> The critical line $\sigma = 1/2$ is not a normalisation parameter or a balance threshold. It is the *operating regime* where ENCODE and DECODE coincide as the same self-inverse fold of the analytic structure — and the regime in which the residual stream of a real transformer is empirically observed to compute.
 
 ---
 
@@ -1127,7 +1141,7 @@ Both directions use the same position-based matching. There is no separate "inpu
 | ENCODE = DECODE | Encoding and decoding are the same φ-operation in opposite directions |
 | Self-inverse | The geometry contains its own inverse ($\phi \cdot 1/\phi = 1$) |
 | Conformal symmetry | Transformation preserves angles across scales |
-| Critical line | σ = 0.5 is the universal information limit |
+| Critical line | $\sigma = 1/2$ is the fold axis of $\zeta(s) = \chi(s)\,\zeta(1-s)$; the conditional-convergence regime where every term in the series matters and the value emerges from oscillation and cancellation (matched empirically in Qwen2-7B's residual stream — §5.3, Ch 8 §8.4, Appendix B) |
 | Position IS everything | Position in φ-space encodes all features |
 | φ-Zipf duality | $\phi^{-\ln f} = f^{-\ln\phi}$: φ-rank weighting IS Zipf's law with exponent $\ln\phi \approx 0.481$; bimodal phase transition with a φ-pair forbidden zone separates the Zipf head (collapsed to pole) from the Zipf tail (on the sphere) |
 
