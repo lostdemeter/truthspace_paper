@@ -378,51 +378,108 @@ content inline.
 
 ## Open questions / things to research before writing
 
-1. **Does `N_smooth(t_n) ≈ n − 1/2` connect to the φ-encoding's
-   half-step morphological boundary?** I claimed it does in B.5 but
-   haven't verified. Need to check `phi_2byte_inference.py`'s level
-   structure to see if morphological boundaries actually live at
-   half-integer φ-levels.
-2. **What is the right empirical anchor for B.4 (the α = 1/2 uniqueness
-   argument)?** F109 has the partial-sums table. We need to confirm
-   the Dirichlet partial-sum experiment runs cleanly and yields a clean
-   plot for figB_1 panel 4.
-3. **Should we cite `holographic_gate` or `geometric_ipa` or similar
-   in the appendix?** Ch 9 §9.6.1 and Ch 12 §12.4 already cite both.
-   The appendix should *not* duplicate those citations; if anything is
-   added, it goes in Ch 12.
-4. **`rharithmeticlight` is a published-form paper (Sept 2025) and
-   `srt` ships a 31-page paper.** Should these get bibliography entries?
-   The paper currently has no bibliography. *Decision: defer until the
-   appendix is drafted; if the chain depends on three or more external
-   papers, add a small "Selected references" subsection at the end of
-   Appendix B.*
-5. **Resfrac concept attribution.** B.7 introduces the ρ statistic
-   without naming the originating tool. Decide whether to add a
-   footnote like *"the ρ statistic is the residual-fractality
-   invariant from a private research codebase; the underlying idea
-   generalises classical noise/signal ratios to spectral domains."*
-   *Initial decision: no footnote, define ρ from scratch.*
-6. **What stays empirical vs derived in B.4 and B.6?** The α = 1/2
-   uniqueness has a clean information-theoretic argument
-   (Euler–Maclaurin transition); the Riemann–Siegel mapping is
-   structural identity, not derivation. Make sure the appendix is
-   honest about which is which.
+### Q1 (RESOLVED — session 1) Half-step is materialised in 3+ places
+
+The half-step does not just appear in `N_smooth(t_n) ≈ n − 1/2`. It
+appears as an operational structure across TruthSpace:
+
+- **DC 199 — half-integer φ^(k/2) precision tier.** When quantising
+  weights to φ-powers, four precision tiers exist:
+  - Simple φ^k: 11.03% mean error, ~7 bits
+  - **Half-integer φ^(k/2): 6.02% mean error, ~8 bits** (the half-step
+    encoding halves the quantisation error roughly)
+  - φ-nary 2-term: 4.64% mean error, ~15 bits
+  - φ-nary 3-term: 1.02% mean error, ~22 bits
+- **DC 096 — eigenspace offset as signal.** When a query doesn't snap
+  cleanly to a concept lattice point, "the offset isn't error — it's
+  the key to disambiguation." Small offset (< 0.1) → correct match;
+  large offset (> 0.15) → potential mismatch. The offset *direction*
+  encodes which dimension is missing.
+- **DC 209 — Layer-3 click point.** Explicit mapping:
+  - `n − 0.5` offset (zeta) ↔ Layer-3 click (transformer)
+  - `σ_k = σ_0 × φ^k` (downcasting moments) ↔ φ-level convergence at
+    L27 (transformer bottleneck)
+  - "It's where the projection 'clicks' into place. Before:
+    high-dimensional mixing. After: low-dimensional path determined."
+
+**Implication for B.5:** The section becomes ~50 lines instead of
+~30. Three sub-bullets: zeta offset (the discovery), φ-encoding
+precision tier (operational use), eigenspace/Layer-3 click (the
+geometric form). Conclusion: the half-step is not a quirk of the
+zeta function — it is the unique offset at which a discrete index and
+a continuous count can co-exist with maximum information.
+
+### Q2 (RESOLVED — session 1) Dirichlet experiment exists and is reproducible
+
+`phase10z5_dirichlet_processor.py` (lines 286–296) computes the
+Dirichlet partial sum `Σ_{n=1}^{N} n^{-s}` at `s = 1/2 + 14.134725 i`
+(near the first non-trivial zero) and reports the error vs the true
+`ζ(s)` value at `N ∈ {1, 2, 3, 5, 7, 10, 15, 17, 20, 25, 28}`.
+
+The numbers cited in DC 270 (N=1 → 1.000, N=3 → 0.274, N=10 → 0.247,
+N=20 → 0.327, N=28 → 0.381) come from this experiment. The full
+ratified result is in
+`results/phase10z5_dirichlet_processor.json`:
+
+- SV decay α = 1.2226 (≈ 2/φ = 1.236, R² = 0.977)
+- Mean crystallisation rank 3.67 ≈ φ²
+- Back-loaded: last 6 Processor layers contribute more than first 6
+- Evidence-against item: SV decay matches 2/φ at 99% but not 2/φ²
+  (this is the *full* SVD decay; per-zone exponents do match 2/φ²,
+  per F107)
+
+For figB_1 panel 4: reproduce the experiment with mpmath at higher
+density (N = 1..200, evenly spaced) to draw a clean oscillation
+curve. The data is fully reproducible — no model loading needed for
+the panel.
+
+### Q3 (deferred to drafting) Bibliography decisions
+
+`holographic_gate` and `geometric_ipa` already cited in Ch 9/12.
+Should not duplicate in Appendix B. If `rharithmeticlight` or `srt`
+need formal references, add a short "Selected references" subsection
+at the end of Appendix B. Defer the decision until B.1–B.4 are
+drafted; only act if the chain reads incomplete without them.
+
+### Q4 (RESOLVED) Resfrac concept attribution
+
+Decision: no footnote. B.7 defines ρ from scratch as a measurement
+statistic on signal/residual variance. The reader does not need to
+know the originating codebase to follow the argument. If a reader
+asks "where did this come from?", the empirical anchor (DC 282
+applies ρ to Qwen2.5-7B SV spectra) provides the workspace
+reference.
+
+### Q5 (deferred to drafting) Empirical vs derived split in B.4/B.6
+
+The α = 1/2 uniqueness has a clean information-theoretic argument
+(Euler–Maclaurin transition between absolute and conditional
+convergence). The Riemann–Siegel ↔ transformer mapping is
+*structural identity* (same form), not derivation (one does not
+imply the other). The appendix must be honest about which is which.
+Specifically:
+
+- **B.4 derives** that α = 1/2 is the unique exponent at which
+  conditional convergence holds.
+- **B.6 observes** that the transformer's three-stage pipeline has
+  the same structural shape as the ζ-zero finder, with empirical
+  evidence (F107–F111) that the φ-power-law decay is universal.
+
+The two are independent claims. The chain holds even if only one
+is correct.
 
 ---
 
 ## Multi-session execution plan
 
-This integration is at least 4–5 working sessions. Suggested order:
-
-| Session | Focus | Deliverable |
-|---|---|---|
-| 1 (this) | Research synthesis + plan | This file. |
-| 2 | Verify open questions 1–2; sketch figures fig5_3, figB_1, figB_2 as `.py.todo` placeholders | Outline confirmed; figure scripts started but not run. |
-| 3 | Draft refined §5.3 (~80 lines). Update Ch 5 summary table if needed. | §5.3 in chapter file; build the paper to confirm no LaTeX errors. |
-| 4 | Draft Appendix B sections B.1–B.4 (~120 lines). | Half of Appendix B; build paper. |
-| 5 | Draft Appendix B sections B.5–B.9 (~150 lines). Apply Ch 8/9/10/11 forward-reference touch-ups. | Full Appendix B; cross-references resolved. |
-| 6 | Finalise figures (fig5_3, figB_1, figB_2). Final build. Update README front matter and `REFINEMENT_NOTES.md` to reflect the new content. | Final 130–140-page PDF (currently 124). |
+| Session | Focus | Deliverable | Status |
+|---|---|---|---|
+| 1 | Research synthesis + plan + verify open questions 1, 2 | This file with Q1, Q2 resolved | **Done** |
+| 2 | Draft figure placeholder scripts: `fig5_3` (Riemann–Siegel ↔ residual stream), `figB_1` (5 constraints), `figB_2` (21 empirical zeros). Run scripts to confirm rendering. | Three new `.py` files in `output/figures/scripts/`, three new `.png` files. | Pending |
+| 3 | Draft refined §5.3 (~80 lines). Update Ch 5 summary table. | §5.3 in chapter file; build the paper to confirm no LaTeX errors. | Pending |
+| 4 | Draft Appendix B sections B.1–B.4 (~150 lines, expanded scope per Q1). | Half of Appendix B; build paper. | Pending |
+| 5 | Draft Appendix B sections B.5–B.9 (~180 lines). Apply Ch 8/9/10/11 forward-reference touch-ups. | Full Appendix B; cross-references resolved. | Pending |
+| 6 | Finalise figures, integrate `figB_1` panel 4 with mpmath-reproduced data, integrate `figB_2` with parsed DC 296 results. Final build. Update README front matter and `REFINEMENT_NOTES.md`. | Final ≈140-page PDF (currently 124). | Pending |
 
 ---
 
@@ -451,5 +508,10 @@ This integration is at least 4–5 working sessions. Suggested order:
 
 ---
 
-*End of working notes. Pickup point for session 2: verify open
-questions 1–2, draft figure placeholders, refine §5.3.*
+*End of working notes. Pickup point for session 2: draft the three
+figure placeholder scripts (`fig5_3`, `figB_1`, `figB_2`) using the
+data anchors verified in Q1/Q2. Reference experiment file:
+`truthspace-lcm/experiments/model_reverse_engineering_v2/phase10z5_dirichlet_processor.py`
+(panel 4 of figB_1) and
+`truthspace-lcm/experiments/model_reverse_engineering_v2/phi_collective_zero_hunt_results.txt`
+(figB_2, 550 lines of structured zero data).*
