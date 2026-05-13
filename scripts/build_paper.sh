@@ -71,6 +71,11 @@ date: \"February 2026\"
 subject: \"Geometric AI\"
 keywords: [\"phi\", \"golden ratio\", \"geometric computation\", \"transformer\", \"Qwen2-7B\", \"phi-lattice\", \"navigation\", \"irreducible shape\"]
 lang: en
+documentclass: article
+classoption:
+  - twocolumn
+  - 10pt
+  - a4paper
 titlepage: true
 toc: true
 listings-disable-line-numbers: true
@@ -113,16 +118,79 @@ with open('paper.md', 'w') as f:
 "
 echo "  Done."
 
-# Step 4: Compile PDF with pandoc
+# Step 4: Compile PDF with pandoc + xelatex (two-stage so we can fix
+# pandoc's longtable output to work inside twocolumn).
 echo "[4/4] Compiling paper.pdf..."
 cd "$OUTPUT_DIR"
+
+# 4a: pandoc -> .tex (standalone)
 pandoc paper.md \
     --from markdown \
-    --to pdf \
-    --pdf-engine=xelatex \
+    --to latex \
+    --standalone \
+    --include-in-header="$SCRIPT_DIR/preamble.tex" \
     -V mainfont="DejaVu Serif" \
     -V monofont="DejaVu Sans Mono" \
-    -o paper.pdf
+    -o paper.tex
+
+# 4b: rewrite longtable blocks for twocolumn compatibility.  Pandoc
+# emits each table as:
+#     \begin{longtable}[]{...}
+#     \toprule\noalign{}
+#     HEADER \\
+#     \midrule\noalign{}
+#     \endhead
+#     \bottomrule\noalign{}      <- belongs at end, not after header
+#     \endlastfoot
+#     ROWS
+#     \end{longtable}
+# The preamble redefines longtable->tabular, but the misplaced
+# \bottomrule after \endhead then appears before the rows.  Strip it
+# here and let the preamble append \bottomrule at \end{longtable}.
+python3 - <<'PYFIX'
+import re
+src = open('paper.tex').read()
+# Drop the \bottomrule\noalign{} that appears immediately after
+# \endhead (this only matches inside longtable blocks, since that
+# pattern doesn't appear elsewhere).
+src = re.sub(
+    r'(\\endhead\s*\n)\\bottomrule\\noalign\{\}\s*\n\\endlastfoot\s*\n',
+    r'\1',
+    src,
+)
+# At the end of every (former) longtable block we still need a
+# \bottomrule.  The redefined longtable in preamble.tex wraps content
+# in a tabular; pandoc's row format ends with `\\` so we add a final
+# rule just before \end{longtable} (which the preamble has redefined
+# to close the tabular).
+src = re.sub(
+    r'(\n)(\\end\{longtable\})',
+    r'\1\\bottomrule\\noalign{}\n\2',
+    src,
+)
+# Force \maketitle and \tableofcontents into single-column mode (in
+# twocolumn class, they would otherwise render as cramped two-column
+# blocks).  Wrap the title + TOC in \onecolumn ... \twocolumn.
+src = re.sub(
+    r'(\\begin\{document\}\s*\n)(\\maketitle\s*\n\s*\n\{\s*\n\\setcounter\{tocdepth\}\{\d+\}\s*\n\\tableofcontents\s*\n\})',
+    r'\1\\onecolumn\n\2\n\\twocolumn',
+    src,
+)
+open('paper.tex', 'w').write(src)
+PYFIX
+
+# 4c: xelatex twice (for TOC) -- final stage
+xelatex -interaction=nonstopmode -halt-on-error paper.tex > paper.xelatex.log 2>&1 || {
+    echo "  xelatex pass 1 failed -- see output/paper.xelatex.log"
+    exit 1
+}
+xelatex -interaction=nonstopmode -halt-on-error paper.tex > paper.xelatex.log 2>&1 || {
+    echo "  xelatex pass 2 failed -- see output/paper.xelatex.log"
+    exit 1
+}
+
+# Clean up aux/log clutter (keep .pdf, .tex)
+rm -f paper.aux paper.log paper.out paper.toc paper.xelatex.log
 
 echo ""
 echo "=== Build complete ==="

@@ -39,9 +39,7 @@ levels = np.floor(np.log(abs_w) / LN_PHI).astype(np.int8)
 tet_ids = (levels * 2 + (signs > 0).astype(np.int8)).astype(np.int8)
 ```
 
-![φ-Lattice and Tetromino Distribution](../figures/fig7_1_phi_lattice.png)
-
-*Figure 7.1: Left: The φ-lattice — a 2D projection showing grid lines at φ-power intervals. Each intersection is a valid weight coordinate. Right: Weight count by φ-level, showing clustering at discrete levels with 74 unique tetromino structures.*
+![*Figure 7.1: Left: The φ-lattice — a 2D projection showing grid lines at φ-power intervals. Each intersection is a valid weight coordinate. Right: Weight count by φ-level, showing clustering at discrete levels with 74 unique tetromino structures.*](../figures/fig7_1_phi_lattice.png)
 
 ### Rule 2: Finite Vocabulary
 

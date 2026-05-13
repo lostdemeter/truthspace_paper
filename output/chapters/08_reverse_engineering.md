@@ -34,9 +34,7 @@ Where no exact φ-form exists, the substitution is recorded as a *linearization*
 
 These are not three independent results: the correlation drives the accuracy, and the accuracy is what makes the LUT possible — since the computation is deterministic geometric navigation, every input has a precomputable output.
 
-![Transformer Unwinding Pipeline](../figures/fig8_1_transformer_unwinding.png)
-
-*Figure 8.1: The transformer unwinding pipeline. Every standard operation (RMSNorm, QKV projection, attention, MLP) was replaced with a φ-equivalent. Key discoveries include the φ-sigmoid exact match, rank-1 structure in layers 3-27, and the universal bottleneck at φ ~ 1.57.*
+![*Figure 8.1: The transformer unwinding pipeline. Every standard operation (RMSNorm, QKV projection, attention, MLP) was replaced with a φ-equivalent. Key discoveries include the φ-sigmoid exact match, rank-1 structure in layers 3-27, and the universal bottleneck at φ ~ 1.57.*](../figures/fig8_1_transformer_unwinding.png)
 
 ---
 
@@ -164,9 +162,7 @@ and truncating to the top $k$ singular values produces the rank-$k$ approximatio
 
 $k = 106$ is the elbow: past this point each additional dimension contributes less than 0.5% of the variance, and further φ-quantization of the projections holds the correlation at $0.9938$. The precomputation pipeline uses power-iteration SVD ($\approx 7\times$ faster than full SVD) over all $28 \times 28 = 784$ (layer, head) pairs and caches the bases:
 
-![Discriminant Attention Spectrum](../figures/fig8_2_discriminant_spectrum.png)
-
-*Figure 8.2: Discriminant attention rank $k = 106$ derived from the MESH spectrum. **Panel A** shows the MESH singular values follow a φ-Zipf decay $\sigma_k \propto \phi^{-k}$ — sharp enough that the top $\sim 100$ singular vectors capture nearly all the variance. **Panel B** shows the corresponding score correlation against the full-rank baseline as $k$ varies on the verification sweep $\{32, 64, 106, 128, 256, 512\}$: the elbow is at $k = 106$ with $r = 0.9950$ and a $1{,}143\times$ ops reduction.*
+![*Figure 8.2: Discriminant attention rank $k = 106$ derived from the MESH spectrum. **Panel A** shows the MESH singular values follow a φ-Zipf decay $\sigma_k \propto \phi^{-k}$ — sharp enough that the top $\sim 100$ singular vectors capture nearly all the variance. **Panel B** shows the corresponding score correlation against the full-rank baseline as $k$ varies on the verification sweep $\{32, 64, 106, 128, 256, 512\}$: the elbow is at $k = 106$ with $r = 0.9950$ and a $1{,}143\times$ ops reduction.*](../figures/fig8_2_discriminant_spectrum.png)
 
 ```python
 MESH = W_q_head.T @ W_k_head            # (3584, 3584)

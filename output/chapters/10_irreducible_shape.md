@@ -38,9 +38,7 @@ Geometrically, this is a lattice of:
 
 The equivalence chain is what makes “irreducible” a measurable claim, not a slogan: the sign matrix can be stored in $67{,}895{,}296$ bits = $8.49$ MB and reconstructs the original gate behaviour with full fidelity. Storing the same matrix as float32 takes $271.6$ MB; storing it as a rank-3000 SVD takes $270.3$ MB at $99.97\%$ accuracy. The *direct sign storage* is **simultaneously smaller and more accurate** — the signs are not just the cheapest representation, they are the *only* irreducible one.
 
-![The Irreducible Shape](../figures/fig10_1_irreducible_shape.png)
-
-*Figure 10.1: Left — The φ-Zipf duality: φ-encoding and Zipf frequency are the same fractal viewed from opposite directions. Right — The irreducible shape: a lattice of $3{,}584$ critical lines whose $67.9$ M intersections encode all possible computation states.*
+![*Figure 10.1: Left — The φ-Zipf duality: φ-encoding and Zipf frequency are the same fractal viewed from opposite directions. Right — The irreducible shape: a lattice of $3{,}584$ critical lines whose $67.9$ M intersections encode all possible computation states.*](../figures/fig10_1_irreducible_shape.png)
 
 ---
 
@@ -92,9 +90,7 @@ The connectivity of gates forms a graph. The spectral decomposition of this grap
 
 The two signatures are not in tension — they describe different objects. The φ-Zipf decay lives in the magnitudes (the “how far from origin” coordinate, Chapter 7); the uniform decay lives in the signs (the “which side of which boundary” coordinate, this chapter). The full geometry needs both. The φ-Zipf decay's continuous exponent $\ln\phi \approx 0.481$ sits at the lower edge of the conditional-convergence band $[1/2,\,1]$ that Appendix B.4 establishes as the unique partial-summation operating regime — and the per-zone operating exponents observed in the residual stream ($1/\phi \approx 0.618$ Compressor, $2/\phi^2 \approx 0.764$ Processor) lie inside that band as φ-powers. The uniform sign-matrix decay represents the irreducible part of the geometry that is *not* a partial-summation signal at all.
 
-![Two complementary spectra](../figures/fig10_2_two_spectra.png)
-
-*Figure 10.2: Two complementary spectral signatures of the irreducible shape. **Panel A** shows the MESH magnitudes' φ-Zipf decay $\sigma_k \propto \phi^{-k}$ — sharp enough that $\sim 89$ levels suffice to capture the magnitude axis (the $8$-bit storage of §7.5). The elbow at $k = 106$ corresponds to the discriminant-attention rank of Chapter 8 §8.3.2. **Panel B** shows the sign matrix's near-uniform decay $\sigma_k \propto k^{-0.14}$ — after $512$ dimensions, $\sigma_k/\sigma_1$ has fallen only to $0.418$. All $3{,}584$ hyperplanes are roughly equally important, which is why the signs are *irreducible* at $1$ bit each.*
+![*Figure 10.2: Two complementary spectral signatures of the irreducible shape. **Panel A** shows the MESH magnitudes' φ-Zipf decay $\sigma_k \propto \phi^{-k}$ — sharp enough that $\sim 89$ levels suffice to capture the magnitude axis (the $8$-bit storage of §7.5). The elbow at $k = 106$ corresponds to the discriminant-attention rank of Chapter 8 §8.3.2. **Panel B** shows the sign matrix's near-uniform decay $\sigma_k \propto k^{-0.14}$ — after $512$ dimensions, $\sigma_k/\sigma_1$ has fallen only to $0.418$. All $3{,}584$ hyperplanes are roughly equally important, which is why the signs are *irreducible* at $1$ bit each.*](../figures/fig10_2_two_spectra.png)
 
 ### 10.2.4 Level 4: Spectrum = Irreducible
 

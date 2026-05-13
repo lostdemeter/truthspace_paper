@@ -20,9 +20,7 @@ But there's a growing body of evidence that something deeper is happening. When 
 
 The core analogy that launched this research program is the **vacuum forming hypothesis**. Imagine a vacuum forming machine: you heat a plastic sheet, stretch it over a mold, and suck the air out. The plastic captures the *surface* of the mold—its shape, contours, and features—but reveals nothing about the *interior*.
 
-![Vacuum Forming Hypothesis](../figures/fig1_1_vacuum_forming.png)
-
-*Figure 1.1: The vacuum forming hypothesis. Left: Training data forms the "surface" that LLMs learn. Right: The interior geometric structure that TruthSpace seeks to discover. The red contour lines represent the underlying φ-geometry; the blue contours represent the surface approximation learned by training.*
+![*Figure 1.1: The vacuum forming hypothesis. Left: Training data forms the "surface" that LLMs learn. Right: The interior geometric structure that TruthSpace seeks to discover. The red contour lines represent the underlying φ-geometry; the blue contours represent the surface approximation learned by training.*](../figures/fig1_1_vacuum_forming.png)
 
 The hypothesis states:
 
@@ -55,9 +53,7 @@ Four findings emerged, each with concrete numerical signatures.
 
 **Finding 1 — Phase invariance.** Cosine similarities had *exactly zero variance* across all 1000 phase angles. Related pairs sat at mean similarity 0.25, unrelated pairs at 0.00, and opposite pairs at −1.00, *with zero spread on any of them.* A random or surface-only encoding would have shown wildly fluctuating similarities; instead, the phase rotation moved the entire embedding in lockstep, preserving every relative-position relationship. The structure was an invariant of the encoding, not an accident of basis choice.
 
-![Phase Invariance](../figures/fig1_2_phase_invariance.png)
-
-*Figure 1.2: Cosine similarity is exactly constant across the full $2\pi$ phase rotation. Related, unrelated, and opposite pairs sit at $0.25$, $0.00$, and $-1.00$ respectively, with variance $= 0$ across all $1000$ phase angles. The relative geometry is invariant under global rotation — the structure is a shape, not a coordinate.*
+![*Figure 1.2: Cosine similarity is exactly constant across the full $2\pi$ phase rotation. Related, unrelated, and opposite pairs sit at $0.25$, $0.00$, and $-1.00$ respectively, with variance $= 0$ across all $1000$ phase angles. The relative geometry is invariant under global rotation — the structure is a shape, not a coordinate.*](../figures/fig1_2_phase_invariance.png)
 
 **Finding 2 — Polarity as a first-class semantic relation.** Opposite-meaning pairs were not merely dissimilar; they were *antipodal* — placed at exactly opposite ends of the same dimension, producing cosine similarity exactly −1.0:
 

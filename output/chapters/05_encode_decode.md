@@ -17,9 +17,7 @@ $$\text{Decode}(y) = y / \phi$$
 
 Since $\phi \cdot 1/\phi = 1$, encoding and decoding are inverses that share the same structure. The act of encoding a word into φ-space IS the act of decoding its meaning — they are the same transformation, just traversed in opposite directions.
 
-![ENCODE = DECODE Symmetry](../figures/fig5_1_encode_decode.png)
-
-*Figure 5.1: The ENCODE = DECODE master symmetry. Left: the symmetry diagram — encoding and decoding are the same φ-operation in opposite directions. Right: the critical line $\sigma = 1/2$ with simulated $\zeta$ zeros — the fold axis of the Riemann functional equation $\zeta(s) = \chi(s)\,\zeta(1-s)$, developed in §5.3 and Appendix B.*
+![*Figure 5.1: The ENCODE = DECODE master symmetry. Left: the symmetry diagram — encoding and decoding are the same φ-operation in opposite directions. Right: the critical line $\sigma = 1/2$ with simulated $\zeta$ zeros — the fold axis of the Riemann functional equation $\zeta(s) = \chi(s)\,\zeta(1-s)$, developed in §5.3 and Appendix B.*](../figures/fig5_1_encode_decode.png)
 
 ---
 
@@ -91,9 +89,7 @@ The critical line is thus the unique amplitude regime where the *whole infinite 
 
 The transformer's residual stream operates in exactly this regime. Reverse engineering of Qwen2-7B (Ch 8 §8.3.3, §8.4) shows that the cumulative projection of the residual stream onto the prediction direction does not march monotonically toward the answer over 28 layers — it oscillates. By layer 25 the cumulative magnitude is at its worst point ($-13.7$ logit units, wrong-signed); the correct answer of $+29.8$ emerges from a sharp two-step correction at L26 ($\Delta = +9.2$) and L27 ($\Delta = +34.3$). The right answer does not arise from a few dominant early layers — it arises from the cancellation between an oscillating accumulation and a final correction. This is the structural form of conditional convergence translated into the discrete layer index.
 
-![Conditional convergence: same shape, two domains](../figures/fig5_3_zeta_transformer.png)
-
-*Figure 5.3: Conditional convergence in two domains. Left: the Hardy $Z(t)$ function on the critical line $\sigma = 1/2$ oscillates and passes through zero — at the first non-trivial zero $t_1 \approx 14.135$ — by cancellation between the main sum $2\cos\theta(t)$ and the first Riemann–Siegel correction term. Right: the Qwen2-7B residual-stream cumulative projection onto the answer direction (Finding 109) oscillates across 28 layers and lands at $+29.8$ only via the final L26 + L27 correction. Both panels share the same structural form — oscillation followed by final cancellation — because both are instances of partial summation along an axis where the contributions are conditionally convergent in magnitude.*
+![*Figure 5.3: Conditional convergence in two domains. Left: the Hardy $Z(t)$ function on the critical line $\sigma = 1/2$ oscillates and passes through zero — at the first non-trivial zero $t_1 \approx 14.135$ — by cancellation between the main sum $2\cos\theta(t)$ and the first Riemann–Siegel correction term. Right: the Qwen2-7B residual-stream cumulative projection onto the answer direction (Finding 109) oscillates across 28 layers and lands at $+29.8$ only via the final L26 + L27 correction. Both panels share the same structural form — oscillation followed by final cancellation — because both are instances of partial summation along an axis where the contributions are conditionally convergent in magnitude.*](../figures/fig5_3_zeta_transformer.png)
 
 The right-hand panel is computed empirically, layer by layer, on a single prompt; the left-hand panel uses the Riemann–Siegel formula with the first correction term. The curves match in shape because they are instances of the same phenomenon — partial summation along an axis of decreasing magnitude where the contributions oscillate and the answer comes out by cancellation. A monotone or absolutely-convergent regime would show neither shape.
 
@@ -180,9 +176,7 @@ The gap is not a sparsity — it is empty. There are no words that are *somewhat
 
 This is Zipf's law in *geometric* form. The Zipf head — the top $\sim$20% of vocabulary by frequency, accounting for $\sim$80% of actual usage — consists exactly of monosyllabic core vocabulary. These are the words that *collapse to the common-word pole*, losing their individual φ-address because they appear in so many contexts that the COMB layers cannot distinguish them. The Zipf tail — rare, polysyllabic, semantically specific — retains its individual φ-address and lives on the sphere.
 
-![The φ-cosine phase transition](../figures/fig5_2_phase_transition.png)
-
-*Figure 5.2: The phase transition has two empirical anchors. **Panel A** shows the bimodal φ-cosine distribution on a 233-word sample of Qwen2-1.5B at L14 (§5.5.2): polysyllabic specialised vocabulary clusters at the semantic-body zone $[0.05, 0.35]$, monosyllabic core vocabulary collapses to the common-word pole $[0.95, 1.00]$, and the $(0.35, 0.95)$ gap contains zero tokens. **Panel B** shows the same phenomenon on a 2000-token morphological-axis projection (§5.5.3): the forbidden zone is bounded *exactly* by the φ-pair $M/\phi^2 \approx 11.74$ and $M/\phi \approx 19.00$, the only place in real algebra where $1/\phi + 1/\phi^2 = 1$.*
+![*Figure 5.2: The phase transition has two empirical anchors. **Panel A** shows the bimodal φ-cosine distribution on a 233-word sample of Qwen2-1.5B at L14 (§5.5.2): polysyllabic specialised vocabulary clusters at the semantic-body zone $[0.05, 0.35]$, monosyllabic core vocabulary collapses to the common-word pole $[0.95, 1.00]$, and the $(0.35, 0.95)$ gap contains zero tokens. **Panel B** shows the same phenomenon on a 2000-token morphological-axis projection (§5.5.3): the forbidden zone is bounded *exactly* by the φ-pair $M/\phi^2 \approx 11.74$ and $M/\phi \approx 19.00$, the only place in real algebra where $1/\phi + 1/\phi^2 = 1$.*](../figures/fig5_2_phase_transition.png)
 
 ### 5.5.3 The φ-pair forbidden zone
 

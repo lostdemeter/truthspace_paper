@@ -16,9 +16,7 @@ $$\phi = 1 + \frac{1}{\phi}$$
 
 This single equation encodes a profound truth: φ can be decomposed into a part that equals 1 and a part that equals 1/φ. The ratio between the whole and the larger part is the same as the ratio between the larger part and the smaller part. In other words: **φ is self-similar at every scale**.
 
-![φ Self-Similarity](../figures/fig2_1_phi_spiral.png)
-
-*Figure 2.1: Three views of φ self-similarity. Left: φ = 1 + 1/φ geometrically. Center: The Fibonacci spiral approximates φ through integer ratios. Right: φ^n follows a self-similar exponential scaling.*
+![*Figure 2.1: Three views of φ self-similarity. Left: φ = 1 + 1/φ geometrically. Center: The Fibonacci spiral approximates φ through integer ratios. Right: φ^n follows a self-similar exponential scaling.*](../figures/fig2_1_phi_spiral.png)
 
 This self-similarity is not a mathematical curiosity—it is the fundamental organizing principle that makes φ the natural coordinate system for geometric computation. Consider what self-similarity gives us:
 
@@ -109,9 +107,7 @@ This means that if you encode a value by multiplying by φ, you can decode it by
 
 φ-level binning is used to encode context at multiple distances using a fixed number of features:
 
-![φ-Level Context Decay](../figures/fig2_2_self_similarity.png)
-
-*Figure 2.2: Left: φ-decay of context weights with distance, showing how levels 0-3 partition 12 tokens of context using only 4 features per direction. Right: The infinite self-similarity of φ visualized as a recursive decomposition tree.*
+![*Figure 2.2: Left: φ-decay of context weights with distance, showing how levels 0-3 partition 12 tokens of context using only 4 features per direction. Right: The infinite self-similarity of φ visualized as a recursive decomposition tree.*](../figures/fig2_2_self_similarity.png)
 
 The levels are defined as:
 

@@ -1,0 +1,60 @@
+% TruthSpace paper preamble -- IEEE-inspired twocolumn layout
+% Loaded via pandoc --include-in-header to keep raw LaTeX intact.
+
+\usepackage{float}
+\usepackage{array}
+
+% Caption styling.  We suppress LaTeX's auto "Figure N." prefix because
+% the markdown captions already include their own chapter-prefixed labels
+% ("Figure 3.1:", "Figure B.6:", etc.).  Without this, captions would
+% render as "Figure 5. Figure 3.1: ..." (doubled).
+\usepackage[font=small,labelformat=empty,labelsep=none]{caption}
+
+% Keep figures inside the section they appear in.  Without this, in
+% twocolumn mode LaTeX's float queue happily migrates figures across
+% page or even section boundaries, e.g. figures from chapter 9 floating
+% up into the TOC.
+\usepackage[section]{placeins}
+
+% Tighter column gutter and float spacing
+\setlength{\columnsep}{18pt}
+\setlength{\textfloatsep}{8pt}
+\setlength{\intextsep}{8pt}
+
+% Default every \includegraphics{} to column-width (graphicx is already
+% loaded by pandoc earlier in the preamble).
+\setkeys{Gin}{width=\columnwidth,keepaspectratio}
+
+% Code blocks at column width.  Pandoc defines the Highlighting
+% environment via \DefineVerbatimEnvironment with the base fancyvrb
+% package, but fancyvrb does not provide line-breaking options.
+% Load fvextra (a superset of fancyvrb) which adds breaklines/
+% breakanywhere, and use \RecustomVerbatimEnvironment to override
+% the pandoc definition with our breaking-enabled options.
+\usepackage{fvextra}
+\RecustomVerbatimEnvironment{Highlighting}{Verbatim}{%
+  commandchars=\\\{\},%
+  breaklines=true,%
+  breakanywhere=true,%
+  fontsize=\scriptsize}
+% Also apply to plain verbatim code blocks (pandoc's `verbatim`
+% environment), which lack syntax highlighting.
+\fvset{breaklines=true,breakanywhere=true,fontsize=\scriptsize}
+
+% longtable is incompatible with twocolumn mode (it errors out with
+% "longtable not in 1-column mode").  Pandoc emits longtable for every
+% markdown table, so we redefine it as a centred \footnotesize tabular
+% that fits within a column.  The longtable-specific commands that
+% pandoc inserts (\endhead, \endfirsthead, \endfoot, \endlastfoot) are
+% turned into no-ops.  Tables that are too wide for one column can be
+% promoted to span both columns by wrapping the original markdown table
+% in raw \begin{table*}...\end{table*}.
+\renewenvironment{longtable}[2][]{%
+  \begin{center}\footnotesize\begin{tabular}{#2}%
+}{%
+  \end{tabular}\end{center}%
+}
+\let\endhead\relax
+\let\endfirsthead\relax
+\let\endfoot\relax
+\let\endlastfoot\relax

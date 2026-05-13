@@ -139,9 +139,7 @@ class QuaternionEncoder(Encoder):
         return pos / max(np.linalg.norm(pos), 1e-10) * CRITICAL_LINE
 ```
 
-![4D Quaternion φ-Dial](../figures/fig4_1_quaternion_dial.png)
-
-*Figure 4.1: The 4D Quaternion φ-Dial. Left: The four axes (X: Style, Y: Perspective, Z: Depth, W: Certainty as spherical radius). Right: Control sliders showing how each axis modulates output generation.*
+![*Figure 4.1: The 4D Quaternion φ-Dial. Left: The four axes (X: Style, Y: Perspective, Z: Depth, W: Certainty as spherical radius). Right: Control sliders showing how each axis modulates output generation.*](../figures/fig4_1_quaternion_dial.png)
 
 ---
 

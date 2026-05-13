@@ -75,9 +75,7 @@ This is the geometric reformulation of memory: instead of remembering that *Fran
 
 The consistency of $\theta_R$ within each row is the strong empirical claim; the differences across rows are what make relationships distinguishable. The closeness of capital-of's $77.3^\circ$ to $\arccos(1/\phi^2) \approx 72^\circ$ is suggestive but not exact — we flag this as a numerological coincidence pending more rigorous analysis.
 
-![Platonic Ideal as Rotation Anchor](../figures/fig12_2_platonic_rotation.png)
-
-*Figure 12.2: Platonic Ideals are rotation anchors in φ-space. **Panel A** gives the geometric definition: the entity $e$ rotates by angle $\theta_R$ about an axis orthogonal to $e$ that points toward the Platonic ideal $I_R$, producing the answer $a$. For the *capital-of* relationship, $\theta_R = 77.3^\circ$ and $I_R$ is the dimension-intersection that defines "capital" (city $\cap$ political $\cap$ important). **Panel B** shows that $\theta_R$ is universal within a relationship type but distinct across types — capital-of clusters at $77.3^\circ \pm 1.5^\circ$, size-decrease at $83.9^\circ \pm 1.0^\circ$, the full-pass hidden-state trajectory at $90.3^\circ \pm 0.2^\circ$. The angle is the relationship.*
+![*Figure 12.2: Platonic Ideals are rotation anchors in φ-space. **Panel A** gives the geometric definition: the entity $e$ rotates by angle $\theta_R$ about an axis orthogonal to $e$ that points toward the Platonic ideal $I_R$, producing the answer $a$. For the *capital-of* relationship, $\theta_R = 77.3^\circ$ and $I_R$ is the dimension-intersection that defines "capital" (city $\cap$ political $\cap$ important). **Panel B** shows that $\theta_R$ is universal within a relationship type but distinct across types — capital-of clusters at $77.3^\circ \pm 1.5^\circ$, size-decrease at $83.9^\circ \pm 1.0^\circ$, the full-pass hidden-state trajectory at $90.3^\circ \pm 0.2^\circ$. The angle is the relationship.*](../figures/fig12_2_platonic_rotation.png)
 
 ### 12.2.3 How many ideals? Empirical bound (DC 299)
 
@@ -98,9 +96,7 @@ We report the **95% threshold** as the working number: **~79 Platonic Ideals** a
 
 What we *can* say firmly: the concept space is **finite-dimensional**, with effective dimensionality $\sim 79–86$ — not the full $3584$. This finiteness is what makes the trivial-AI hypothesis (§12.1) tractable in principle.
 
-![PCA cumulative variance](../figures/fig12_3_pca_variance.png)
-
-*Figure 12.3: Cumulative variance vs PCA rank on the DC 299 probe set ($88$ single-token concepts in Qwen2-7B's $3584$-dimensional embedding space). Four thresholds are marked: $50\%$ at $k = 27$, $90\%$ at $k = 71$, $\mathbf{95\%}$ at $\mathbf{k = 79}$ (the working number of Platonic Ideals), and $99\%$ at $k = 86$. The concept space is genuinely finite-dimensional — not $3584$ but $\sim 79$ — which is what makes the trivial-AI hypothesis (§12.1) tractable in principle.*
+![*Figure 12.3: Cumulative variance vs PCA rank on the DC 299 probe set ($88$ single-token concepts in Qwen2-7B's $3584$-dimensional embedding space). Four thresholds are marked: $50\%$ at $k = 27$, $90\%$ at $k = 71$, $\mathbf{95\%}$ at $\mathbf{k = 79}$ (the working number of Platonic Ideals), and $99\%$ at $k = 86$. The concept space is genuinely finite-dimensional — not $3584$ but $\sim 79$ — which is what makes the trivial-AI hypothesis (§12.1) tractable in principle.*](../figures/fig12_3_pca_variance.png)
 
 ### 12.2.4 What the rotation angle *is*
 
@@ -209,9 +205,7 @@ A final set of design questions opens up once the geometry is verified: how do w
 
 The key insight: if the model IS the geometry, then navigating the geometry IS understanding the model. The user interface for an AI is a map of φ-space. These four interfaces are not separate proposals — they are four projections of the same underlying claim that knowledge work *is* navigation through φ-space.
 
-![The Path Forward](../figures/fig12_1_implications.png)
-
-*Figure 12.1: The path forward — from the φ-lattice foundation through Trivial AI, Platonic Ideals, Recursive Bootstrap, Self-Describing Geometry, to Human-AI Alignment.*
+![*Figure 12.1: The path forward — from the φ-lattice foundation through Trivial AI, Platonic Ideals, Recursive Bootstrap, Self-Describing Geometry, to Human-AI Alignment.*](../figures/fig12_1_implications.png)
 
 ---
 

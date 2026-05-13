@@ -43,9 +43,7 @@ def test_phi_sigmoid_equivalence():
     assert max_diff < 1e-14  # IDENTICAL
 ```
 
-![φ-Sigmoid Exact Fit](../figures/fig11_1_phi_computer_proof.png)
-
-*Figure 11.1: Left — The φ-sigmoid EXACTLY matches the standard sigmoid (difference < 10^-14). Right — The universal bottleneck at φ ≈ 1.57 at layer 27.*
+![*Figure 11.1: Left — The φ-sigmoid EXACTLY matches the standard sigmoid (difference < 10^-14). Right — The universal bottleneck at φ ≈ 1.57 at layer 27.*](../figures/fig11_1_phi_computer_proof.png)
 
 ---
 
@@ -137,9 +135,7 @@ The Fibonacci correction is the **final piece** in the negative-zero discovery c
 
 The Fibonacci correction is what carries the chapter's headline claim — *every transformer operation is an exact φ-operation* — across the 28-layer compounded-error gap from "good but not perfect" to "byte-for-byte identical."
 
-![Fibonacci Correction Decomposition](../figures/fig11_2_fibonacci_correction.png)
-
-*Figure 11.2: The Fibonacci correction decomposition (DC 145). **Panel A** shows SiLU as the exact sum of two operationally distinct terms: a *φ-sigmoid geometric base* $x \cdot \sigma(\ell(x))$ that gates on the φ-level coordinate (gold dashed), plus a *Fibonacci correction* $\Delta(x) = x(\sigma(x) - \sigma(\ell(x)))$ that bridges $e$-space to φ-space (red). The two terms sum identically to the standard SiLU (thick grey). **Panel B** shows the reconstruction-error envelope on a log scale: the empirical mean error from DC 145 is $1.62 \times 10^{-8}$ — essentially zero, limited by the $\log(|x| + 10^{-8})$ regularisation. The Fibonacci correction is the only operationally non-trivial entry in the entire φ-computer proof.*
+![*Figure 11.2: The Fibonacci correction decomposition (DC 145). **Panel A** shows SiLU as the exact sum of two operationally distinct terms: a *φ-sigmoid geometric base* $x \cdot \sigma(\ell(x))$ that gates on the φ-level coordinate (gold dashed), plus a *Fibonacci correction* $\Delta(x) = x(\sigma(x) - \sigma(\ell(x)))$ that bridges $e$-space to φ-space (red). The two terms sum identically to the standard SiLU (thick grey). **Panel B** shows the reconstruction-error envelope on a log scale: the empirical mean error from DC 145 is $1.62 \times 10^{-8}$ — essentially zero, limited by the $\log(|x| + 10^{-8})$ regularisation. The Fibonacci correction is the only operationally non-trivial entry in the entire φ-computer proof.*](../figures/fig11_2_fibonacci_correction.png)
 
 The decomposition $\text{SiLU}(x) = x \cdot \sigma(\ell(x)) + \Delta(x)$ is the per-channel form of conditional convergence: a *geometric base* (analogous to a partial-sum truncation) plus a small bridging correction (analogous to the Riemann–Siegel remainder). The same oscillation-and-final-correction structure that operates at the residual-stream level (Ch 8 §8.4) and at the analytic level (Appendix B.4) operates here at the *single-activation* level — Fibonacci is what conditional convergence looks like when restricted to one scalar input.
 

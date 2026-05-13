@@ -79,9 +79,7 @@ class GearChain:
         return current
 ```
 
-![Gear Chain Architecture](../figures/fig6_1_gear_chain.png)
-
-*Figure 6.1: Gear chain architecture. Each gear applies a transformation and accumulates its quaternion. The emergent pattern (below) shows the 5-step lifecycle: Structure → Bootstrap → Match → Compose → Learn.*
+![*Figure 6.1: Gear chain architecture. Each gear applies a transformation and accumulates its quaternion. The emergent pattern (below) shows the 5-step lifecycle: Structure → Bootstrap → Match → Compose → Learn.*](../figures/fig6_1_gear_chain.png)
 
 ### The Quaternion Accumulation
 
@@ -323,9 +321,7 @@ To test whether the geometric stack can actually substitute for neural networks,
 
 The "Full" configuration achieves 100% on all six tasks. We are careful about what this does and does not say. These are *small-scale benchmark tasks* (4 to 14 examples each), not full ML problems — the result demonstrates that the geometric stack has the *capability* to handle each task type, not that it would scale to ImageNet or to a 70 B-parameter language model. The substantive claim is in the improvement column: three of six tasks went from 0% or 15% with naive position-matching to 100% with the geometric additions. *Self-Similar Transforms, Tachyon Navigation, and Geometric RL are therefore non-trivial enablers*, not decorative additions — they convert the position-store from a key-value lookup into a genuine substitute for the corresponding neural network.
 
-![HyperMapping 6-task benchmark](../figures/fig6_2_hypermapping_benchmark.png)
-
-*Figure 6.2: Six-task NN-capability sweep. Basic position-matching (grey) averages $47.7\%$ across the six tasks; adding Self-Similar Transforms, Tachyon Navigation, and Geometric RL (gold) lifts every task to $100\%$. The three large deltas — function approximation ($+85\%$), sequence prediction ($+100\%$), and structure learning ($+100\%$) — are the cases where the bare position-store fails and the geometric add-ons are what convert it into a working substitute for the conventional NN.*
+![*Figure 6.2: Six-task NN-capability sweep. Basic position-matching (grey) averages $47.7\%$ across the six tasks; adding Self-Similar Transforms, Tachyon Navigation, and Geometric RL (gold) lifts every task to $100\%$. The three large deltas — function approximation ($+85\%$), sequence prediction ($+100\%$), and structure learning ($+100\%$) — are the cases where the bare position-store fails and the geometric add-ons are what convert it into a working substitute for the conventional NN.*](../figures/fig6_2_hypermapping_benchmark.png)
 
 ---
 

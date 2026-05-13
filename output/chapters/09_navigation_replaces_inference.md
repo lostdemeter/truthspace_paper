@@ -14,9 +14,7 @@ The truthspace insight reframes this entirely:
 
 If weights are coordinates of a shape (Chapter 3), and the shape is a φ-lattice (Chapter 7), then generating a token is not "computing a probability distribution" — it is "finding the next position in φ-space" and reading off the token at that position.
 
-![Navigation vs. Inference](../figures/fig9_1_navigation_vs_inference.png)
-
-*Figure 9.1: Left — Traditional autoregressive inference: each token attends to all previous tokens (O(N²)). Right — φ-lattice navigation: each token moves through the lattice by following geometric relationships (O(N log N)).*
+![*Figure 9.1: Left — Traditional autoregressive inference: each token attends to all previous tokens (O(N²)). Right — φ-lattice navigation: each token moves through the lattice by following geometric relationships (O(N log N)).*](../figures/fig9_1_navigation_vs_inference.png)
 
 ---
 
@@ -256,9 +254,7 @@ The two are duals, related by the ENCODE = DECODE symmetry of Chapter 5. The sta
 
 The external repository [`lostdemeter/holographic_gate`](https://github.com/lostdemeter/holographic_gate) implements the 4-state classifier and reproduces the Qwen2-7B / DDColor measurements on synthetic MLPs and on the real model. The companion repository [`lostdemeter/geometric_ipa`](https://github.com/lostdemeter/geometric_ipa) shows the *same* primitive (`gate_step` with sharpness $s = \phi^2$) driving English-to-IPA phonetic transcription with **no neural network, no gradient descent** — just the geometric gate operating on the φ-lattice. Both are runnable, standalone validations that the holographic gate field is not a metaphor.
 
-![The 4-state holographic gate](../figures/fig9_2_holographic_gate.png)
-
-*Figure 9.2: The 4-state holographic activation gate. **Panel A** partitions the gate input axis at boundaries $\pm \log\phi \approx \pm 0.481$ into four states — `−1` CONTRACT, `−0` PRESERVE−, `+0` PRESERVE+, `+1` EXPAND — and shows SiLU and GELU passing through the field. The identity $\sigma(\log\phi) = 1/\phi$ pins the boundaries to φ exactly. **Panel B** shows the energy contribution by state at Qwen2-7B layer 14: the two "dead" PRESERVE channels together account for $42.4\%$ of the output energy. Removing the `−0` state collapses end-to-end argmax from $4/5$ to $0/5$ on the verification suite — the dark fringes are not a stylistic distinction, they carry the holographic-image content.*
+![*Figure 9.2: The 4-state holographic activation gate. **Panel A** partitions the gate input axis at boundaries $\pm \log\phi \approx \pm 0.481$ into four states — `−1` CONTRACT, `−0` PRESERVE−, `+0` PRESERVE+, `+1` EXPAND — and shows SiLU and GELU passing through the field. The identity $\sigma(\log\phi) = 1/\phi$ pins the boundaries to φ exactly. **Panel B** shows the energy contribution by state at Qwen2-7B layer 14: the two "dead" PRESERVE channels together account for $42.4\%$ of the output energy. Removing the `−0` state collapses end-to-end argmax from $4/5$ to $0/5$ on the verification suite — the dark fringes are not a stylistic distinction, they carry the holographic-image content.*](../figures/fig9_2_holographic_gate.png)
 
 ---
 

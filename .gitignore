@@ -1,1 +1,9 @@
 venv/
+
+# LaTeX build artifacts (output/paper.pdf is the committed deliverable)
+output/paper.tex
+output/paper.aux
+output/paper.log
+output/paper.out
+output/paper.toc
+output/paper.xelatex.log

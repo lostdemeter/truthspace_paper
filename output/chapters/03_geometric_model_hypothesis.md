@@ -12,9 +12,7 @@ The **Geometric Model Hypothesis** makes a radical claim about what neural netwo
 
 This reframes the entire training process. Instead of "learning a function that maps inputs to outputs," the model is "uncovering a pre-existing geometric structure that encodes the relationships in the data." The training process does not *build* this structure; it *finds* it.
 
-![Weights as Shape Coordinates](../figures/fig3_1_shape_coordinates.png)
-
-*Figure 3.1: Left: A representation of weights as φ-coordinates of a 3D shape. Red points (31%) are noise that can be zeroed without affecting accuracy. Right: Training fidelity as a function of training steps—the shape is discovered, not created.*
+![*Figure 3.1: Left: A representation of weights as φ-coordinates of a 3D shape. Red points (31%) are noise that can be zeroed without affecting accuracy. Right: Training fidelity as a function of training steps—the shape is discovered, not created.*](../figures/fig3_1_shape_coordinates.png)
 
 Evidence for this hypothesis comes from three directions:
 
@@ -33,9 +31,7 @@ Evidence for this hypothesis comes from three directions:
 
 Across all four models, weight distributions show 100% Fibonacci structure and cluster at the same peak φ-level, $\phi^{-9} \approx 0.013$. The cross-architecture results (Qwen2 / DA2 / DDColor) and the cross-model results (GPT-2 ↔ Qwen2-1.5B) together establish that the φ-geometric signature is not an artifact of any specific architecture, tokeniser, or training corpus.
 
-![Cross-Architecture Universality](../figures/fig3_2_cross_architecture.png)
-
-*Figure 3.2: Reconstruction correlations and peak φ-level invariance across four models from three task families. **Panel A** shows that linear projections (LM head, DA2 head, DDColor refiner) reproduce in φ-space at $\geq 99.99\%$, while full attention chains (DINOv2's 12 layers, DA2 full pipeline) land at $62$–$74\%$ — the residual is the context-dependent component of attention, not the static lattice. **Panel B** shows all four models cluster at the same peak φ-level $\phi^{-9} \approx 0.013$ — the φ-lattice is architecture-independent.*
+![*Figure 3.2: Reconstruction correlations and peak φ-level invariance across four models from three task families. **Panel A** shows that linear projections (LM head, DA2 head, DDColor refiner) reproduce in φ-space at $\geq 99.99\%$, while full attention chains (DINOv2's 12 layers, DA2 full pipeline) land at $62$–$74\%$ — the residual is the context-dependent component of attention, not the static lattice. **Panel B** shows all four models cluster at the same peak φ-level $\phi^{-9} \approx 0.013$ — the φ-lattice is architecture-independent.*](../figures/fig3_2_cross_architecture.png)
 
 A finer reading of the table is also illuminating. The DA2 head reconstruction — 99.9914% depth correlation from 125 bytes of φ-weights, with 83.3% of decoder weights landing within 0.1 of a φ-value — sits at the *linear-projection* end of the spectrum, along with the Qwen2 LM head and the DDColor refiner. The DINOv2 backbone, separately analysed, sits at the *full-attention* end: per-layer linear-approximation correlation $\approx 92\%$, chained 12-layer correlation $0.74$, full-pipeline depth correlation $0.62$. The cross-model GPT-2 ↔ Qwen2-1.5B alignment carries the same message at the embedding level: the capital-of direction lands on PC3 in both models with cosine alignment $0.43$ / $0.41$, even though the two models share neither tokeniser nor training corpus. The pattern is unambiguous: linear projections reproduce essentially perfectly in φ-space; full attention stacks reproduce only partially, and the residual is in every case the context-dependent component of attention. The φ-lattice describes the *structure* a network has settled into; the dynamical part of attention carries information the static lattice does not. We return to this in Chapters 8 and 9 when we replace attention with explicit geometric navigation.
 

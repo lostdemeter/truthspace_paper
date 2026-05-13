@@ -6,6 +6,11 @@ date: "February 2026"
 subject: "Geometric AI"
 keywords: ["phi", "golden ratio", "geometric computation", "transformer", "Qwen2-7B", "phi-lattice", "navigation", "irreducible shape"]
 lang: en
+documentclass: article
+classoption:
+  - twocolumn
+  - 10pt
+  - a4paper
 titlepage: true
 toc: true
 listings-disable-line-numbers: true
@@ -33,9 +38,7 @@ But there's a growing body of evidence that something deeper is happening. When 
 
 The core analogy that launched this research program is the **vacuum forming hypothesis**. Imagine a vacuum forming machine: you heat a plastic sheet, stretch it over a mold, and suck the air out. The plastic captures the *surface* of the mold—its shape, contours, and features—but reveals nothing about the *interior*.
 
-![Vacuum Forming Hypothesis](figures/fig1_1_vacuum_forming.png)
-
-*Figure 1.1: The vacuum forming hypothesis. Left: Training data forms the "surface" that LLMs learn. Right: The interior geometric structure that TruthSpace seeks to discover. The red contour lines represent the underlying φ-geometry; the blue contours represent the surface approximation learned by training.*
+![*Figure 1.1: The vacuum forming hypothesis. Left: Training data forms the "surface" that LLMs learn. Right: The interior geometric structure that TruthSpace seeks to discover. The red contour lines represent the underlying φ-geometry; the blue contours represent the surface approximation learned by training.*](figures/fig1_1_vacuum_forming.png)
 
 The hypothesis states:
 
@@ -68,9 +71,7 @@ Four findings emerged, each with concrete numerical signatures.
 
 **Finding 1 — Phase invariance.** Cosine similarities had *exactly zero variance* across all 1000 phase angles. Related pairs sat at mean similarity 0.25, unrelated pairs at 0.00, and opposite pairs at −1.00, *with zero spread on any of them.* A random or surface-only encoding would have shown wildly fluctuating similarities; instead, the phase rotation moved the entire embedding in lockstep, preserving every relative-position relationship. The structure was an invariant of the encoding, not an accident of basis choice.
 
-![Phase Invariance](figures/fig1_2_phase_invariance.png)
-
-*Figure 1.2: Cosine similarity is exactly constant across the full $2\pi$ phase rotation. Related, unrelated, and opposite pairs sit at $0.25$, $0.00$, and $-1.00$ respectively, with variance $= 0$ across all $1000$ phase angles. The relative geometry is invariant under global rotation — the structure is a shape, not a coordinate.*
+![*Figure 1.2: Cosine similarity is exactly constant across the full $2\pi$ phase rotation. Related, unrelated, and opposite pairs sit at $0.25$, $0.00$, and $-1.00$ respectively, with variance $= 0$ across all $1000$ phase angles. The relative geometry is invariant under global rotation — the structure is a shape, not a coordinate.*](figures/fig1_2_phase_invariance.png)
 
 **Finding 2 — Polarity as a first-class semantic relation.** Opposite-meaning pairs were not merely dissimilar; they were *antipodal* — placed at exactly opposite ends of the same dimension, producing cosine similarity exactly −1.0:
 
@@ -182,9 +183,7 @@ $$\phi = 1 + \frac{1}{\phi}$$
 
 This single equation encodes a profound truth: φ can be decomposed into a part that equals 1 and a part that equals 1/φ. The ratio between the whole and the larger part is the same as the ratio between the larger part and the smaller part. In other words: **φ is self-similar at every scale**.
 
-![φ Self-Similarity](figures/fig2_1_phi_spiral.png)
-
-*Figure 2.1: Three views of φ self-similarity. Left: φ = 1 + 1/φ geometrically. Center: The Fibonacci spiral approximates φ through integer ratios. Right: φ^n follows a self-similar exponential scaling.*
+![*Figure 2.1: Three views of φ self-similarity. Left: φ = 1 + 1/φ geometrically. Center: The Fibonacci spiral approximates φ through integer ratios. Right: φ^n follows a self-similar exponential scaling.*](figures/fig2_1_phi_spiral.png)
 
 This self-similarity is not a mathematical curiosity—it is the fundamental organizing principle that makes φ the natural coordinate system for geometric computation. Consider what self-similarity gives us:
 
@@ -275,9 +274,7 @@ This means that if you encode a value by multiplying by φ, you can decode it by
 
 φ-level binning is used to encode context at multiple distances using a fixed number of features:
 
-![φ-Level Context Decay](figures/fig2_2_self_similarity.png)
-
-*Figure 2.2: Left: φ-decay of context weights with distance, showing how levels 0-3 partition 12 tokens of context using only 4 features per direction. Right: The infinite self-similarity of φ visualized as a recursive decomposition tree.*
+![*Figure 2.2: Left: φ-decay of context weights with distance, showing how levels 0-3 partition 12 tokens of context using only 4 features per direction. Right: The infinite self-similarity of φ visualized as a recursive decomposition tree.*](figures/fig2_2_self_similarity.png)
 
 The levels are defined as:
 
@@ -409,9 +406,7 @@ The **Geometric Model Hypothesis** makes a radical claim about what neural netwo
 
 This reframes the entire training process. Instead of "learning a function that maps inputs to outputs," the model is "uncovering a pre-existing geometric structure that encodes the relationships in the data." The training process does not *build* this structure; it *finds* it.
 
-![Weights as Shape Coordinates](figures/fig3_1_shape_coordinates.png)
-
-*Figure 3.1: Left: A representation of weights as φ-coordinates of a 3D shape. Red points (31%) are noise that can be zeroed without affecting accuracy. Right: Training fidelity as a function of training steps—the shape is discovered, not created.*
+![*Figure 3.1: Left: A representation of weights as φ-coordinates of a 3D shape. Red points (31%) are noise that can be zeroed without affecting accuracy. Right: Training fidelity as a function of training steps—the shape is discovered, not created.*](figures/fig3_1_shape_coordinates.png)
 
 Evidence for this hypothesis comes from three directions:
 
@@ -430,9 +425,7 @@ Evidence for this hypothesis comes from three directions:
 
 Across all four models, weight distributions show 100% Fibonacci structure and cluster at the same peak φ-level, $\phi^{-9} \approx 0.013$. The cross-architecture results (Qwen2 / DA2 / DDColor) and the cross-model results (GPT-2 ↔ Qwen2-1.5B) together establish that the φ-geometric signature is not an artifact of any specific architecture, tokeniser, or training corpus.
 
-![Cross-Architecture Universality](figures/fig3_2_cross_architecture.png)
-
-*Figure 3.2: Reconstruction correlations and peak φ-level invariance across four models from three task families. **Panel A** shows that linear projections (LM head, DA2 head, DDColor refiner) reproduce in φ-space at $\geq 99.99\%$, while full attention chains (DINOv2's 12 layers, DA2 full pipeline) land at $62$–$74\%$ — the residual is the context-dependent component of attention, not the static lattice. **Panel B** shows all four models cluster at the same peak φ-level $\phi^{-9} \approx 0.013$ — the φ-lattice is architecture-independent.*
+![*Figure 3.2: Reconstruction correlations and peak φ-level invariance across four models from three task families. **Panel A** shows that linear projections (LM head, DA2 head, DDColor refiner) reproduce in φ-space at $\geq 99.99\%$, while full attention chains (DINOv2's 12 layers, DA2 full pipeline) land at $62$–$74\%$ — the residual is the context-dependent component of attention, not the static lattice. **Panel B** shows all four models cluster at the same peak φ-level $\phi^{-9} \approx 0.013$ — the φ-lattice is architecture-independent.*](figures/fig3_2_cross_architecture.png)
 
 A finer reading of the table is also illuminating. The DA2 head reconstruction — 99.9914% depth correlation from 125 bytes of φ-weights, with 83.3% of decoder weights landing within 0.1 of a φ-value — sits at the *linear-projection* end of the spectrum, along with the Qwen2 LM head and the DDColor refiner. The DINOv2 backbone, separately analysed, sits at the *full-attention* end: per-layer linear-approximation correlation $\approx 92\%$, chained 12-layer correlation $0.74$, full-pipeline depth correlation $0.62$. The cross-model GPT-2 ↔ Qwen2-1.5B alignment carries the same message at the embedding level: the capital-of direction lands on PC3 in both models with cosine alignment $0.43$ / $0.41$, even though the two models share neither tokeniser nor training corpus. The pattern is unambiguous: linear projections reproduce essentially perfectly in φ-space; full attention stacks reproduce only partially, and the residual is in every case the context-dependent component of attention. The φ-lattice describes the *structure* a network has settled into; the dynamical part of attention carries information the static lattice does not. We return to this in Chapters 8 and 9 when we replace attention with explicit geometric navigation.
 
@@ -749,9 +742,7 @@ class QuaternionEncoder(Encoder):
         return pos / max(np.linalg.norm(pos), 1e-10) * CRITICAL_LINE
 ```
 
-![4D Quaternion φ-Dial](figures/fig4_1_quaternion_dial.png)
-
-*Figure 4.1: The 4D Quaternion φ-Dial. Left: The four axes (X: Style, Y: Perspective, Z: Depth, W: Certainty as spherical radius). Right: Control sliders showing how each axis modulates output generation.*
+![*Figure 4.1: The 4D Quaternion φ-Dial. Left: The four axes (X: Style, Y: Perspective, Z: Depth, W: Certainty as spherical radius). Right: Control sliders showing how each axis modulates output generation.*](figures/fig4_1_quaternion_dial.png)
 
 ---
 
@@ -890,9 +881,7 @@ $$\text{Decode}(y) = y / \phi$$
 
 Since $\phi \cdot 1/\phi = 1$, encoding and decoding are inverses that share the same structure. The act of encoding a word into φ-space IS the act of decoding its meaning — they are the same transformation, just traversed in opposite directions.
 
-![ENCODE = DECODE Symmetry](figures/fig5_1_encode_decode.png)
-
-*Figure 5.1: The ENCODE = DECODE master symmetry. Left: the symmetry diagram — encoding and decoding are the same φ-operation in opposite directions. Right: the critical line $\sigma = 1/2$ with simulated $\zeta$ zeros — the fold axis of the Riemann functional equation $\zeta(s) = \chi(s)\,\zeta(1-s)$, developed in §5.3 and Appendix B.*
+![*Figure 5.1: The ENCODE = DECODE master symmetry. Left: the symmetry diagram — encoding and decoding are the same φ-operation in opposite directions. Right: the critical line $\sigma = 1/2$ with simulated $\zeta$ zeros — the fold axis of the Riemann functional equation $\zeta(s) = \chi(s)\,\zeta(1-s)$, developed in §5.3 and Appendix B.*](figures/fig5_1_encode_decode.png)
 
 ---
 
@@ -964,9 +953,7 @@ The critical line is thus the unique amplitude regime where the *whole infinite 
 
 The transformer's residual stream operates in exactly this regime. Reverse engineering of Qwen2-7B (Ch 8 §8.3.3, §8.4) shows that the cumulative projection of the residual stream onto the prediction direction does not march monotonically toward the answer over 28 layers — it oscillates. By layer 25 the cumulative magnitude is at its worst point ($-13.7$ logit units, wrong-signed); the correct answer of $+29.8$ emerges from a sharp two-step correction at L26 ($\Delta = +9.2$) and L27 ($\Delta = +34.3$). The right answer does not arise from a few dominant early layers — it arises from the cancellation between an oscillating accumulation and a final correction. This is the structural form of conditional convergence translated into the discrete layer index.
 
-![Conditional convergence: same shape, two domains](figures/fig5_3_zeta_transformer.png)
-
-*Figure 5.3: Conditional convergence in two domains. Left: the Hardy $Z(t)$ function on the critical line $\sigma = 1/2$ oscillates and passes through zero — at the first non-trivial zero $t_1 \approx 14.135$ — by cancellation between the main sum $2\cos\theta(t)$ and the first Riemann–Siegel correction term. Right: the Qwen2-7B residual-stream cumulative projection onto the answer direction (Finding 109) oscillates across 28 layers and lands at $+29.8$ only via the final L26 + L27 correction. Both panels share the same structural form — oscillation followed by final cancellation — because both are instances of partial summation along an axis where the contributions are conditionally convergent in magnitude.*
+![*Figure 5.3: Conditional convergence in two domains. Left: the Hardy $Z(t)$ function on the critical line $\sigma = 1/2$ oscillates and passes through zero — at the first non-trivial zero $t_1 \approx 14.135$ — by cancellation between the main sum $2\cos\theta(t)$ and the first Riemann–Siegel correction term. Right: the Qwen2-7B residual-stream cumulative projection onto the answer direction (Finding 109) oscillates across 28 layers and lands at $+29.8$ only via the final L26 + L27 correction. Both panels share the same structural form — oscillation followed by final cancellation — because both are instances of partial summation along an axis where the contributions are conditionally convergent in magnitude.*](figures/fig5_3_zeta_transformer.png)
 
 The right-hand panel is computed empirically, layer by layer, on a single prompt; the left-hand panel uses the Riemann–Siegel formula with the first correction term. The curves match in shape because they are instances of the same phenomenon — partial summation along an axis of decreasing magnitude where the contributions oscillate and the answer comes out by cancellation. A monotone or absolutely-convergent regime would show neither shape.
 
@@ -1053,9 +1040,7 @@ The gap is not a sparsity — it is empty. There are no words that are *somewhat
 
 This is Zipf's law in *geometric* form. The Zipf head — the top $\sim$20% of vocabulary by frequency, accounting for $\sim$80% of actual usage — consists exactly of monosyllabic core vocabulary. These are the words that *collapse to the common-word pole*, losing their individual φ-address because they appear in so many contexts that the COMB layers cannot distinguish them. The Zipf tail — rare, polysyllabic, semantically specific — retains its individual φ-address and lives on the sphere.
 
-![The φ-cosine phase transition](figures/fig5_2_phase_transition.png)
-
-*Figure 5.2: The phase transition has two empirical anchors. **Panel A** shows the bimodal φ-cosine distribution on a 233-word sample of Qwen2-1.5B at L14 (§5.5.2): polysyllabic specialised vocabulary clusters at the semantic-body zone $[0.05, 0.35]$, monosyllabic core vocabulary collapses to the common-word pole $[0.95, 1.00]$, and the $(0.35, 0.95)$ gap contains zero tokens. **Panel B** shows the same phenomenon on a 2000-token morphological-axis projection (§5.5.3): the forbidden zone is bounded *exactly* by the φ-pair $M/\phi^2 \approx 11.74$ and $M/\phi \approx 19.00$, the only place in real algebra where $1/\phi + 1/\phi^2 = 1$.*
+![*Figure 5.2: The phase transition has two empirical anchors. **Panel A** shows the bimodal φ-cosine distribution on a 233-word sample of Qwen2-1.5B at L14 (§5.5.2): polysyllabic specialised vocabulary clusters at the semantic-body zone $[0.05, 0.35]$, monosyllabic core vocabulary collapses to the common-word pole $[0.95, 1.00]$, and the $(0.35, 0.95)$ gap contains zero tokens. **Panel B** shows the same phenomenon on a 2000-token morphological-axis projection (§5.5.3): the forbidden zone is bounded *exactly* by the φ-pair $M/\phi^2 \approx 11.74$ and $M/\phi \approx 19.00$, the only place in real algebra where $1/\phi + 1/\phi^2 = 1$.*](figures/fig5_2_phase_transition.png)
 
 ### 5.5.3 The φ-pair forbidden zone
 
@@ -1231,9 +1216,7 @@ class GearChain:
         return current
 ```
 
-![Gear Chain Architecture](figures/fig6_1_gear_chain.png)
-
-*Figure 6.1: Gear chain architecture. Each gear applies a transformation and accumulates its quaternion. The emergent pattern (below) shows the 5-step lifecycle: Structure → Bootstrap → Match → Compose → Learn.*
+![*Figure 6.1: Gear chain architecture. Each gear applies a transformation and accumulates its quaternion. The emergent pattern (below) shows the 5-step lifecycle: Structure → Bootstrap → Match → Compose → Learn.*](figures/fig6_1_gear_chain.png)
 
 ### The Quaternion Accumulation
 
@@ -1475,9 +1458,7 @@ To test whether the geometric stack can actually substitute for neural networks,
 
 The "Full" configuration achieves 100% on all six tasks. We are careful about what this does and does not say. These are *small-scale benchmark tasks* (4 to 14 examples each), not full ML problems — the result demonstrates that the geometric stack has the *capability* to handle each task type, not that it would scale to ImageNet or to a 70 B-parameter language model. The substantive claim is in the improvement column: three of six tasks went from 0% or 15% with naive position-matching to 100% with the geometric additions. *Self-Similar Transforms, Tachyon Navigation, and Geometric RL are therefore non-trivial enablers*, not decorative additions — they convert the position-store from a key-value lookup into a genuine substitute for the corresponding neural network.
 
-![HyperMapping 6-task benchmark](figures/fig6_2_hypermapping_benchmark.png)
-
-*Figure 6.2: Six-task NN-capability sweep. Basic position-matching (grey) averages $47.7\%$ across the six tasks; adding Self-Similar Transforms, Tachyon Navigation, and Geometric RL (gold) lifts every task to $100\%$. The three large deltas — function approximation ($+85\%$), sequence prediction ($+100\%$), and structure learning ($+100\%$) — are the cases where the bare position-store fails and the geometric add-ons are what convert it into a working substitute for the conventional NN.*
+![*Figure 6.2: Six-task NN-capability sweep. Basic position-matching (grey) averages $47.7\%$ across the six tasks; adding Self-Similar Transforms, Tachyon Navigation, and Geometric RL (gold) lifts every task to $100\%$. The three large deltas — function approximation ($+85\%$), sequence prediction ($+100\%$), and structure learning ($+100\%$) — are the cases where the bare position-store fails and the geometric add-ons are what convert it into a working substitute for the conventional NN.*](figures/fig6_2_hypermapping_benchmark.png)
 
 ---
 
@@ -1543,9 +1524,7 @@ levels = np.floor(np.log(abs_w) / LN_PHI).astype(np.int8)
 tet_ids = (levels * 2 + (signs > 0).astype(np.int8)).astype(np.int8)
 ```
 
-![φ-Lattice and Tetromino Distribution](figures/fig7_1_phi_lattice.png)
-
-*Figure 7.1: Left: The φ-lattice — a 2D projection showing grid lines at φ-power intervals. Each intersection is a valid weight coordinate. Right: Weight count by φ-level, showing clustering at discrete levels with 74 unique tetromino structures.*
+![*Figure 7.1: Left: The φ-lattice — a 2D projection showing grid lines at φ-power intervals. Each intersection is a valid weight coordinate. Right: Weight count by φ-level, showing clustering at discrete levels with 74 unique tetromino structures.*](figures/fig7_1_phi_lattice.png)
 
 ### Rule 2: Finite Vocabulary
 
@@ -1756,9 +1735,7 @@ Where no exact φ-form exists, the substitution is recorded as a *linearization*
 
 These are not three independent results: the correlation drives the accuracy, and the accuracy is what makes the LUT possible — since the computation is deterministic geometric navigation, every input has a precomputable output.
 
-![Transformer Unwinding Pipeline](figures/fig8_1_transformer_unwinding.png)
-
-*Figure 8.1: The transformer unwinding pipeline. Every standard operation (RMSNorm, QKV projection, attention, MLP) was replaced with a φ-equivalent. Key discoveries include the φ-sigmoid exact match, rank-1 structure in layers 3-27, and the universal bottleneck at φ ~ 1.57.*
+![*Figure 8.1: The transformer unwinding pipeline. Every standard operation (RMSNorm, QKV projection, attention, MLP) was replaced with a φ-equivalent. Key discoveries include the φ-sigmoid exact match, rank-1 structure in layers 3-27, and the universal bottleneck at φ ~ 1.57.*](figures/fig8_1_transformer_unwinding.png)
 
 ---
 
@@ -1886,9 +1863,7 @@ and truncating to the top $k$ singular values produces the rank-$k$ approximatio
 
 $k = 106$ is the elbow: past this point each additional dimension contributes less than 0.5% of the variance, and further φ-quantization of the projections holds the correlation at $0.9938$. The precomputation pipeline uses power-iteration SVD ($\approx 7\times$ faster than full SVD) over all $28 \times 28 = 784$ (layer, head) pairs and caches the bases:
 
-![Discriminant Attention Spectrum](figures/fig8_2_discriminant_spectrum.png)
-
-*Figure 8.2: Discriminant attention rank $k = 106$ derived from the MESH spectrum. **Panel A** shows the MESH singular values follow a φ-Zipf decay $\sigma_k \propto \phi^{-k}$ — sharp enough that the top $\sim 100$ singular vectors capture nearly all the variance. **Panel B** shows the corresponding score correlation against the full-rank baseline as $k$ varies on the verification sweep $\{32, 64, 106, 128, 256, 512\}$: the elbow is at $k = 106$ with $r = 0.9950$ and a $1{,}143\times$ ops reduction.*
+![*Figure 8.2: Discriminant attention rank $k = 106$ derived from the MESH spectrum. **Panel A** shows the MESH singular values follow a φ-Zipf decay $\sigma_k \propto \phi^{-k}$ — sharp enough that the top $\sim 100$ singular vectors capture nearly all the variance. **Panel B** shows the corresponding score correlation against the full-rank baseline as $k$ varies on the verification sweep $\{32, 64, 106, 128, 256, 512\}$: the elbow is at $k = 106$ with $r = 0.9950$ and a $1{,}143\times$ ops reduction.*](figures/fig8_2_discriminant_spectrum.png)
 
 ```python
 MESH = W_q_head.T @ W_k_head            # (3584, 3584)
@@ -2039,9 +2014,7 @@ The truthspace insight reframes this entirely:
 
 If weights are coordinates of a shape (Chapter 3), and the shape is a φ-lattice (Chapter 7), then generating a token is not "computing a probability distribution" — it is "finding the next position in φ-space" and reading off the token at that position.
 
-![Navigation vs. Inference](figures/fig9_1_navigation_vs_inference.png)
-
-*Figure 9.1: Left — Traditional autoregressive inference: each token attends to all previous tokens (O(N²)). Right — φ-lattice navigation: each token moves through the lattice by following geometric relationships (O(N log N)).*
+![*Figure 9.1: Left — Traditional autoregressive inference: each token attends to all previous tokens (O(N²)). Right — φ-lattice navigation: each token moves through the lattice by following geometric relationships (O(N log N)).*](figures/fig9_1_navigation_vs_inference.png)
 
 ---
 
@@ -2281,9 +2254,7 @@ The two are duals, related by the ENCODE = DECODE symmetry of Chapter 5. The sta
 
 The external repository [`lostdemeter/holographic_gate`](https://github.com/lostdemeter/holographic_gate) implements the 4-state classifier and reproduces the Qwen2-7B / DDColor measurements on synthetic MLPs and on the real model. The companion repository [`lostdemeter/geometric_ipa`](https://github.com/lostdemeter/geometric_ipa) shows the *same* primitive (`gate_step` with sharpness $s = \phi^2$) driving English-to-IPA phonetic transcription with **no neural network, no gradient descent** — just the geometric gate operating on the φ-lattice. Both are runnable, standalone validations that the holographic gate field is not a metaphor.
 
-![The 4-state holographic gate](figures/fig9_2_holographic_gate.png)
-
-*Figure 9.2: The 4-state holographic activation gate. **Panel A** partitions the gate input axis at boundaries $\pm \log\phi \approx \pm 0.481$ into four states — `−1` CONTRACT, `−0` PRESERVE−, `+0` PRESERVE+, `+1` EXPAND — and shows SiLU and GELU passing through the field. The identity $\sigma(\log\phi) = 1/\phi$ pins the boundaries to φ exactly. **Panel B** shows the energy contribution by state at Qwen2-7B layer 14: the two "dead" PRESERVE channels together account for $42.4\%$ of the output energy. Removing the `−0` state collapses end-to-end argmax from $4/5$ to $0/5$ on the verification suite — the dark fringes are not a stylistic distinction, they carry the holographic-image content.*
+![*Figure 9.2: The 4-state holographic activation gate. **Panel A** partitions the gate input axis at boundaries $\pm \log\phi \approx \pm 0.481$ into four states — `−1` CONTRACT, `−0` PRESERVE−, `+0` PRESERVE+, `+1` EXPAND — and shows SiLU and GELU passing through the field. The identity $\sigma(\log\phi) = 1/\phi$ pins the boundaries to φ exactly. **Panel B** shows the energy contribution by state at Qwen2-7B layer 14: the two "dead" PRESERVE channels together account for $42.4\%$ of the output energy. Removing the `−0` state collapses end-to-end argmax from $4/5$ to $0/5$ on the verification suite — the dark fringes are not a stylistic distinction, they carry the holographic-image content.*](figures/fig9_2_holographic_gate.png)
 
 ---
 
@@ -2405,9 +2376,7 @@ Geometrically, this is a lattice of:
 
 The equivalence chain is what makes “irreducible” a measurable claim, not a slogan: the sign matrix can be stored in $67{,}895{,}296$ bits = $8.49$ MB and reconstructs the original gate behaviour with full fidelity. Storing the same matrix as float32 takes $271.6$ MB; storing it as a rank-3000 SVD takes $270.3$ MB at $99.97\%$ accuracy. The *direct sign storage* is **simultaneously smaller and more accurate** — the signs are not just the cheapest representation, they are the *only* irreducible one.
 
-![The Irreducible Shape](figures/fig10_1_irreducible_shape.png)
-
-*Figure 10.1: Left — The φ-Zipf duality: φ-encoding and Zipf frequency are the same fractal viewed from opposite directions. Right — The irreducible shape: a lattice of $3{,}584$ critical lines whose $67.9$ M intersections encode all possible computation states.*
+![*Figure 10.1: Left — The φ-Zipf duality: φ-encoding and Zipf frequency are the same fractal viewed from opposite directions. Right — The irreducible shape: a lattice of $3{,}584$ critical lines whose $67.9$ M intersections encode all possible computation states.*](figures/fig10_1_irreducible_shape.png)
 
 ---
 
@@ -2459,9 +2428,7 @@ The connectivity of gates forms a graph. The spectral decomposition of this grap
 
 The two signatures are not in tension — they describe different objects. The φ-Zipf decay lives in the magnitudes (the “how far from origin” coordinate, Chapter 7); the uniform decay lives in the signs (the “which side of which boundary” coordinate, this chapter). The full geometry needs both. The φ-Zipf decay's continuous exponent $\ln\phi \approx 0.481$ sits at the lower edge of the conditional-convergence band $[1/2,\,1]$ that Appendix B.4 establishes as the unique partial-summation operating regime — and the per-zone operating exponents observed in the residual stream ($1/\phi \approx 0.618$ Compressor, $2/\phi^2 \approx 0.764$ Processor) lie inside that band as φ-powers. The uniform sign-matrix decay represents the irreducible part of the geometry that is *not* a partial-summation signal at all.
 
-![Two complementary spectra](figures/fig10_2_two_spectra.png)
-
-*Figure 10.2: Two complementary spectral signatures of the irreducible shape. **Panel A** shows the MESH magnitudes' φ-Zipf decay $\sigma_k \propto \phi^{-k}$ — sharp enough that $\sim 89$ levels suffice to capture the magnitude axis (the $8$-bit storage of §7.5). The elbow at $k = 106$ corresponds to the discriminant-attention rank of Chapter 8 §8.3.2. **Panel B** shows the sign matrix's near-uniform decay $\sigma_k \propto k^{-0.14}$ — after $512$ dimensions, $\sigma_k/\sigma_1$ has fallen only to $0.418$. All $3{,}584$ hyperplanes are roughly equally important, which is why the signs are *irreducible* at $1$ bit each.*
+![*Figure 10.2: Two complementary spectral signatures of the irreducible shape. **Panel A** shows the MESH magnitudes' φ-Zipf decay $\sigma_k \propto \phi^{-k}$ — sharp enough that $\sim 89$ levels suffice to capture the magnitude axis (the $8$-bit storage of §7.5). The elbow at $k = 106$ corresponds to the discriminant-attention rank of Chapter 8 §8.3.2. **Panel B** shows the sign matrix's near-uniform decay $\sigma_k \propto k^{-0.14}$ — after $512$ dimensions, $\sigma_k/\sigma_1$ has fallen only to $0.418$. All $3{,}584$ hyperplanes are roughly equally important, which is why the signs are *irreducible* at $1$ bit each.*](figures/fig10_2_two_spectra.png)
 
 ### 10.2.4 Level 4: Spectrum = Irreducible
 
@@ -2623,9 +2590,7 @@ def test_phi_sigmoid_equivalence():
     assert max_diff < 1e-14  # IDENTICAL
 ```
 
-![φ-Sigmoid Exact Fit](figures/fig11_1_phi_computer_proof.png)
-
-*Figure 11.1: Left — The φ-sigmoid EXACTLY matches the standard sigmoid (difference < 10^-14). Right — The universal bottleneck at φ ≈ 1.57 at layer 27.*
+![*Figure 11.1: Left — The φ-sigmoid EXACTLY matches the standard sigmoid (difference < 10^-14). Right — The universal bottleneck at φ ≈ 1.57 at layer 27.*](figures/fig11_1_phi_computer_proof.png)
 
 ---
 
@@ -2717,9 +2682,7 @@ The Fibonacci correction is the **final piece** in the negative-zero discovery c
 
 The Fibonacci correction is what carries the chapter's headline claim — *every transformer operation is an exact φ-operation* — across the 28-layer compounded-error gap from "good but not perfect" to "byte-for-byte identical."
 
-![Fibonacci Correction Decomposition](figures/fig11_2_fibonacci_correction.png)
-
-*Figure 11.2: The Fibonacci correction decomposition (DC 145). **Panel A** shows SiLU as the exact sum of two operationally distinct terms: a *φ-sigmoid geometric base* $x \cdot \sigma(\ell(x))$ that gates on the φ-level coordinate (gold dashed), plus a *Fibonacci correction* $\Delta(x) = x(\sigma(x) - \sigma(\ell(x)))$ that bridges $e$-space to φ-space (red). The two terms sum identically to the standard SiLU (thick grey). **Panel B** shows the reconstruction-error envelope on a log scale: the empirical mean error from DC 145 is $1.62 \times 10^{-8}$ — essentially zero, limited by the $\log(|x| + 10^{-8})$ regularisation. The Fibonacci correction is the only operationally non-trivial entry in the entire φ-computer proof.*
+![*Figure 11.2: The Fibonacci correction decomposition (DC 145). **Panel A** shows SiLU as the exact sum of two operationally distinct terms: a *φ-sigmoid geometric base* $x \cdot \sigma(\ell(x))$ that gates on the φ-level coordinate (gold dashed), plus a *Fibonacci correction* $\Delta(x) = x(\sigma(x) - \sigma(\ell(x)))$ that bridges $e$-space to φ-space (red). The two terms sum identically to the standard SiLU (thick grey). **Panel B** shows the reconstruction-error envelope on a log scale: the empirical mean error from DC 145 is $1.62 \times 10^{-8}$ — essentially zero, limited by the $\log(|x| + 10^{-8})$ regularisation. The Fibonacci correction is the only operationally non-trivial entry in the entire φ-computer proof.*](figures/fig11_2_fibonacci_correction.png)
 
 The decomposition $\text{SiLU}(x) = x \cdot \sigma(\ell(x)) + \Delta(x)$ is the per-channel form of conditional convergence: a *geometric base* (analogous to a partial-sum truncation) plus a small bridging correction (analogous to the Riemann–Siegel remainder). The same oscillation-and-final-correction structure that operates at the residual-stream level (Ch 8 §8.4) and at the analytic level (Appendix B.4) operates here at the *single-activation* level — Fibonacci is what conditional convergence looks like when restricted to one scalar input.
 
@@ -2882,9 +2845,7 @@ This is the geometric reformulation of memory: instead of remembering that *Fran
 
 The consistency of $\theta_R$ within each row is the strong empirical claim; the differences across rows are what make relationships distinguishable. The closeness of capital-of's $77.3^\circ$ to $\arccos(1/\phi^2) \approx 72^\circ$ is suggestive but not exact — we flag this as a numerological coincidence pending more rigorous analysis.
 
-![Platonic Ideal as Rotation Anchor](figures/fig12_2_platonic_rotation.png)
-
-*Figure 12.2: Platonic Ideals are rotation anchors in φ-space. **Panel A** gives the geometric definition: the entity $e$ rotates by angle $\theta_R$ about an axis orthogonal to $e$ that points toward the Platonic ideal $I_R$, producing the answer $a$. For the *capital-of* relationship, $\theta_R = 77.3^\circ$ and $I_R$ is the dimension-intersection that defines "capital" (city $\cap$ political $\cap$ important). **Panel B** shows that $\theta_R$ is universal within a relationship type but distinct across types — capital-of clusters at $77.3^\circ \pm 1.5^\circ$, size-decrease at $83.9^\circ \pm 1.0^\circ$, the full-pass hidden-state trajectory at $90.3^\circ \pm 0.2^\circ$. The angle is the relationship.*
+![*Figure 12.2: Platonic Ideals are rotation anchors in φ-space. **Panel A** gives the geometric definition: the entity $e$ rotates by angle $\theta_R$ about an axis orthogonal to $e$ that points toward the Platonic ideal $I_R$, producing the answer $a$. For the *capital-of* relationship, $\theta_R = 77.3^\circ$ and $I_R$ is the dimension-intersection that defines "capital" (city $\cap$ political $\cap$ important). **Panel B** shows that $\theta_R$ is universal within a relationship type but distinct across types — capital-of clusters at $77.3^\circ \pm 1.5^\circ$, size-decrease at $83.9^\circ \pm 1.0^\circ$, the full-pass hidden-state trajectory at $90.3^\circ \pm 0.2^\circ$. The angle is the relationship.*](figures/fig12_2_platonic_rotation.png)
 
 ### 12.2.3 How many ideals? Empirical bound (DC 299)
 
@@ -2905,9 +2866,7 @@ We report the **95% threshold** as the working number: **~79 Platonic Ideals** a
 
 What we *can* say firmly: the concept space is **finite-dimensional**, with effective dimensionality $\sim 79–86$ — not the full $3584$. This finiteness is what makes the trivial-AI hypothesis (§12.1) tractable in principle.
 
-![PCA cumulative variance](figures/fig12_3_pca_variance.png)
-
-*Figure 12.3: Cumulative variance vs PCA rank on the DC 299 probe set ($88$ single-token concepts in Qwen2-7B's $3584$-dimensional embedding space). Four thresholds are marked: $50\%$ at $k = 27$, $90\%$ at $k = 71$, $\mathbf{95\%}$ at $\mathbf{k = 79}$ (the working number of Platonic Ideals), and $99\%$ at $k = 86$. The concept space is genuinely finite-dimensional — not $3584$ but $\sim 79$ — which is what makes the trivial-AI hypothesis (§12.1) tractable in principle.*
+![*Figure 12.3: Cumulative variance vs PCA rank on the DC 299 probe set ($88$ single-token concepts in Qwen2-7B's $3584$-dimensional embedding space). Four thresholds are marked: $50\%$ at $k = 27$, $90\%$ at $k = 71$, $\mathbf{95\%}$ at $\mathbf{k = 79}$ (the working number of Platonic Ideals), and $99\%$ at $k = 86$. The concept space is genuinely finite-dimensional — not $3584$ but $\sim 79$ — which is what makes the trivial-AI hypothesis (§12.1) tractable in principle.*](figures/fig12_3_pca_variance.png)
 
 ### 12.2.4 What the rotation angle *is*
 
@@ -3016,9 +2975,7 @@ A final set of design questions opens up once the geometry is verified: how do w
 
 The key insight: if the model IS the geometry, then navigating the geometry IS understanding the model. The user interface for an AI is a map of φ-space. These four interfaces are not separate proposals — they are four projections of the same underlying claim that knowledge work *is* navigation through φ-space.
 
-![The Path Forward](figures/fig12_1_implications.png)
-
-*Figure 12.1: The path forward — from the φ-lattice foundation through Trivial AI, Platonic Ideals, Recursive Bootstrap, Self-Describing Geometry, to Human-AI Alignment.*
+![*Figure 12.1: The path forward — from the φ-lattice foundation through Trivial AI, Platonic Ideals, Recursive Bootstrap, Self-Describing Geometry, to Human-AI Alignment.*](figures/fig12_1_implications.png)
 
 ---
 
@@ -3164,9 +3121,7 @@ The Riemann Hypothesis is the statement that $\beta = 1/2$ for every non-trivial
 
 **Empirical anchor.** Define $G(t) = e^{-t/2} F(t)$, the $\sqrt{x}$-normalised fluctuation. For primes up to $x = 10^7$ (i.e. $t \le \ln 10^7 \approx 16.1$), $G(t)$ is bounded — the fluctuations stay within an $O(t)$ envelope after the $\sqrt{x}$ normalisation. Figure B.1 shows the consequence: at $\beta = 0.40$ (sub-luminal), the curve decays; at $\beta = 0.50$ (light cone), the curve is bounded; at $\beta = 0.60$ (tachyonic), the curve blows up. Only the middle case is consistent with the observed behaviour of primes.
 
-![Light-cone constraint on the Chebyshev fluctuation](figures/figB_1_light_cone.png)
-
-*Figure B.1: The Chebyshev fluctuation $|F_\beta(t)| \cdot e^{-t/2}$ for three hypothetical positions of the dominant zero. $\beta = 0.40$ (teal, dotted): sub-luminal, the curve decays. $\beta = 0.50$ (gold, the empirical case): light cone, the curve is bounded. $\beta = 0.60$ (red): tachyonic, the curve blows up exponentially past the $\sqrt{x}$ envelope. The light cone $\beta \le 1/2$ is the speed limit forced by the observed boundedness of prime fluctuations.*
+![*Figure B.1: The Chebyshev fluctuation $|F_\beta(t)| \cdot e^{-t/2}$ for three hypothetical positions of the dominant zero. $\beta = 0.40$ (teal, dotted): sub-luminal, the curve decays. $\beta = 0.50$ (gold, the empirical case): light cone, the curve is bounded. $\beta = 0.60$ (red): tachyonic, the curve blows up exponentially past the $\sqrt{x}$ envelope. The light cone $\beta \le 1/2$ is the speed limit forced by the observed boundedness of prime fluctuations.*](figures/figB_1_light_cone.png)
 
 **Connection to TruthSpace.** The φ-encoding stores the residual stream's contributions on a logarithmic level axis (Ch 7, the φ-lattice). The bounded $G(t)$ after $\sqrt{x}$ normalisation is the arithmetic analogue of the bounded layer-by-layer projection on the prediction direction observed in Qwen2-7B (Ch 8 §8.4). The residual stream is, by reverse engineering, never *exponentially blown up* across layers; what makes it converge to the right answer is the same speed-limit constraint that keeps $G(t)$ bounded.
 
@@ -3186,9 +3141,7 @@ where $|ds|^2$ is the flat Euclidean metric and $e^{2\Phi}$ is a scalar conforma
 
 **Empirical anchor.** Numerical integration of the geodesic equation with starting conditions on $\sigma \approx 0.51$ (using `mpmath` at 88 decimal places to keep precision through the rapidly varying $\Phi$) shows that 10/10 trajectories reach the truncation horizon $\tau_{\max} = 120$ without encountering an interior singularity. Figure B.2 visualises this: the conformal level sets pinch toward $\sigma = 1/2$, the geodesics fall toward the line as if into an attractor basin, and the line itself is smooth. Synthetic injection of an off-line zero at $(0.7,\,t_0)$ immediately breaks completeness: half the trajectories crash at the injected zero, half escape to $\sigma \to 1$.
 
-![Geodesics on the conformal metric](figures/figB_2_geodesics.png)
-
-*Figure B.2: Geodesics on the conformal metric $e^{2\Phi(s)}$ where $\Phi(s) = \tfrac{1}{2}\log|\zeta(s)\zeta(1-s)|$. The metric level sets (orange contours) form a parabolic well centred on $\sigma = 1/2$; geodesics from starting points off the line fall toward it as if into an attractor basin. Critical-line zeros (gold dots) are smooth termination points; an off-line zero (red X) immediately breaks completeness.*
+![*Figure B.2: Geodesics on the conformal metric $e^{2\Phi(s)}$ where $\Phi(s) = \tfrac{1}{2}\log|\zeta(s)\zeta(1-s)|$. The metric level sets (orange contours) form a parabolic well centred on $\sigma = 1/2$; geodesics from starting points off the line fall toward it as if into an attractor basin. Critical-line zeros (gold dots) are smooth termination points; an off-line zero (red X) immediately breaks completeness.*](figures/figB_2_geodesics.png)
 
 **The φ connection.** Extended freefall analysis on this metric — letting a test particle fall from height $\tau = 0$ to large $\tau$ — produces a velocity profile whose asymptotic ratio surfaces $\varphi = (1+\sqrt{5})/2 \approx 1.618$ as a natural scale of the geometry, *without $\varphi$ being put in by hand*. This is the first-principles origin of the golden ratio in the curvature: $\varphi$ is what the metric chooses for its own scale, not what we choose for it. (Forward-referenced from Ch 2 §2.1 and Ch 7 §7.3, both of which treat $\varphi$ as a given.)
 
@@ -3208,9 +3161,7 @@ evaluate *exactly* to $\pi/2$ for $n \le 6$ and then break sharply at $n = 7$. T
 
 **Empirical anchor.** Figure B.3 shows the deviation $|1 - 2\,I_n/\pi|$ on a logarithmic scale: a plateau at machine epsilon ($\sim 10^{-17}$) for $n \le 6$, then a near-vertical jump to $\sim 10^{-11}$ at $n = 7$, then continued growth toward $10^{-1}$ by $n = 15$. The jump at $n = 7$ is one of the cleanest examples in mathematics of a spectral identity that "knows" exactly when its convergence radius is exhausted.
 
-![Borwein spectral-fragility break at $n = 7$](figures/figB_3_borwein.png)
-
-*Figure B.3: The Borwein integrals are exact ($I_n = \pi/2$ to machine epsilon) for $n \le 6$ — gold bars at the $10^{-17}$ plateau. At $n = 7$ the sum $\sum_{k=0}^{n} 1/(2k+1)$ first exceeds 1, and the identity fails; the red bars show the resulting deviation growing through twelve orders of magnitude as $n$ increases. The spectral break is exact and reproducible, with no fitted parameters.*
+![*Figure B.3: The Borwein integrals are exact ($I_n = \pi/2$ to machine epsilon) for $n \le 6$ — gold bars at the $10^{-17}$ plateau. At $n = 7$ the sum $\sum_{k=0}^{n} 1/(2k+1)$ first exceeds 1, and the identity fails; the red bars show the resulting deviation growing through twelve orders of magnitude as $n$ increases. The spectral break is exact and reproducible, with no fitted parameters.*](figures/figB_3_borwein.png)
 
 **Window functions as the resolution.** Replacing boxcar windows with smooth windows (Gaussian, raised cosine, Hann, staircase) preserves the identity to higher orders. The cost is a small bias on the integral; the benefit is robust convergence well past the boxcar threshold. The same trade-off appears in transformer attention: hard top-$k$ attention is the boxcar; learned soft attention is the smooth window. The transformer pays a small bias for robust convergence.
 
@@ -3237,9 +3188,7 @@ The Borwein constraint locates $\sigma = 1/2$ because $\sum 1/(2k+1)$ is precise
 
 Figure B.4 shows the consequence numerically. At $t = 14.135$ (the height of the first non-trivial zero), $\sqrt{t/(2\pi)} \approx 1.50$, so the Riemann–Siegel main sum has length $N(t) = 1$ and the value of $Z(t)$ emerges from cancellation between that single main-sum term and the first Riemann–Siegel correction term — the partial sums do not settle. At $\alpha = 0.80$, the partial sums settle at a finite limit but still oscillate during transit. At $\alpha = 1.20$, the series converges absolutely and a few terms suffice.
 
-![Conditional convergence at $\sigma = 1/2$](figures/figB_4_conditional_convergence.png)
-
-*Figure B.4: Partial sums $\bigl|\sum_{n=1}^{N} n^{-s}\bigr|$ at $s = \sigma + 14.1347 i$ for three amplitudes. At $\sigma = 1/2$ (gold) the partial sums grow as $\sqrt{N}$ and never settle — the regime that requires Riemann–Siegel cancellation. At $\sigma = 0.80$ (teal) the sums oscillate but tend to a finite limit. At $\sigma = 1.20$ (muted) the series converges absolutely after a few terms. Only $\sigma = 1/2$ exhibits the conditional convergence that the Riemann–Siegel formula is built around.*
+![*Figure B.4: Partial sums $\bigl|\sum_{n=1}^{N} n^{-s}\bigr|$ at $s = \sigma + 14.1347 i$ for three amplitudes. At $\sigma = 1/2$ (gold) the partial sums grow as $\sqrt{N}$ and never settle — the regime that requires Riemann–Siegel cancellation. At $\sigma = 0.80$ (teal) the sums oscillate but tend to a finite limit. At $\sigma = 1.20$ (muted) the series converges absolutely after a few terms. Only $\sigma = 1/2$ exhibits the conditional convergence that the Riemann–Siegel formula is built around.*](figures/figB_4_conditional_convergence.png)
 
 **In the transformer.** The residual stream's per-layer contribution to the prediction direction *also* oscillates. Finding 109 of the Qwen2-7B reverse-engineering pipeline reports the cumulative projection layer by layer:
 
@@ -3271,9 +3220,7 @@ $$N_{\mathrm{smooth}}(t_n) \;=\; n \,-\, \tfrac{1}{2} \qquad (\text{empirically,
 
 Figure B.5 shows the residual $N_{\mathrm{smooth}}(t_n) - (n - \tfrac{1}{2})$ for the first 20 zeros: bounded oscillation around zero with RMS $\approx 0.169$ and no drift. The $\tfrac{1}{2}$ is exact; the residual is just the $S(t)$ noise.
 
-![Half-integer offset of the smooth zero count](figures/figB_5_half_step_offset.png)
-
-*Figure B.5: The residual $N_{\mathrm{smooth}}(t_n) - (n - \tfrac{1}{2})$ for the first 20 non-trivial zeros, computed from Riemann–Siegel $\theta(t)$ via Stirling. The residual is exactly $-S(t_n)/\pi$, the bounded $S(t)$ noise: it oscillates around zero with no drift, RMS $\approx 0.169$. The $\tfrac{1}{2}$ offset is exact — the same $\tfrac{1}{2}$ as $\sigma = 1/2$ and as the harmonic-oscillator zero-point.*
+![*Figure B.5: The residual $N_{\mathrm{smooth}}(t_n) - (n - \tfrac{1}{2})$ for the first 20 non-trivial zeros, computed from Riemann–Siegel $\theta(t)$ via Stirling. The residual is exactly $-S(t_n)/\pi$, the bounded $S(t)$ noise: it oscillates around zero with no drift, RMS $\approx 0.169$. The $\tfrac{1}{2}$ offset is exact — the same $\tfrac{1}{2}$ as $\sigma = 1/2$ and as the harmonic-oscillator zero-point.*](figures/figB_5_half_step_offset.png)
 
 **Why the half is the same half.** This $\tfrac{1}{2}$ is the same $\tfrac{1}{2}$ as $\sigma = 1/2$. The smooth count is half a step behind the integer count *at every zero*, structurally, because the critical line lives at half-integer height in the Riemann–Siegel theta-function quantisation. The classical analogue is the harmonic oscillator: a quantum oscillator's energy is $E_n = \hbar\omega(n + \tfrac{1}{2})$, with the same $\tfrac{1}{2}$ as the *zero-point energy* offset that is forced by the operator algebra. The half-integer offset is the discrete signature of an operating regime where information lives between the integer levels rather than on them.
 
@@ -3355,9 +3302,7 @@ where $\delta$ parameterises a phase shift applied to one $\varepsilon$-group of
 
 **The result.** Twenty-one non-trivial zeros located across three prompts (France: "The capital of France is", Japan: "The capital of Japan is", Einstein: "Einstein developed the theory of") and five swept layers ($\ell \in \{5, 15, 22, 23, 27\}$). The full distribution is shown in Figure B.6.
 
-![Twenty-one non-trivial zeros of the transformer logit gap](figures/figB_6_empirical_zeros.png)
-
-*Figure B.6: The empirical zero spectrum of Qwen2-7B (DC 296). Each marker is one non-trivial zero of $f_\ell(\delta)$. Colour encodes the prompt; marker shape encodes the semantic outcome at the zero (HOLD: baseline maintained; REVEAL: correct answer surfaces; DESTROY: prediction collapses to a junk token; MARGINAL: tangent zero). The secondary axis shows the $\varphi^{\delta^*}$ scaling factor — the multiplicative gain at which the perturbation acts. The Einstein-at-L23 callout marks a counterexample: in the entire scanned range, no zero exists; the model's commitment is unconditional at that layer.*
+![*Figure B.6: The empirical zero spectrum of Qwen2-7B (DC 296). Each marker is one non-trivial zero of $f_\ell(\delta)$. Colour encodes the prompt; marker shape encodes the semantic outcome at the zero (HOLD: baseline maintained; REVEAL: correct answer surfaces; DESTROY: prediction collapses to a junk token; MARGINAL: tangent zero). The secondary axis shows the $\varphi^{\delta^*}$ scaling factor — the multiplicative gain at which the perturbation acts. The Einstein-at-L23 callout marks a counterexample: in the entire scanned range, no zero exists; the model's commitment is unconditional at that layer.*](figures/figB_6_empirical_zeros.png)
 
 **Counts and structure.** Of the 21 zeros: 4 hold the baseline, 6 reveal the correct answer (all six of these are Japan ____ → Tokyo, where the baseline placeholder is replaced by the true capital), 8 destroy the baseline, and 3 are tangent (marginal) zeros. The logit gap *oscillates*: layers L5, L15, and L22 each carry up to three sign changes per prompt, exactly the kind of multi-zero oscillation that the Riemann–Siegel main sum exhibits at heights where $N(t) > 1$.
 

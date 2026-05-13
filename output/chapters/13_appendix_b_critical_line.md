@@ -40,9 +40,7 @@ The Riemann Hypothesis is the statement that $\beta = 1/2$ for every non-trivial
 
 **Empirical anchor.** Define $G(t) = e^{-t/2} F(t)$, the $\sqrt{x}$-normalised fluctuation. For primes up to $x = 10^7$ (i.e. $t \le \ln 10^7 \approx 16.1$), $G(t)$ is bounded — the fluctuations stay within an $O(t)$ envelope after the $\sqrt{x}$ normalisation. Figure B.1 shows the consequence: at $\beta = 0.40$ (sub-luminal), the curve decays; at $\beta = 0.50$ (light cone), the curve is bounded; at $\beta = 0.60$ (tachyonic), the curve blows up. Only the middle case is consistent with the observed behaviour of primes.
 
-![Light-cone constraint on the Chebyshev fluctuation](../figures/figB_1_light_cone.png)
-
-*Figure B.1: The Chebyshev fluctuation $|F_\beta(t)| \cdot e^{-t/2}$ for three hypothetical positions of the dominant zero. $\beta = 0.40$ (teal, dotted): sub-luminal, the curve decays. $\beta = 0.50$ (gold, the empirical case): light cone, the curve is bounded. $\beta = 0.60$ (red): tachyonic, the curve blows up exponentially past the $\sqrt{x}$ envelope. The light cone $\beta \le 1/2$ is the speed limit forced by the observed boundedness of prime fluctuations.*
+![*Figure B.1: The Chebyshev fluctuation $|F_\beta(t)| \cdot e^{-t/2}$ for three hypothetical positions of the dominant zero. $\beta = 0.40$ (teal, dotted): sub-luminal, the curve decays. $\beta = 0.50$ (gold, the empirical case): light cone, the curve is bounded. $\beta = 0.60$ (red): tachyonic, the curve blows up exponentially past the $\sqrt{x}$ envelope. The light cone $\beta \le 1/2$ is the speed limit forced by the observed boundedness of prime fluctuations.*](../figures/figB_1_light_cone.png)
 
 **Connection to TruthSpace.** The φ-encoding stores the residual stream's contributions on a logarithmic level axis (Ch 7, the φ-lattice). The bounded $G(t)$ after $\sqrt{x}$ normalisation is the arithmetic analogue of the bounded layer-by-layer projection on the prediction direction observed in Qwen2-7B (Ch 8 §8.4). The residual stream is, by reverse engineering, never *exponentially blown up* across layers; what makes it converge to the right answer is the same speed-limit constraint that keeps $G(t)$ bounded.
 
@@ -62,9 +60,7 @@ where $|ds|^2$ is the flat Euclidean metric and $e^{2\Phi}$ is a scalar conforma
 
 **Empirical anchor.** Numerical integration of the geodesic equation with starting conditions on $\sigma \approx 0.51$ (using `mpmath` at 88 decimal places to keep precision through the rapidly varying $\Phi$) shows that 10/10 trajectories reach the truncation horizon $\tau_{\max} = 120$ without encountering an interior singularity. Figure B.2 visualises this: the conformal level sets pinch toward $\sigma = 1/2$, the geodesics fall toward the line as if into an attractor basin, and the line itself is smooth. Synthetic injection of an off-line zero at $(0.7,\,t_0)$ immediately breaks completeness: half the trajectories crash at the injected zero, half escape to $\sigma \to 1$.
 
-![Geodesics on the conformal metric](../figures/figB_2_geodesics.png)
-
-*Figure B.2: Geodesics on the conformal metric $e^{2\Phi(s)}$ where $\Phi(s) = \tfrac{1}{2}\log|\zeta(s)\zeta(1-s)|$. The metric level sets (orange contours) form a parabolic well centred on $\sigma = 1/2$; geodesics from starting points off the line fall toward it as if into an attractor basin. Critical-line zeros (gold dots) are smooth termination points; an off-line zero (red X) immediately breaks completeness.*
+![*Figure B.2: Geodesics on the conformal metric $e^{2\Phi(s)}$ where $\Phi(s) = \tfrac{1}{2}\log|\zeta(s)\zeta(1-s)|$. The metric level sets (orange contours) form a parabolic well centred on $\sigma = 1/2$; geodesics from starting points off the line fall toward it as if into an attractor basin. Critical-line zeros (gold dots) are smooth termination points; an off-line zero (red X) immediately breaks completeness.*](../figures/figB_2_geodesics.png)
 
 **The φ connection.** Extended freefall analysis on this metric — letting a test particle fall from height $\tau = 0$ to large $\tau$ — produces a velocity profile whose asymptotic ratio surfaces $\varphi = (1+\sqrt{5})/2 \approx 1.618$ as a natural scale of the geometry, *without $\varphi$ being put in by hand*. This is the first-principles origin of the golden ratio in the curvature: $\varphi$ is what the metric chooses for its own scale, not what we choose for it. (Forward-referenced from Ch 2 §2.1 and Ch 7 §7.3, both of which treat $\varphi$ as a given.)
 
@@ -84,9 +80,7 @@ evaluate *exactly* to $\pi/2$ for $n \le 6$ and then break sharply at $n = 7$. T
 
 **Empirical anchor.** Figure B.3 shows the deviation $|1 - 2\,I_n/\pi|$ on a logarithmic scale: a plateau at machine epsilon ($\sim 10^{-17}$) for $n \le 6$, then a near-vertical jump to $\sim 10^{-11}$ at $n = 7$, then continued growth toward $10^{-1}$ by $n = 15$. The jump at $n = 7$ is one of the cleanest examples in mathematics of a spectral identity that "knows" exactly when its convergence radius is exhausted.
 
-![Borwein spectral-fragility break at $n = 7$](../figures/figB_3_borwein.png)
-
-*Figure B.3: The Borwein integrals are exact ($I_n = \pi/2$ to machine epsilon) for $n \le 6$ — gold bars at the $10^{-17}$ plateau. At $n = 7$ the sum $\sum_{k=0}^{n} 1/(2k+1)$ first exceeds 1, and the identity fails; the red bars show the resulting deviation growing through twelve orders of magnitude as $n$ increases. The spectral break is exact and reproducible, with no fitted parameters.*
+![*Figure B.3: The Borwein integrals are exact ($I_n = \pi/2$ to machine epsilon) for $n \le 6$ — gold bars at the $10^{-17}$ plateau. At $n = 7$ the sum $\sum_{k=0}^{n} 1/(2k+1)$ first exceeds 1, and the identity fails; the red bars show the resulting deviation growing through twelve orders of magnitude as $n$ increases. The spectral break is exact and reproducible, with no fitted parameters.*](../figures/figB_3_borwein.png)
 
 **Window functions as the resolution.** Replacing boxcar windows with smooth windows (Gaussian, raised cosine, Hann, staircase) preserves the identity to higher orders. The cost is a small bias on the integral; the benefit is robust convergence well past the boxcar threshold. The same trade-off appears in transformer attention: hard top-$k$ attention is the boxcar; learned soft attention is the smooth window. The transformer pays a small bias for robust convergence.
 
@@ -113,9 +107,7 @@ The Borwein constraint locates $\sigma = 1/2$ because $\sum 1/(2k+1)$ is precise
 
 Figure B.4 shows the consequence numerically. At $t = 14.135$ (the height of the first non-trivial zero), $\sqrt{t/(2\pi)} \approx 1.50$, so the Riemann–Siegel main sum has length $N(t) = 1$ and the value of $Z(t)$ emerges from cancellation between that single main-sum term and the first Riemann–Siegel correction term — the partial sums do not settle. At $\alpha = 0.80$, the partial sums settle at a finite limit but still oscillate during transit. At $\alpha = 1.20$, the series converges absolutely and a few terms suffice.
 
-![Conditional convergence at $\sigma = 1/2$](../figures/figB_4_conditional_convergence.png)
-
-*Figure B.4: Partial sums $\bigl|\sum_{n=1}^{N} n^{-s}\bigr|$ at $s = \sigma + 14.1347 i$ for three amplitudes. At $\sigma = 1/2$ (gold) the partial sums grow as $\sqrt{N}$ and never settle — the regime that requires Riemann–Siegel cancellation. At $\sigma = 0.80$ (teal) the sums oscillate but tend to a finite limit. At $\sigma = 1.20$ (muted) the series converges absolutely after a few terms. Only $\sigma = 1/2$ exhibits the conditional convergence that the Riemann–Siegel formula is built around.*
+![*Figure B.4: Partial sums $\bigl|\sum_{n=1}^{N} n^{-s}\bigr|$ at $s = \sigma + 14.1347 i$ for three amplitudes. At $\sigma = 1/2$ (gold) the partial sums grow as $\sqrt{N}$ and never settle — the regime that requires Riemann–Siegel cancellation. At $\sigma = 0.80$ (teal) the sums oscillate but tend to a finite limit. At $\sigma = 1.20$ (muted) the series converges absolutely after a few terms. Only $\sigma = 1/2$ exhibits the conditional convergence that the Riemann–Siegel formula is built around.*](../figures/figB_4_conditional_convergence.png)
 
 **In the transformer.** The residual stream's per-layer contribution to the prediction direction *also* oscillates. Finding 109 of the Qwen2-7B reverse-engineering pipeline reports the cumulative projection layer by layer:
 
@@ -147,9 +139,7 @@ $$N_{\mathrm{smooth}}(t_n) \;=\; n \,-\, \tfrac{1}{2} \qquad (\text{empirically,
 
 Figure B.5 shows the residual $N_{\mathrm{smooth}}(t_n) - (n - \tfrac{1}{2})$ for the first 20 zeros: bounded oscillation around zero with RMS $\approx 0.169$ and no drift. The $\tfrac{1}{2}$ is exact; the residual is just the $S(t)$ noise.
 
-![Half-integer offset of the smooth zero count](../figures/figB_5_half_step_offset.png)
-
-*Figure B.5: The residual $N_{\mathrm{smooth}}(t_n) - (n - \tfrac{1}{2})$ for the first 20 non-trivial zeros, computed from Riemann–Siegel $\theta(t)$ via Stirling. The residual is exactly $-S(t_n)/\pi$, the bounded $S(t)$ noise: it oscillates around zero with no drift, RMS $\approx 0.169$. The $\tfrac{1}{2}$ offset is exact — the same $\tfrac{1}{2}$ as $\sigma = 1/2$ and as the harmonic-oscillator zero-point.*
+![*Figure B.5: The residual $N_{\mathrm{smooth}}(t_n) - (n - \tfrac{1}{2})$ for the first 20 non-trivial zeros, computed from Riemann–Siegel $\theta(t)$ via Stirling. The residual is exactly $-S(t_n)/\pi$, the bounded $S(t)$ noise: it oscillates around zero with no drift, RMS $\approx 0.169$. The $\tfrac{1}{2}$ offset is exact — the same $\tfrac{1}{2}$ as $\sigma = 1/2$ and as the harmonic-oscillator zero-point.*](../figures/figB_5_half_step_offset.png)
 
 **Why the half is the same half.** This $\tfrac{1}{2}$ is the same $\tfrac{1}{2}$ as $\sigma = 1/2$. The smooth count is half a step behind the integer count *at every zero*, structurally, because the critical line lives at half-integer height in the Riemann–Siegel theta-function quantisation. The classical analogue is the harmonic oscillator: a quantum oscillator's energy is $E_n = \hbar\omega(n + \tfrac{1}{2})$, with the same $\tfrac{1}{2}$ as the *zero-point energy* offset that is forced by the operator algebra. The half-integer offset is the discrete signature of an operating regime where information lives between the integer levels rather than on them.
 
@@ -231,9 +221,7 @@ where $\delta$ parameterises a phase shift applied to one $\varepsilon$-group of
 
 **The result.** Twenty-one non-trivial zeros located across three prompts (France: "The capital of France is", Japan: "The capital of Japan is", Einstein: "Einstein developed the theory of") and five swept layers ($\ell \in \{5, 15, 22, 23, 27\}$). The full distribution is shown in Figure B.6.
 
-![Twenty-one non-trivial zeros of the transformer logit gap](../figures/figB_6_empirical_zeros.png)
-
-*Figure B.6: The empirical zero spectrum of Qwen2-7B (DC 296). Each marker is one non-trivial zero of $f_\ell(\delta)$. Colour encodes the prompt; marker shape encodes the semantic outcome at the zero (HOLD: baseline maintained; REVEAL: correct answer surfaces; DESTROY: prediction collapses to a junk token; MARGINAL: tangent zero). The secondary axis shows the $\varphi^{\delta^*}$ scaling factor — the multiplicative gain at which the perturbation acts. The Einstein-at-L23 callout marks a counterexample: in the entire scanned range, no zero exists; the model's commitment is unconditional at that layer.*
+![*Figure B.6: The empirical zero spectrum of Qwen2-7B (DC 296). Each marker is one non-trivial zero of $f_\ell(\delta)$. Colour encodes the prompt; marker shape encodes the semantic outcome at the zero (HOLD: baseline maintained; REVEAL: correct answer surfaces; DESTROY: prediction collapses to a junk token; MARGINAL: tangent zero). The secondary axis shows the $\varphi^{\delta^*}$ scaling factor — the multiplicative gain at which the perturbation acts. The Einstein-at-L23 callout marks a counterexample: in the entire scanned range, no zero exists; the model's commitment is unconditional at that layer.*](../figures/figB_6_empirical_zeros.png)
 
 **Counts and structure.** Of the 21 zeros: 4 hold the baseline, 6 reveal the correct answer (all six of these are Japan ____ → Tokyo, where the baseline placeholder is replaced by the true capital), 8 destroy the baseline, and 3 are tangent (marginal) zeros. The logit gap *oscillates*: layers L5, L15, and L22 each carry up to three sign changes per prompt, exactly the kind of multi-zero oscillation that the Riemann–Siegel main sum exhibits at heights where $N(t) > 1$.
 
