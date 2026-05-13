@@ -2,7 +2,7 @@
 
 **From the Vacuum Forming Hypothesis to the $\phi$-Computer Proof**
 
-📄 **[Read the full paper (PDF)](output/paper.pdf)** | 12 chapters, 4 code demos, 12 figures
+📄 **[Read the full paper (PDF)](output/paper.pdf)** | 12 chapters, 4 code demos, 23 figures, 124 pages
 
 All figures are generated from scripts in `output/figures/scripts/` — tweak and regenerate with `python3 output/figures/scripts/figX_Y_title.py`.
 
@@ -22,14 +22,20 @@ This repository contains the definitive write-up of the TruthSpace project: a 14
 |-----------|--------|--------------------|
 | $\phi$-sigmoid = sigmoid | **Exact** (diff < 2.78e-17) | Chapter 11 + demo 4 |
 | $\phi$-softmax = softmax | **Exact** (diff = 0.0) | Chapter 11 + demo 4 |
+| **Fibonacci correction** | SiLU = $\phi$-sigmoid + correction, residual $1.62 \times 10^{-8}$ | Chapter 11 §11.4.1 |
+| **4-state holographic gate** | Boundaries at $\pm \log\phi$; dark fringes carry 42.4% of L14 energy | Chapter 9 §9.6.1 |
+| **Cross-architecture universality** | Same $\phi^{-9}$ peak in Qwen2 / DA2 / DDColor / GPT-2 | Chapter 3 §3.1 |
+| Discriminant attention | $k = 106$ elbow, $1{,}143\times$ ops reduction at $r = 0.9950$ | Chapter 8 §8.3.2 |
 | Transformer = lookup table | **12.9x compression, 100% accuracy** | Chapter 8 |
 | Sign-only navigation | **960x compression, 100% semantics** | Chapter 9 + demo 3 |
 | Tetromino weight structure | **74 shapes** cover all 7B weights | Chapter 7 + demo 3 |
 | Irreducible shape | **3,584 critical lines, 67.9M points** | Chapter 10 |
-| Universal bottleneck | $\phi \approx 1.57$ at layer 27 | Chapter 8 / Chapter 11 |
+| Universal bottleneck | $\bar{\ell} \approx 1.57$ at layer 27 | Chapter 8 / Chapter 11 |
 | $\phi$-Zipf duality | Encoding = ranking, same fractal | Chapter 5 / Chapter 10 |
+| **Bimodal phase transition** | Vocabulary splits at $\phi$-pair boundary; 0 tokens in forbidden gap | Chapter 5 §5.5 |
 | ENCODE = DECODE | Self-inverse geometry | Chapter 5 + demo 2 |
 | Gear chain composition | $Q_{\text{total}} = Q_1 \times Q_2 \times \cdots$ | Chapter 6 |
+| **Platonic Ideals** | Relationships are rotations; $\sim 79$ ideals span 95% of concept space | Chapter 12 §12.2 |
 
 ---
 
@@ -47,10 +53,10 @@ The monograph builds knowledge linearly — each chapter motivates the next:
 | 6 | Gear Architecture | Composable geometric transformations replacing neural networks |
 | 7 | The $\phi$-Lattice | Absolute coordinate system: 89 primitives, 74 tetrominoes |
 | 8 | Reverse Engineering Qwen2-7B | 99.9991% correlation, full layer unwinding |
-| 9 | Navigation Replaces Inference | Sign-only nav (960x), boom attention, fixed points |
-| 10 | The Irreducible Shape | $\phi$-Zipf spectrum, 67.9M binary intersection points |
-| 11 | The $\phi$-Computer Proof | Every nonlinearity is an exact $\phi$-operation |
-| 12 | Implications | Trivial AI O(log N), recursive bootstrap, Platonic ideals |
+| 9 | Navigation Replaces Inference | Sign-only nav (960x), boom attention, holographic gate field |
+| 10 | The Irreducible Shape | $\phi$-Zipf magnitudes, near-uniform signs, 67.9M binary intersections |
+| 11 | The $\phi$-Computer Proof | Every nonlinearity is an exact $\phi$-operation; Fibonacci correction |
+| 12 | Implications | Trivial AI O(log N), Platonic Ideals as rotation anchors, recursive bootstrap |
 
 ---
 
