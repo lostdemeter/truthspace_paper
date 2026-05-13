@@ -477,7 +477,7 @@ is correct.
 | 1 | Research synthesis + plan + verify open questions 1, 2 | This file with Q1, Q2 resolved | **Done** |
 | 2 | Draft figure placeholder scripts: `fig5_3` (Riemann–Siegel ↔ residual stream), `figB_1` (5 constraints), `figB_2` (21 empirical zeros). Run scripts to confirm rendering. | Three new `.py` files in `output/figures/scripts/`, three new `.png` files. | **Done** |
 | 3 | Draft refined §5.3 (~80 lines). Update Ch 5 summary table. | §5.3 in chapter file; build the paper to confirm no LaTeX errors. | **Done** |
-| 4 | Draft Appendix B sections B.1–B.4 (~150 lines, expanded scope per Q1). | Half of Appendix B; build paper. | Pending |
+| 4 | Draft Appendix B sections B.1–B.4 (~150 lines, expanded scope per Q1). | Half of Appendix B; build paper. | **Done** |
 | 5 | Draft Appendix B sections B.5–B.9 (~180 lines). Apply Ch 8/9/10/11 forward-reference touch-ups. | Full Appendix B; cross-references resolved. | Pending |
 | 6 | Finalise figures, integrate `figB_1` panel 4 with mpmath-reproduced data, integrate `figB_2` with parsed DC 296 results. Final build. Update README front matter and `REFINEMENT_NOTES.md`. | Final ≈140-page PDF (currently 124). | Pending |
 
@@ -566,6 +566,53 @@ Paper builds cleanly (`build_paper.sh --skip-figures`, 5.0 MB PDF);
 xelatex + DejaVu Serif render all the new Greek symbols (σ, χ, ζ,
 π, Γ, Δ, θ) and the math display equations without warnings.
 
+### Session 4 retrospective
+
+New file `output/chapters/13_appendix_b_critical_line.md` (~115
+markdown lines, ~2185 words, ~7 PDF pages) introduces Appendix B and
+covers B.0 – B.4. Each numbered section follows the *Setup →
+Statement → Empirical anchor → Connection to TruthSpace* pattern
+from the outline.
+
+- **B.0** *Why this appendix exists.* Bridge from §5.3, embeds
+  Figure B.1 (the figB_1 placeholder from session 2) as an early
+  overview of the five constraints, points the reader to §B.8 for
+  the empirical landing.
+- **B.1** *Light-cone constraint.* Riemann–von Mangoldt explicit
+  formula; β ≤ 1/2 as the boundary between sub-luminal and tachyonic
+  arithmetic modes; bounded $G(t) = e^{-t/2} F(t)$ for primes up to
+  $10^7$; references Figure B.1 panel 1.
+- **B.2** *Conformal metric and geodesics.* Metric
+  $g = e^{2\Phi} |ds|^2$ with $\Phi = \tfrac{1}{2}\log|\zeta(s)\zeta(1-s)|$;
+  geodesic completeness on $\sigma = 1/2$; mpmath 88-dps numerical
+  integration; the φ connection from extended freefall analysis;
+  references Figure B.1 panel 2. Forward-references Ch 2 §2.1 and
+  Ch 7 §7.3 for the role of φ elsewhere.
+- **B.3** *Borwein phenomenon.* Classical Borwein integral exact
+  for $n \le 6$ then breaks at $n = 7$ when $\sum 1/(2k+1) > 1$;
+  spectral-fragility framing; window-function resolution; analogy to
+  hard-vs-soft attention; references Figure B.1 panel 3.
+- **B.4** *Conditional convergence.* The three-regime stratification
+  ($\alpha > 1$ absolute, $\alpha < 1/2$ divergent, $1/2 \le \alpha
+  \le 1$ conditional); $\alpha = 1/2$ as the unique critical exponent;
+  the F109 cumulative projection (L00–L06: $-1.68$, L25 worst:
+  $-13.7$, L26: $+9.2$, L27: $+34.3$, net $+29.8$) as conditional
+  convergence in computational form; references Figure B.1 panel 4
+  and Figure 5.3.
+
+Mid-build fix applied: `\tau_\max` re-quoted as `\tau_{\max}`
+(operator subscripts need explicit braces under xelatex). Numerical
+consistency fix in the closing of B.4: original outline claimed
+$\alpha \approx 0.28$ falls in the conditional-convergence band
+$[1/2, 1]$, which is internally contradictory; rewritten to keep
+$\alpha \approx 1/\varphi$ (Compressor) and $2/\varphi^2$ (Processor)
+as the load-bearing operating exponents and to flag the steeper
+$0.28$ as the asymptotic-tail regime separately.
+
+`scripts/build_paper.sh` chapter list extended with
+`'appendix_b_critical_line'` as item 13. Paper builds cleanly; PDF
+grows from 131 to 134 pages, 5.5 MB.
+
 ---
 
 ## Provenance lookup (research-only, NOT paper citations)
@@ -593,13 +640,17 @@ xelatex + DejaVu Serif render all the new Greek symbols (σ, χ, ζ,
 
 ---
 
-*End of working notes. Pickup point for session 4: draft Appendix B
-sections B.1–B.4 (~150 lines, expanded scope per Q1) in a new file
-`output/chapters/13_appendix_b_critical_line.md`. The full outline
-for all of Appendix B (B.1–B.9) is above; sessions 4 covers the
-first half. Each section follows the *Setup → Statement → Empirical
-anchor → Connection to TruthSpace* pattern shown in the outline. Also
-update `scripts/build_paper.sh` to include the new appendix in the
-chapter list, and re-build the paper to confirm clean compilation.
-The three figures (`fig5_3`, `figB_1`, `figB_2`) are already ready
-to be referenced from Appendix B without further work.*
+*End of working notes. Pickup point for session 5: draft Appendix B
+sections B.5–B.9 (~180 lines) in the same file
+`output/chapters/13_appendix_b_critical_line.md`. The full outline is
+above; key load-bearing sections are B.6 (Riemann–Siegel as discrete
+transformer — the structural mapping is the central claim) and B.8
+(empirical landing: 21 non-trivial transformer zeros from DC 296,
+uses figB_2). B.5 covers the half-step offset $N_\text{smooth}(t_n) = n - 1/2$
+(uses figB_1 panel 5; expanded per Q1 to mention the half-step
+appearances elsewhere in the project: φʳ⁻½ precision tier (DC 199),
+eigenspace offset as signal (DC 096), Layer-3 click point (DC 209)).
+B.7 covers residual fractality. B.9 is the closing synthesis (uses
+figB_1 panel 6, the synthesis box). After session 5, also apply the
+Ch 8 / 9 / 10 / 11 forward-reference touch-ups outlined in the
+"Cross-chapter touch-ups" section above.*

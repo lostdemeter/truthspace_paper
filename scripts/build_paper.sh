@@ -35,7 +35,8 @@ files = [f'chapters/{i:02d}_{name}.md' for i, name in enumerate([
     'what_llms_learn', 'phi_self_similarity', 'geometric_model_hypothesis',
     'encodings_phi_dial', 'encode_decode', 'gear_architecture',
     'phi_lattice', 'reverse_engineering', 'navigation_replaces_inference',
-    'irreducible_shape', 'phi_computer_proof', 'implications'
+    'irreducible_shape', 'phi_computer_proof', 'implications',
+    'appendix_b_critical_line'
 ], 1)]
 
 header = '''---
