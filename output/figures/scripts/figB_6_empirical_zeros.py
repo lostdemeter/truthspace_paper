@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Figure B.2 - The empirical zero spectrum of Qwen2.5-7B (DC 296).
+Figure B.6 - The empirical zero spectrum of Qwen2.5-7B (DC 296).
 
 The same three-stage pipeline (Compressor sweep -> Processor bisection
 -> Targeter semantic analysis) that locates non-trivial zeros of the
@@ -344,4 +344,4 @@ ax.text(0.5, -0.165,
         fontsize=9, color=INK_SOFT, style="italic",
         ha="center", va="top")
 
-save_fig("figB_2_empirical_zeros")
+save_fig("figB_6_empirical_zeros")
