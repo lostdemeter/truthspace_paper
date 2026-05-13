@@ -175,6 +175,8 @@ For our purposes the boom is important because it is **detectable using integer 
 
 None of these methods uses floating-point arithmetic. They are integer-only detectors of a phase transition that conventionally requires high-precision zeta computation.
 
+The 80th-zero boom is the same kind of structural transition as the spectral-fragility break of the Borwein integral at $n = 7$ (Appendix B.3) and the 21 non-trivial zeros of the Qwen2-7B logit gap located by the same three-stage pipeline (Appendix B.8) — three views, on three signals, of the same operating-regime threshold.
+
 ### 9.5.2 PSLQ and the Same Phenomenon
 
 The **PSLQ integer-relation algorithm** finds small-integer relations $a_1 x_1 + a_2 x_2 + \cdots + a_n x_n = 0$ between real numbers. PSLQ exhibits the same boom behaviour:

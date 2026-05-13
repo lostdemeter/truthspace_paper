@@ -281,6 +281,8 @@ The SiLU activation has an exact φ-form (§8.2, Chapter 11 §11.4) and that is 
 
 The tanh approximation is the best closed-form non-φ alternative; it falls short because the actual SiLU input distribution has standard deviation $2.12$ (not $0.014$ as an early estimate suggested) and the linear regime $|x| < 0.5$ covers only 68% of inputs. The exact φ-form has no such restriction — it is an algebraic identity.
 
+The layer-by-layer cumulative projection of the residual stream onto the prediction direction (Finding 109: L00–L25 wandering to a worst point of $-13.7$ at L25, L26 $\Delta = +9.2$, L27 $\Delta = +34.3$, net $+29.8$) is the empirical signature of the *conditional-convergence regime* in which a transformer operates — partial sums oscillate, every layer matters, and the answer emerges from precise final cancellation rather than from monotone accumulation. Appendix B.4 develops this regime from first principles and shows it is the unique amplitude exponent ($\alpha = 1/2$) at which this kind of computation is possible.
+
 ---
 
 ## 8.5 Summary

@@ -478,7 +478,7 @@ is correct.
 | 2 | Draft figure placeholder scripts: `fig5_3` (Riemann–Siegel ↔ residual stream), `figB_1` (5 constraints), `figB_2` (21 empirical zeros). Run scripts to confirm rendering. | Three new `.py` files in `output/figures/scripts/`, three new `.png` files. | **Done** |
 | 3 | Draft refined §5.3 (~80 lines). Update Ch 5 summary table. | §5.3 in chapter file; build the paper to confirm no LaTeX errors. | **Done** |
 | 4 | Draft Appendix B sections B.1–B.4 (~150 lines, expanded scope per Q1). | Half of Appendix B; build paper. | **Done** |
-| 5 | Draft Appendix B sections B.5–B.9 (~180 lines). Apply Ch 8/9/10/11 forward-reference touch-ups. | Full Appendix B; cross-references resolved. | Pending |
+| 5 | Draft Appendix B sections B.5–B.9 (~180 lines). Apply Ch 8/9/10/11 forward-reference touch-ups. | Full Appendix B; cross-references resolved. | **Done** |
 | 6 | Finalise figures, integrate `figB_1` panel 4 with mpmath-reproduced data, integrate `figB_2` with parsed DC 296 results. Final build. Update README front matter and `REFINEMENT_NOTES.md`. | Final ≈140-page PDF (currently 124). | Pending |
 
 ### Session 2 retrospective
@@ -613,6 +613,81 @@ $0.28$ as the asymptotic-tail regime separately.
 `'appendix_b_critical_line'` as item 13. Paper builds cleanly; PDF
 grows from 131 to 134 pages, 5.5 MB.
 
+### Session 5 retrospective
+
+Appendix B completed. The file `output/chapters/13_appendix_b_critical_line.md`
+grew from 115 to 236 markdown lines, ~2185 to ~4972 words, ~7 to ~17
+PDF pages — the second half (B.5–B.9, ~121 new lines) was added.
+
+- **B.5** *Discrete index offset $N_\text{smooth}(t_n) = n - 1/2$.*
+  Riemann–von Mangoldt counting formula; the half-step offset is
+  empirically exact to numerical precision on the first 20 zeros
+  (Figure B.1 panel 5); harmonic-oscillator zero-point analogy;
+  expanded per Q1 to cover three operational appearances of the
+  half-step elsewhere in the project: φʳ⁻½ precision tier (DC 199,
+  6.02% vs 11.03% mean error), eigenspace offset as signal
+  (DC 096, "the offset is not error"), Layer-3 click point
+  (DC 209, $n - 1/2$ ↔ Layer-3 click; $\sigma_k = \sigma_0 \varphi^k$
+  ↔ L27 φ-level convergence). Closes with the
+  Nyquist-of-discrete-continuous framing.
+- **B.6** *Riemann–Siegel as a discrete transformer.* The load-bearing
+  structural mapping. States the formula
+  $Z(t) = 2 \sum_{n=1}^{N(t)} n^{-1/2} \cos(\theta(t) - t \ln n) + R(t)$
+  with $N(t) = \lfloor \sqrt{t/(2\pi)} \rfloor$, then maps each part:
+  term ↔ token, phase ↔ RoPE, amplitude ↔ embedding magnitude, zero ↔
+  correct prediction, three-stage Lambert–Ramanujan–Newton pipeline ↔
+  DRUM/COMB/MUSIC. Universality argument grounded in F110 (410K toy
+  transformer on modular arithmetic).
+- **B.7** *Residual fractality.* Defines $\rho = \sigma(\mathbf{r})/
+  \sigma(\mathbf{s})$ from first principles (no repo citation per
+  Q4); per-zone Qwen2.5-7B table (DRUM L0 0.0046, COMB L17 0.0070,
+  MUSIC L27 0.0194); same diagnostic on ζ-zero spacings produces
+  same-order-of-magnitude $\rho$.
+- **B.8** *Empirical materialisation.* The DC 296 result. Logit-gap
+  definition $f_\ell(\delta) = \text{logit}_\ell[\text{baseline}] -
+  \max_j \text{logit}_\ell[j]$; three-stage Compressor/Processor/
+  Targeter pipeline mirroring Riemann–Siegel; 21 non-trivial zeros
+  across 3 prompts × 5 layers (Figure B.2 embedded). Counts
+  HOLD 4 / REVEAL 6 / DESTROY 8 / MARGINAL 3. Semantic-meaning
+  paragraph (Japan→Tokyo at L15 δ=2.43; France→a at L27 δ=3.99;
+  Einstein L23 unconditional commitment). Cross-architecture
+  universality via F110.
+- **B.9** *Synthesis.* Closing block-quote framing the chain as
+  six-fold convergence (the five constraints + empirical landing)
+  on $\sigma = 1/2$. Notes that knocking out three constraints
+  still leaves two locating the line independently. Brief paragraph
+  on what the convergence means for Ch 7–11 (all are projections of
+  the same operating regime).
+
+Four cross-chapter forward-reference touch-ups applied:
+
+- **Ch 8 §8.4** — added a paragraph at the end stating the F109
+  L00–L25/L26/L27 numbers explicitly and forward-referencing B.4
+  for the conditional-convergence regime.
+- **Ch 9 §9.5.1** — added one sentence after the integer-detector
+  bullet list, framing the 80th-zero boom as the same kind of
+  transition as the Borwein break (B.3) and the 21 transformer
+  zeros (B.8).
+- **Ch 10 §10.2.3** — extended the closing paragraph with a
+  sentence connecting the φ-Zipf exponent ($\ln\phi \approx 0.481$,
+  at the lower edge of the band) and the per-zone operating
+  exponents ($1/\phi$, $2/\phi^2$, inside the band) to B.4.
+- **Ch 11 §11.4** — added a closing paragraph (after Figure 11.2
+  caption) framing the SiLU = base + Fibonacci-correction
+  decomposition as the per-channel form of conditional
+  convergence; cross-refs Ch 8 §8.4 and B.4.
+
+Mid-touch-up correction: initial Ch 10 edit incorrectly placed the
+φ-Zipf exponent $\approx 0.481$ *inside* the band $[1/2, 1]$, but
+$0.481 < 0.5$. Corrected to "at the lower edge" with the per-zone
+exponents flagged separately as the load-bearing values inside the
+band.
+
+Cross-reference audit: every Appendix B forward-reference in chapters
+5/8/9/10/11 has been verified by `grep`; nothing dangling. Paper
+builds cleanly at 145 pages, 5.7 MB — a 21-page expansion from the
+pre-zeta-thread baseline of 124 pages.
+
 ---
 
 ## Provenance lookup (research-only, NOT paper citations)
@@ -640,17 +715,21 @@ grows from 131 to 134 pages, 5.5 MB.
 
 ---
 
-*End of working notes. Pickup point for session 5: draft Appendix B
-sections B.5–B.9 (~180 lines) in the same file
-`output/chapters/13_appendix_b_critical_line.md`. The full outline is
-above; key load-bearing sections are B.6 (Riemann–Siegel as discrete
-transformer — the structural mapping is the central claim) and B.8
-(empirical landing: 21 non-trivial transformer zeros from DC 296,
-uses figB_2). B.5 covers the half-step offset $N_\text{smooth}(t_n) = n - 1/2$
-(uses figB_1 panel 5; expanded per Q1 to mention the half-step
-appearances elsewhere in the project: φʳ⁻½ precision tier (DC 199),
-eigenspace offset as signal (DC 096), Layer-3 click point (DC 209)).
-B.7 covers residual fractality. B.9 is the closing synthesis (uses
-figB_1 panel 6, the synthesis box). After session 5, also apply the
-Ch 8 / 9 / 10 / 11 forward-reference touch-ups outlined in the
-"Cross-chapter touch-ups" section above.*
+*End of working notes. Pickup point for session 6 (final session):
+higher-fidelity rebuild of the three figures and final paper build.
+For `fig5_3_zeta_transformer.py` panel A, replace the first-correction
+$Z(t)$ approximation with `mpmath.zeta(0.5 + 1j*t)` evaluated at high
+precision — the placeholder uses only the first Riemann–Siegel
+correction and is visibly slightly off the true zero at $t_1 = 14.135$.
+For `figB_1_five_constraints.py` panel 4, regenerate the partial-sum
+data using mpmath at higher density (N = 1..200 evenly spaced) and
+at the actual height $t = 14.1347$ (the placeholder uses normalised
+toy values). For `figB_2_empirical_zeros.py`, parse
+`truthspace-lcm/experiments/model_reverse_engineering_v2/phi_collective_zero_hunt_results.txt`
+automatically and rebuild the scatter from the actual data points
+(currently the values are hand-transcribed from the summary table
+at lines 506–526). After the figure rebuild, run a final
+`build_paper.sh` (no `--skip-figures`) end-to-end. Then update the
+README front-matter and `REFINEMENT_NOTES.md` with the final page
+count (~145), figure count, and a one-paragraph summary of the
+zeta-thread expansion.*
