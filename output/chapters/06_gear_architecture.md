@@ -124,28 +124,16 @@ The Hamilton product is *non-commutative*: in general $Q_1 \times Q_2 \neq Q_2 \
 
 The 5-step **Structure → Bootstrap → Match → Compose → Learn** loop is the design discipline we adopted after observing the same shape recur across four independent gear implementations — `PythonCodeGear`, `EmergentClassifierGear`, `HolographicPatternSpace`, and `PlotCorpus`. We promoted it to an explicit contract for every new gear:
 
-```
-┌─────────────────────────────────────────────────────┐
-│  1. STRUCTURE — Define what the space looks like     │
-│     Patterns, signatures, templates, modules         │
-│                                                       │
-│  2. BOOTSTRAP — Seed with initial examples            │
-│     Use LLM to generate missing pieces               │
-│     Transform seeds into geometry immediately         │
-│                                                       │
-│  3. MATCH — Find the right structure for input        │
-│     Project input into the space                     │
-│     Find nearest/best matching structure              │
-│                                                       │
-│  4. COMPOSE — Adapt structure to specific request     │
-│     Extract parameters from input                    │
-│     Modify the matched structure                     │
-│                                                       │
-│  5. LEARN — Self-improve from usage                   │
-│     Record successes and failures                    │
-│     Promote temporary structures to permanent         │
-└─────────────────────────────────────────────────────┘
-```
+1. **STRUCTURE** — *Define what the space looks like.*
+   Patterns, signatures, templates, modules.
+2. **BOOTSTRAP** — *Seed with initial examples.*
+   Use an LLM to generate missing pieces; transform seeds into geometry immediately.
+3. **MATCH** — *Find the right structure for the input.*
+   Project the input into the space; locate the nearest / best-matching structure.
+4. **COMPOSE** — *Adapt the matched structure to the specific request.*
+   Extract parameters from the input; modify the structure to fit.
+5. **LEARN** — *Self-improve from usage.*
+   Record successes and failures; promote temporary structures to permanent ones.
 
 The discipline appears in three forms in the codebase, each at a different scale:
 
