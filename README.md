@@ -2,7 +2,7 @@
 
 **From the Vacuum Forming Hypothesis to the $\phi$-Computer Proof**
 
-📄 **[Read the full paper (PDF)](output/paper.pdf)** | 12 chapters + Appendix B, 4 code demos, 26 figures, 145 pages
+📄 **[Read the full paper (PDF)](output/paper.pdf)** | 12 chapters + Appendix B, 4 code demos, 30 figures, 147 pages
 
 All figures are generated from scripts in `output/figures/scripts/` — tweak and regenerate with `python3 output/figures/scripts/figX_Y_title.py`.
 
