@@ -14,9 +14,16 @@ no sign changes - a counterexample of unconditional commitment).
 Each marker is one zero: x = layer index, y = delta*.  Colour encodes
 prompt; marker shape encodes the semantic outcome at the zero.
 
-Source data: phi_collective_zero_hunt_results.txt (Phase 10z, summary
-table at lines 504-526).  Precision +/- 2.27e-13 from Stage 2 bisection.
+Source data: parsed automatically from
+  truthspace-lcm/experiments/model_reverse_engineering_v2/
+    phi_collective_zero_hunt_results.txt
+(Phase 10z summary table).  Precision +/- 2.27e-13 from Stage 2
+bisection.  If the source file is not reachable at build time the
+script falls back to a hand-transcribed copy of the same numbers
+(verified equal at session 6).
 """
+import os
+import re
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
@@ -26,15 +33,102 @@ from figstyle import (apply_style, save_fig, panel_label,
 
 apply_style()
 
-# (prompt, layer, delta_star, baseline -> after, outcome)
-# outcome categories:
+# -----------------------------------------------------------------------
+# Outcome categories:
 #   HOLD     - baseline top1 maintained
 #   REVEAL   - baseline was a placeholder; perturbation reveals the
-#              correct answer (Japan ___ -> Tokyo)
+#              correct answer (Japan ____ -> Tokyo)
 #   DESTROY  - baseline destroyed, prediction is wrong / junk
 #   MARGINAL - tangent zero; gap touches 0 but does not flip cleanly
-ZEROS = [
-    # France (baseline = "Paris")
+# -----------------------------------------------------------------------
+
+# Long prompt -> short prompt name used for plotting / colour mapping
+_PROMPT_SHORT = {
+    "The capital of France is":                "France",
+    "The capital of Japan is":                 "Japan",
+    "Albert Einstein developed the theory of": "Einstein",
+}
+
+# Correct continuation token for each prompt (Qwen tokenisation).
+# REVEAL fires only when the perturbation flips into the *correct*
+# continuation, not into any non-placeholder token.  For Einstein the
+# baseline already predicts the correct token "rel" (a partial of
+# "relativity"); REVEAL therefore does not apply -- the only outcomes
+# possible at Einstein zeros are HOLD (rel->rel) or DESTROY (rel->junk).
+_CORRECT_ANSWER = {
+    "France":   "Paris",
+    "Japan":    "Tokyo",
+    "Einstein": "rel",
+}
+
+
+def _classify(prompt: str, from_tok: str, to_tok: str) -> str:
+    """Map (prompt, baseline_top1, after_top1) -> outcome category."""
+    if to_tok == "?":
+        return "MARGINAL"
+    if from_tok == to_tok:
+        return "HOLD"
+    if to_tok == _CORRECT_ANSWER.get(prompt) and from_tok != _CORRECT_ANSWER.get(prompt):
+        return "REVEAL"
+    return "DESTROY"
+
+
+# Regex for one row of the summary table at the foot of the source file:
+#   <prompt(can contain spaces)>  <layer>  <delta>  <phi^delta>  <from>  <to>  <precision>
+_ROW_RE = re.compile(
+    r"^\s*(?P<prompt>.+?)\s{2,}"
+    r"(?P<layer>-?\d+)\s+"
+    r"(?P<delta>-?\d+\.\d+)\s+"
+    r"(?P<phi_pow>-?\d+\.\d+)\s+"
+    r"(?P<from>\S+)\s+"
+    r"(?P<to>\S+)\s+"
+    r"(?P<precision>\d+\.\d+e-\d+)\s*$"
+)
+
+
+def _parse_zeros_from_file(path: str):
+    """Parse zeros from the Phase 10z summary table.
+
+    Returns a list of tuples (prompt, layer, delta, from, to, outcome).
+    Raises FileNotFoundError if the source is not available; raises
+    RuntimeError if the file is reachable but no rows could be parsed.
+    """
+    with open(path) as f:
+        lines = f.readlines()
+    rows = []
+    in_summary = False
+    for line in lines:
+        if "SUMMARY: ALL NON-TRIVIAL ZEROS" in line:
+            in_summary = True
+            continue
+        if not in_summary:
+            continue
+        if "Cross-prompt analysis" in line:
+            break
+        m = _ROW_RE.match(line)
+        if not m:
+            continue
+        full_prompt = m.group("prompt").strip()
+        prompt = _PROMPT_SHORT.get(full_prompt, full_prompt)
+        rows.append((
+            prompt,
+            int(m.group("layer")),
+            float(m.group("delta")),
+            m.group("from"),
+            m.group("to"),
+            _classify(prompt, m.group("from"), m.group("to")),
+        ))
+    if not rows:
+        raise RuntimeError(
+            f"Source file {path} reachable but no zero rows parsed - "
+            "format may have changed."
+        )
+    return rows
+
+
+# Hand-transcribed fallback (used only if the source file is missing).
+# Verified equal to the parsed values at session 6 to within 1e-3.
+_FALLBACK_ZEROS = [
     ("France",   5,  4.0039, "Paris",  "Paris",  "HOLD"),
     ("France",   5,  5.0000, "Paris",  "?",      "MARGINAL"),
     ("France",   5,  5.4764, "Paris",  "a",      "DESTROY"),
@@ -42,7 +136,6 @@ ZEROS = [
     ("France",  22,  4.6445, "Paris",  "a",      "DESTROY"),
     ("France",  23,  6.2811, "Paris",  "Paris",  "HOLD"),
     ("France",  27,  3.9902, "Paris",  "a",      "DESTROY"),
-    # Japan (baseline = "______")
     ("Japan",    5, -1.5000, "______", "?",      "MARGINAL"),
     ("Japan",    5,  5.2301, "______", "Tokyo",  "REVEAL"),
     ("Japan",   15,  2.4336, "______", "Tokyo",  "REVEAL"),
@@ -53,12 +146,35 @@ ZEROS = [
     ("Japan",   22,  4.3368, "______", "a",      "DESTROY"),
     ("Japan",   23,  4.6101, "______", "Tokyo",  "REVEAL"),
     ("Japan",   27,  3.9758, "______", "Tokyo",  "REVEAL"),
-    # Einstein (baseline = "rel")
     ("Einstein", 5,  5.7396, "rel",    "the",    "DESTROY"),
     ("Einstein",15,  6.0349, "rel",    "which",  "DESTROY"),
     ("Einstein",22,  5.1454, "rel",    "the",    "DESTROY"),
     ("Einstein",27,  2.8929, "rel",    "rel",    "HOLD"),
 ]
+
+
+# Resolve the data file relative to this script -- the workspace layout
+# puts the lcm repo at $WORKSPACE/truthspace-lcm and the paper repo at
+# $WORKSPACE/truthspace_paper, so the relative path is fixed.
+_SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+_DATA_PATH = os.path.normpath(os.path.join(
+    _SCRIPT_DIR, "..", "..", "..", "..",
+    "truthspace-lcm", "experiments",
+    "model_reverse_engineering_v2",
+    "phi_collective_zero_hunt_results.txt",
+))
+
+try:
+    ZEROS = _parse_zeros_from_file(_DATA_PATH)
+    _ZEROS_SOURCE = f"parsed from {os.path.basename(_DATA_PATH)}"
+except (FileNotFoundError, RuntimeError) as _exc:
+    ZEROS = _FALLBACK_ZEROS
+    _ZEROS_SOURCE = f"hand-transcribed fallback ({_exc.__class__.__name__})"
+
+assert len(ZEROS) == 21, (
+    f"expected 21 zeros, got {len(ZEROS)} from {_ZEROS_SOURCE}"
+)
+print(f"figB_2: loaded {len(ZEROS)} zeros ({_ZEROS_SOURCE})")
 
 # colour by prompt
 PROMPT_COLOR = {

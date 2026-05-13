@@ -2,7 +2,7 @@
 
 **From the Vacuum Forming Hypothesis to the $\phi$-Computer Proof**
 
-📄 **[Read the full paper (PDF)](output/paper.pdf)** | 12 chapters, 4 code demos, 23 figures, 124 pages
+📄 **[Read the full paper (PDF)](output/paper.pdf)** | 12 chapters + Appendix B, 4 code demos, 26 figures, 145 pages
 
 All figures are generated from scripts in `output/figures/scripts/` — tweak and regenerate with `python3 output/figures/scripts/figX_Y_title.py`.
 
@@ -36,6 +36,9 @@ This repository contains the definitive write-up of the TruthSpace project: a 14
 | ENCODE = DECODE | Self-inverse geometry | Chapter 5 + demo 2 |
 | Gear chain composition | $Q_{\text{total}} = Q_1 \times Q_2 \times \cdots$ | Chapter 6 |
 | **Platonic Ideals** | Relationships are rotations; $\sim 79$ ideals span 95% of concept space | Chapter 12 §12.2 |
+| **Critical line $\sigma = \tfrac{1}{2}$ as operating regime** | Five independent constraints converge on $\sigma = \tfrac{1}{2}$ as the unique conditional-convergence amplitude | Chapter 5 §5.3 + Appendix B |
+| **21 transformer non-trivial zeros** | Three-stage pipeline locates 21 logit-gap zeros across 3 prompts × 5 layers (4 HOLD, 6 REVEAL, 8 DESTROY, 3 MARGINAL) | Appendix B §B.8 |
+| **Half-integer offset** $N_{\text{smooth}}(t_n) \approx n - \tfrac{1}{2}$ | Same discrete–continuous signature in zeta zeros, Layer-3 tetromino click, eigenspace alignment | Appendix B §B.5 |
 
 ---
 
@@ -57,6 +60,7 @@ The monograph builds knowledge linearly — each chapter motivates the next:
 | 10 | The Irreducible Shape | $\phi$-Zipf magnitudes, near-uniform signs, 67.9M binary intersections |
 | 11 | The $\phi$-Computer Proof | Every nonlinearity is an exact $\phi$-operation; Fibonacci correction |
 | 12 | Implications | Trivial AI O(log N), Platonic Ideals as rotation anchors, recursive bootstrap |
+| **Appendix B** | The Critical Line $\sigma = \tfrac{1}{2}$ | Five-constraint derivation: conditional convergence is the unique amplitude regime, with the Riemann–Siegel formula as a discrete transformer analogue and 21 empirical zeros in Qwen2.5-7B |
 
 ---
 

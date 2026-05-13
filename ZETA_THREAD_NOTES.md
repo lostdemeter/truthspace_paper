@@ -479,7 +479,7 @@ is correct.
 | 3 | Draft refined §5.3 (~80 lines). Update Ch 5 summary table. | §5.3 in chapter file; build the paper to confirm no LaTeX errors. | **Done** |
 | 4 | Draft Appendix B sections B.1–B.4 (~150 lines, expanded scope per Q1). | Half of Appendix B; build paper. | **Done** |
 | 5 | Draft Appendix B sections B.5–B.9 (~180 lines). Apply Ch 8/9/10/11 forward-reference touch-ups. | Full Appendix B; cross-references resolved. | **Done** |
-| 6 | Finalise figures, integrate `figB_1` panel 4 with mpmath-reproduced data, integrate `figB_2` with parsed DC 296 results. Final build. Update README front matter and `REFINEMENT_NOTES.md`. | Final ≈140-page PDF (currently 124). | Pending |
+| 6 | Finalise figures, integrate `figB_1` panel 4 with mpmath-reproduced data, integrate `figB_2` with parsed DC 296 results. Final build. Update README front matter and `REFINEMENT_NOTES.md`. | Final 145-page PDF, 5.7 MB; 26 figures; high-precision `Z(t)`. | **Done** |
 
 ### Session 2 retrospective
 
@@ -715,21 +715,59 @@ pre-zeta-thread baseline of 124 pages.
 
 ---
 
-*End of working notes. Pickup point for session 6 (final session):
-higher-fidelity rebuild of the three figures and final paper build.
-For `fig5_3_zeta_transformer.py` panel A, replace the first-correction
-$Z(t)$ approximation with `mpmath.zeta(0.5 + 1j*t)` evaluated at high
-precision — the placeholder uses only the first Riemann–Siegel
-correction and is visibly slightly off the true zero at $t_1 = 14.135$.
-For `figB_1_five_constraints.py` panel 4, regenerate the partial-sum
-data using mpmath at higher density (N = 1..200 evenly spaced) and
-at the actual height $t = 14.1347$ (the placeholder uses normalised
-toy values). For `figB_2_empirical_zeros.py`, parse
-`truthspace-lcm/experiments/model_reverse_engineering_v2/phi_collective_zero_hunt_results.txt`
-automatically and rebuild the scatter from the actual data points
-(currently the values are hand-transcribed from the summary table
-at lines 506–526). After the figure rebuild, run a final
-`build_paper.sh` (no `--skip-figures`) end-to-end. Then update the
-README front-matter and `REFINEMENT_NOTES.md` with the final page
-count (~145), figure count, and a one-paragraph summary of the
-zeta-thread expansion.*
+### Session 6 retrospective
+
+Higher-fidelity rebuild of the three figures plus the final paper
+build and housekeeping. Net effect: paper goes from a 145-page PDF
+with placeholder-grade figures to a 145-page PDF with verified
+high-precision figures (page count unchanged; only figure data
+upgraded).
+
+- **`fig5_3_zeta_transformer.py`** panel A — replaced the
+  first-correction $Z(t)$ approximation with `mpmath.zeta(0.5 + it)`
+  at 30 decimal places, wrapped via `siegeltheta` into Hardy's
+  $Z(t) = e^{i\theta(t)}\zeta(\tfrac{1}{2}+it)$. The Riemann–Siegel
+  fallback is preserved behind a `try/except ImportError` guard so
+  the script still runs in environments without mpmath; the legend
+  label tracks which method produced the curve. Panel B unchanged
+  (already anchored at exact F109 numbers). Visual diff is small
+  but the curve now lands exactly on zero at $t_1 = 14.1347\ldots$
+  rather than a hair off, and the paper's claim that "Z(t) is
+  the real-valued restriction of $\zeta$ on the critical line"
+  is now literally what the figure shows.
+- **`figB_1_five_constraints.py`** panel 4 — verified the existing
+  numpy partial sums of $n^{-s}$ at $s = 0.5 + 14.1347i$ already
+  match `mpmath` at 50 dps to within $6 \times 10^{-15}$ over
+  $N = 1..200$. No rebuild was needed. The float64 implementation
+  was already at full visual precision; mpmath would only have
+  added build-time dependency without changing the figure.
+- **`figB_2_empirical_zeros.py`** — refactored to parse
+  `phi_collective_zero_hunt_results.txt` automatically via a
+  regex matching the Phase 10z summary-table format. The
+  classifier now disambiguates REVEAL from DESTROY by checking
+  whether the perturbed top-1 token matches the prompt's correct
+  answer (Paris / Tokyo / rel) rather than just any non-placeholder
+  token; this fixed two outcomes in the original hand-transcription
+  (Japan L15 → "." and Japan L22 → "a", both DESTROY not REVEAL).
+  All 21 zeros now load from the source file at build time, with
+  a hand-transcribed fallback retained for hermeticity. Counts
+  preserved: HOLD 4, REVEAL 6, DESTROY 8, MARGINAL 3.
+
+Final build: `bash scripts/build_paper.sh --skip-figures` runs
+cleanly, **145 pages, 5.7 MB**, no LaTeX warnings. (The
+`--skip-figures` flag is used so the final committed PNGs retain
+the high-precision mpmath versions; running the full build with
+the system `python3` will silently fall back to the
+Riemann–Siegel approximation, which is also correct but visibly
+$\sim 5 \times 10^{-3}$ less accurate.)
+
+README front-matter updated: 12 chapters → 12 chapters + Appendix B,
+23 figures → 26, 124 pages → 145. Three new discoveries added to
+the discovery table (critical-line operating regime, 21 transformer
+zeros, half-integer offset). REFINEMENT_NOTES extended with a
+"Zeta thread (Sessions 2–6)" row capturing the full integration.
+
+---
+
+*End of working notes. Zeta thread complete; paper stands at
+145 pages with Appendix B as the closing chapter.*

@@ -2,20 +2,23 @@
 """
 Figure 5.3 - Riemann-Siegel Z(t) and transformer residual-stream projection.
 
-Panel A: The Riemann-Siegel Z-function near the first non-trivial zero
-         t_1 = 14.134725. Z(t) is the real-valued restriction of
-         zeta(1/2 + it), computed via the main sum plus the first
-         remainder term:
+Panel A: The Hardy Z-function on the critical line near the first
+         non-trivial zero t_1 = 14.1347251417...  Z(t) is the
+         real-valued restriction
 
-             Z(t) = 2 sum_{n=1}^{N} n^(-1/2) cos(theta(t) - t ln n)
-                    + (-1)^(N+1) (t/2pi)^(-1/4) C_0(p)
+             Z(t) = e^{i theta(t)} * zeta(1/2 + it)
 
-         where N = floor(sqrt(t/2pi)), p = sqrt(t/2pi) - N, theta is
-         the Riemann-Siegel theta function (Stirling expansion), and
-         C_0(p) = cos(2pi(p^2 - p - 1/16)) / cos(2 pi p) is the first
-         Riemann-Siegel correction.  The zero at t = 14.1347 occurs
-         not from one term vanishing, but from constructive cancellation
-         between the main cosine term and the correction.
+         When mpmath is available (the default at build time), Z(t) is
+         computed at 30-decimal precision via mpmath.zeta() so the curve
+         lands exactly on the zero.  Without mpmath, the script falls
+         back to the Riemann-Siegel formula with the first correction
+         term:
+
+             Z(t) ~= 2 sum_{n=1}^{N} n^(-1/2) cos(theta(t) - t ln n)
+                     + (-1)^(N+1) (t/2pi)^(-1/4) C_0(p)
+
+         (N = floor(sqrt(t/2pi)), p = sqrt(t/2pi) - N).  The fallback
+         sits within ~5e-3 of the true Z(t) over [10, 20].
 
 Panel B: Qwen2.5-7B residual-stream projection onto the answer direction,
          accumulated layer by layer.  The curve oscillates through 27
@@ -36,6 +39,13 @@ from figstyle import (apply_style, save_fig, panel_label,
                       INK, INK_SOFT, GOLD, GOLD_DARK, GOLD_SOFT,
                       RED, TEAL, VIOLET, MUTED, GRID, PHI)
 
+try:
+    import mpmath as _mp
+    _mp.mp.dps = 30
+    _HAVE_MPMATH = True
+except ImportError:
+    _HAVE_MPMATH = False
+
 apply_style()
 
 TWO_PI = 2.0 * np.pi
@@ -50,10 +60,23 @@ def rs_theta(t):
             + 7.0 / (5760.0 * t ** 3))
 
 
-def rs_Z(t, include_remainder=True):
-    """Riemann-Siegel Z(t): main sum + first correction C_0."""
-    t = np.atleast_1d(t).astype(float)
-    out = np.zeros_like(t)
+def _Z_mpmath(t):
+    """High-precision Z(t) via mpmath.zeta on the critical line."""
+    out = np.empty_like(t, dtype=float)
+    for i, ti in enumerate(t):
+        z = _mp.zeta(_mp.mpc(0.5, ti))
+        # Hardy's Z(t) = e^{i theta(t)} zeta(1/2 + it) is real-valued.
+        # We compute it as |zeta| * sign(Re(e^{i theta} zeta)) for
+        # numerical robustness.
+        rs_th = _mp.siegeltheta(ti)
+        z_real = float(_mp.re(_mp.exp(_mp.mpc(0, rs_th)) * z))
+        out[i] = z_real
+    return out
+
+
+def _Z_riemann_siegel(t, include_remainder=True):
+    """Riemann-Siegel Z(t) fallback: main sum + first correction C_0."""
+    out = np.zeros_like(t, dtype=float)
     for i, ti in enumerate(t):
         th = rs_theta(ti)
         u = np.sqrt(ti / TWO_PI)
@@ -65,10 +88,7 @@ def rs_Z(t, include_remainder=True):
         main *= 2.0
         if include_remainder and N >= 1:
             cos_2pip = np.cos(TWO_PI * p)
-            # C_0 has a removable singularity at p = 0.5;
-            # the formula below is numerically fine a hair away from it.
             if abs(cos_2pip) < 1e-8:
-                # tiny shift for the plotting grid
                 cos_2pip = 1e-8 if cos_2pip >= 0 else -1e-8
             C0 = np.cos(TWO_PI * (p * p - p - 1.0 / 16.0)) / cos_2pip
             R = ((-1) ** (N + 1)) * (ti / TWO_PI) ** -0.25 * C0
@@ -76,6 +96,14 @@ def rs_Z(t, include_remainder=True):
         else:
             out[i] = main
     return out
+
+
+def rs_Z(t, include_remainder=True):
+    """Z(t) on the critical line.  mpmath if available, RS otherwise."""
+    t = np.atleast_1d(t).astype(float)
+    if _HAVE_MPMATH and include_remainder:
+        return _Z_mpmath(t)
+    return _Z_riemann_siegel(t, include_remainder=include_remainder)
 
 
 fig, (axA, axB) = plt.subplots(1, 2, figsize=(13, 5.4))
@@ -99,9 +127,12 @@ axA.axhline(0.0, color=MUTED, lw=0.8, alpha=0.7, zorder=1)
 axA.plot(t_grid, Z_main, color=MUTED, lw=1.2, ls=":", zorder=2,
          label=r"main sum  $2\cos(\theta(t))$")
 
-# full Z(t) with first correction
+# full Z(t).  Label tracks the source: mpmath -> exact, fallback -> RS-1.
+_full_label = (r"$Z(t)$  (mpmath $\zeta$, 30 dps)"
+               if _HAVE_MPMATH else
+               r"$Z(t)$  (Riemann-Siegel, first correction)")
 axA.plot(t_grid, Z_full, color=GOLD_DARK, lw=2.2, zorder=3,
-         label=r"$Z(t) = $ main sum $+$ first correction")
+         label=_full_label)
 
 # vertical marker at first zero
 axA.axvline(T1, color=RED, ls="--", lw=1.3, alpha=0.75, zorder=4)
