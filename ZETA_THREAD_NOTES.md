@@ -475,11 +475,52 @@ is correct.
 | Session | Focus | Deliverable | Status |
 |---|---|---|---|
 | 1 | Research synthesis + plan + verify open questions 1, 2 | This file with Q1, Q2 resolved | **Done** |
-| 2 | Draft figure placeholder scripts: `fig5_3` (Riemann–Siegel ↔ residual stream), `figB_1` (5 constraints), `figB_2` (21 empirical zeros). Run scripts to confirm rendering. | Three new `.py` files in `output/figures/scripts/`, three new `.png` files. | Pending |
+| 2 | Draft figure placeholder scripts: `fig5_3` (Riemann–Siegel ↔ residual stream), `figB_1` (5 constraints), `figB_2` (21 empirical zeros). Run scripts to confirm rendering. | Three new `.py` files in `output/figures/scripts/`, three new `.png` files. | **Done** |
 | 3 | Draft refined §5.3 (~80 lines). Update Ch 5 summary table. | §5.3 in chapter file; build the paper to confirm no LaTeX errors. | Pending |
 | 4 | Draft Appendix B sections B.1–B.4 (~150 lines, expanded scope per Q1). | Half of Appendix B; build paper. | Pending |
 | 5 | Draft Appendix B sections B.5–B.9 (~180 lines). Apply Ch 8/9/10/11 forward-reference touch-ups. | Full Appendix B; cross-references resolved. | Pending |
 | 6 | Finalise figures, integrate `figB_1` panel 4 with mpmath-reproduced data, integrate `figB_2` with parsed DC 296 results. Final build. Update README front matter and `REFINEMENT_NOTES.md`. | Final ≈140-page PDF (currently 124). | Pending |
+
+### Session 2 retrospective
+
+Three figure scripts produced, all rendering cleanly with `numpy +
+matplotlib` only (no `mpmath`, no `scipy`, no model loading required).
+Each script lives in `output/figures/scripts/` and is built by the
+default `build_paper.sh` glob.
+
+- **`fig5_3_zeta_transformer.py`** (panel A: Riemann-Siegel `Z(t)`
+  near the first non-trivial zero, computed via main sum + first
+  Riemann-Siegel correction `C_0`; panel B: Qwen2.5-7B residual-stream
+  cumulative projection by layer, anchored at the F109 numbers
+  L06 = −1.68, L25 = −13.7, L26 Δ = +9.2, L27 Δ = +34.3, net = +29.8).
+  The two panels share a near-zero baseline so the structural parallel
+  reads instantly: oscillation with a final correction that lands at
+  the right value.
+- **`figB_1_five_constraints.py`** (six-cell 2×3 grid: light-cone
+  envelope `e^{(β−1/2)t}` for β ∈ {0.4, 0.5, 0.6}; conformal-metric
+  geodesics curving onto σ = 1/2; Borwein deviation `|1 − 2 I_n / π|`
+  on log-scale, plateau at 1e-16 for n ≤ 6 then sharp break at n = 7;
+  partial sums of `n^{-s}` showing only σ = 1/2 is conditionally
+  convergent; smooth-count residual `N_smooth(t_n) − (n − 1/2)` for
+  the first 20 zeros; synthesis box with five arrows converging to
+  σ = 1/2). All five panels are independent constraints from
+  different mathematical structures, all locating the same line.
+- **`figB_2_empirical_zeros.py`** (single-panel scatter of all 21
+  zeros found by the three-stage pipeline in DC 296; x-axis = layer
+  ∈ {5, 15, 22, 23, 27}; y-axis = δ\* with secondary axis showing
+  `φ^δ\*` scaling factor; colour by prompt (France / Japan / Einstein),
+  shape by outcome (HOLD / REVEAL / DESTROY / MARGINAL); annotations
+  call out the Japan L15 → Tokyo "correct" zero, the Einstein L27
+  → rel "committed" zero, and the France L22 → a "destroy" zero;
+  Einstein L23 "no zero in [−5, +12]" callout marks the unconditional-
+  commitment counterexample). Counts: HOLD 4, REVEAL 6, DESTROY 8,
+  MARGINAL 3.
+
+All three figures will be regenerated in session 6 with higher-fidelity
+data (mpmath for `Z(t)` precision, parsed `phi_collective_zero_hunt_results.txt`
+for the empirical zeros). The placeholders are accurate enough that
+the paper's argument can be drafted against them in sessions 3–5
+without further adjustment.
 
 ---
 
@@ -508,10 +549,13 @@ is correct.
 
 ---
 
-*End of working notes. Pickup point for session 2: draft the three
-figure placeholder scripts (`fig5_3`, `figB_1`, `figB_2`) using the
-data anchors verified in Q1/Q2. Reference experiment file:
-`truthspace-lcm/experiments/model_reverse_engineering_v2/phase10z5_dirichlet_processor.py`
-(panel 4 of figB_1) and
-`truthspace-lcm/experiments/model_reverse_engineering_v2/phi_collective_zero_hunt_results.txt`
-(figB_2, 550 lines of structured zero data).*
+*End of working notes. Pickup point for session 3: draft the
+refined §5.3 (~80 lines) in `output/chapters/05_encode_decode.md`
+using the §5.3 outline above. The three figures (`fig5_3`, `figB_1`,
+`figB_2`) are ready and embedded as placeholders; §5.3 should embed
+`fig5_3` and forward-reference Appendix B for the deeper chain.
+Drop the `CRITICAL_LINE = 0.5` code snippet (it is unit-ball
+normalisation, not a ζ connection — see "Refined §5.3 outline" above).
+Drop the over-constrained / balance / under-determined trichotomy.
+Update the Ch 5 summary table (`output/chapters/05_encode_decode.md`
+end-of-chapter checklist) to reflect the refined claim.*
