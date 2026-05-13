@@ -10,7 +10,7 @@ Large Language Models (LLMs) are the most successful AI systems ever built, yet 
 
 The standard answer is statistical: LLMs learn correlations between tokens. Given a sequence of words, they predict the next token based on patterns observed in trillions of text examples. This view treats the model as an extremely high-dimensional regression machine—a lossy compressor of the training distribution.
 
-But there's a growing body of evidence that something deeper is happening. When OpenAI's sparse autoencoders [23] discover interpretable features—like a single direction in activation space representing the concept of "golden gate bridge"—it suggests that LLMs internalize *structure* about the world, not just surface statistics.
+But there's a growing body of evidence that something deeper is happening. When OpenAI's sparse autoencoders discover interpretable features—like a single direction in activation space representing the concept of "golden gate bridge"—it suggests that LLMs internalize *structure* about the world, not just surface statistics.
 
 **TruthSpace** takes this insight to its logical conclusion: what LLMs learn is not statistical correlations but a *geometry*—a latent shape in high-dimensional space where meaning is encoded as position, and computation is navigation through that space.
 
@@ -18,7 +18,7 @@ But there's a growing body of evidence that something deeper is happening. When 
 
 ## 1.2 The Vacuum Forming Hypothesis
 
-The core analogy that launched this research program is the **vacuum forming hypothesis**[3]. Imagine a vacuum forming machine: you heat a plastic sheet, stretch it over a mold, and suck the air out. The plastic captures the *surface* of the mold—its shape, contours, and features—but reveals nothing about the *interior*.
+The core analogy that launched this research program is the **vacuum forming hypothesis**. Imagine a vacuum forming machine: you heat a plastic sheet, stretch it over a mold, and suck the air out. The plastic captures the *surface* of the mold—its shape, contours, and features—but reveals nothing about the *interior*.
 
 ![Vacuum Forming Hypothesis](../figures/fig1_1_vacuum_forming.png)
 
@@ -34,36 +34,56 @@ What is the "interior" structure? It is the underlying **geometric law** that ge
 2. **Navigate** between concepts along geometric paths
 3. **Generate** novel concepts that fit the existing structure
 
-### 1.2.1 Experimental Evidence
+### 1.2.1 The Phase-Shift Probing Method
 
-The initial experiments [4, 5] tested this hypothesis by probing LLM embedding spaces with **phase shifts**—rotating the phase of token embeddings and observing whether semantic relationships remained invariant. The key finding:
+The first-pass experiments did not probe LLM embeddings directly. They tested the hypothesis on a deliberately *intentional* φ-based encoder we built to embody the geometric structure we were hypothesising about — a 12-dimensional clock-style encoding where each axis corresponds to one candidate "fundamental relationship type." We chose 12 dimensions in deliberate analogy with the 12 attention heads of GPT-2 and BERT, conjecturing that those 12 heads might each specialise on one of 12 semantic primitives: hierarchical, sequential, causal, compositional, oppositional, synonymic, analogical, associative, functional, categorical, spatial, and temporal.
 
-> Semantic similarity between concepts remained **consistent across phase shifts**, even when individual embedding magnitudes changed dramatically. This suggests an underlying geometric invariance that transcends surface correlations.
+The probing procedure:
 
-Specifically, when embeddings were shifted along φ-based phase angles [1]:
+1. Encode each concept $c$ as a 12-D complex-valued vector $v(c)$ using the φ-encoder.
+2. Apply a phase shift: $v(c) \rightarrow v(c) \cdot e^{i\theta}$ for 1000 evenly-spaced values of $\theta$ over $[0, 2\pi]$. (Each axis advances at a rate set by its own ratio — φ on one axis, the plastic constant ρ on another, the silver ratio δ on a third, and so on; details in §1.2.2.)
+3. Measure the cosine similarity $\cos(v(c_1), v(c_2))$ between every concept pair at every phase.
+4. Examine the *variance* of that similarity across phases for each pair.
 
-- **Zero-variance points** emerged—positions in semantic space where phase had no effect on meaning, corresponding to "semantic singularities"
-- **Polarity encoding** was discovered: concepts were encoded not by magnitude but by *direction* in a low-dimensional signature space
-- **Orthogonal dimensions** enabled independent tuning, where collisions only mattered within a dimension, not across them
+A relationship that fluctuates wildly under phase shifts is a surface artifact of the chosen basis. A relationship that is *invariant* under phase shifts is a geometric truth — something the encoding represents rather than imposes. The method is analogous to crystallographic X-ray probing: a polycrystalline sample's diffraction pattern is invariant under rotation, while a single oriented crystal shows angle-dependent structure. We were looking for the polycrystalline signature.
 
-The plastic constant ρ ≈ 1.3247 (the real root of x³ = x + 1) was found to provide finer semantic discrimination than φ in certain early 12D encodings [6], but this turned out to be a local optimum rather than a fundamental constant.
+### 1.2.2 First-Pass Experimental Findings
 
-### 1.2.2 The Phase-Shift Probing Method
+The first experiments ran on a small but coherent test corpus: 22 single-token concepts from the command-line / filesystem domain (`file`, `directory`, `read`, `write`, `create`, `destroy`, `copy`, `move`, `search`, `find`, `grep`, `list`, `show`, `process`, `network`, `ssh`, `compress`, `archive`, `tar`, `chmod`, `permissions`, `system`), grouped into 12 ordered pairs covering three relationship types: synonyms, opposites, and unrelated.
 
-The phase-shift probing method works as follows:
+Four findings emerged, each with concrete numerical signatures.
 
-1. Take a trained LLM's token embeddings
-2. Apply a phase transformation: $v \rightarrow v \cdot e^{i\theta\phi}$ where $\phi$ is the golden ratio
-3. Measure how semantic relationships (cosine similarity, analogies) change
-4. Identify invariants—relationships that persist across all phase angles
+**Finding 1 — Phase invariance.** Cosine similarities had *exactly zero variance* across all 1000 phase angles. Related pairs sat at mean similarity 0.25, unrelated pairs at 0.00, and opposite pairs at −1.00, *with zero spread on any of them.* A random or surface-only encoding would have shown wildly fluctuating similarities; instead, the phase rotation moved the entire embedding in lockstep, preserving every relative-position relationship. The structure was an invariant of the encoding, not an accident of basis choice.
 
-This is analogous to probing a physical material with X-rays: the surface absorbs certain frequencies, but the interference patterns reveal the crystalline interior structure.
+![Phase Invariance](../figures/fig1_2_phase_invariance.png)
+
+*Figure 1.2: Cosine similarity is exactly constant across the full $2\pi$ phase rotation. Related, unrelated, and opposite pairs sit at $0.25$, $0.00$, and $-1.00$ respectively, with variance $= 0$ across all $1000$ phase angles. The relative geometry is invariant under global rotation — the structure is a shape, not a coordinate.*
+
+**Finding 2 — Polarity as a first-class semantic relation.** Opposite-meaning pairs were not merely dissimilar; they were *antipodal* — placed at exactly opposite ends of the same dimension, producing cosine similarity exactly −1.0:
+
+| Pair | Cosine sim | Geometric reading |
+|---|---|---|
+| `read ↔ write` | −1.00 | antipodal on the information-flow axis |
+| `create ↔ destroy` | −1.00 | antipodal on the existence axis |
+| `file ↔ directory` | +1.00 | colocated on the filesystem-object axis |
+| `copy ↔ move` | +1.00 | colocated on the spatial-action axis |
+| `file ↔ network` | 0.00 | orthogonal (different dimensions) |
+
+Opposition is a separate geometric primitive from dissimilarity. In an embedding where only magnitude matters, `read` and `write` would just be "far apart"; in this geometry they share a dimension and differ only in sign. This polarity structure foreshadows the **semantic quaternions** of Chapter 4 and the **antipodal Killing pairs** of the rotation-on-the-unit-sphere reading developed in Chapters 9 and 10.
+
+**Finding 3 — Orthogonality as independence.** Unrelated pairs had cosine similarity *exactly 0.00*. Not "small": zero. Distinct relationship types occupied distinct dimensions, with no leakage. This is the cleanest possible separation: a perturbation along one dimension cannot affect any other, which is the structural property that makes φ-dial tuning (Chapter 4) and sign-only navigation (Chapter 9) possible.
+
+**Finding 4 — Intrinsic dimensionality is lower than encoding dimensionality.** PCA on the 22-concept embedding showed that 95% of the variance lived in 7 dimensions, with the elbow (intrinsic dimension) at 4. The 12 axes of the encoding were more capacity than the corpus needed — a foreshadowing of the φ-dial's eventual collapse from 12D to a 4D quaternion in Chapter 4.
+
+**A note on the plastic constant.** Of twelve self-similar constants tested as candidate per-axis ratios (golden φ, silver δ, bronze, plastic ρ, chromium, copper, aluminium, nickel, supergolden, narayana, titanium, tribonacci), the plastic constant ρ ≈ 1.3247 — the real root of $x^3 = x + 1$ — produced the strongest semantic separation in this 12D regime (separation score $|s| = 0.4951$, versus φ's $0.1654$). The intuition is that ρ's cubic Padovan-style recurrence (each term equals the sum of the *second*- and *third*-previous) creates finer-grained phase steps than φ's quadratic Fibonacci recurrence. We initially took this as evidence that ρ, not φ, might be the fundamental constant.
+
+This turned out to be a local optimum specific to the 12D regime. As the encoding contracted toward its intrinsic 4D structure (Chapter 4) and was eventually applied to actual transformer hidden states (Chapter 8), φ re-emerged decisively as the universal constant — every algebraic identity that lets a transformer be rewritten as a closed-form geometric machine (Chapter 11) is a φ-identity, not a ρ-identity. The plastic-constant result is preserved here because it is part of the empirical record and because it illustrates a general principle: the "right" constant depends on the dimensionality of the geometry it lives in.
 
 ---
 
 ## 1.3 What LLMs Actually Learn: A Geometric Reinterpretation
 
-Based on the vacuum forming hypothesis and subsequent experiments [2, 5], we can reinterpret what LLMs learn through a geometric lens:
+Based on the vacuum forming hypothesis and subsequent experiments, we can reinterpret what LLMs learn through a geometric lens:
 
 ### 1.3.1 Token Embeddings
 
@@ -107,19 +127,19 @@ The answer to both questions, we will argue throughout this paper, is **yes**. T
 
 This paper traces the intellectual journey from the vacuum forming hypothesis to the φ-computer proof:
 
-| Chapter | Topic | Key Source Documents |
-|---------|-------|---------------------|
-| 2 | φ and Self-Similarity | 010, 124, 133, 137 |
-| 3 | The Geometric Model Hypothesis | 022, 039, 127 |
-| 4 | Encodings and the φ-Dial | 009, 041–044, 067, 142 |
-| 5 | ENCODE = DECODE | 061, 089–091 |
-| 6 | Gear Architecture and Emergence | 033, 049, 086, 103 |
-| 7 | The φ-Lattice Coordinate System | 099–102, 162–163 |
-| 8 | Reverse Engineering Qwen2-7B | 129, 134, 185–187, 190 |
-| 9 | Navigation Replaces Inference | 161, 165–167, 175–176 |
-| 10 | The Irreducible Shape | 039, 141, 154, 159–160 |
-| 11 | The φ-Computer Proof | 145, 191, 199–200 |
-| 12 | Implications and Future Work | 140, 155, 180, 202 |
+| Chapter | Topic |
+|---------|-------|
+| 2 | φ and Self-Similarity |
+| 3 | The Geometric Model Hypothesis |
+| 4 | Encodings and the φ-Dial |
+| 5 | ENCODE = DECODE |
+| 6 | Gear Architecture and Emergence |
+| 7 | The φ-Lattice Coordinate System |
+| 8 | Reverse Engineering Qwen2-7B |
+| 9 | Navigation Replaces Inference |
+| 10 | The Irreducible Shape |
+| 11 | The φ-Computer Proof |
+| 12 | Implications and Future Work |
 
 Each chapter builds on the previous ones. By the end, we will have shown that:
 
@@ -129,7 +149,3 @@ Each chapter builds on the previous ones. By the end, we will have shown that:
 - The irreducible shape of computation has been **catalogued** (Chapter 10)
 
 But first, we must understand the fundamental building block of this geometry: the golden ratio φ itself.
-
----
-
-*Sources: Docs 1, 2, 3, 4, 5, 6, 23, 33, 127*

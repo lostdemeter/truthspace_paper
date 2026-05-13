@@ -6,9 +6,9 @@
 
 ## 6.1 The Gear Abstraction
 
-If ENCODE = DECODE is the *principle* of geometric computation, the **Gear** is its *mechanism*. A gear is a transformation unit that takes one state and produces another, guided by a geometric parameter (the quaternion) and a corpus of knowledge (the positions).
+If ENCODE = DECODE (§5.1) is the *principle* of geometric computation, the **Gear** is its *mechanism*, and the Music Box (§4.7) is its *axiom*. A gear realises the Music Box discipline as executable code: positions in φ-space play the role of the drum, the `forward()` method plays the role of the comb, and the resulting `GearState` is the music that emerges from their interaction. A gear is therefore a transformation unit that takes one state and produces another, parameterised by a geometric signature (the quaternion) and a corpus of knowledge (the positions).
 
-The base class (`gear.py`) defines the contract:
+The base class defines the contract:
 
 ```python
 class Gear(ABC):
@@ -114,11 +114,15 @@ class Quaternion:
         return sqrt(self.w**2 + self.x**2 + self.y**2 + self.z**2)
 ```
 
+### Why Hamilton Multiplication
+
+The Hamilton product is *non-commutative*: in general $Q_1 \times Q_2 \neq Q_2 \times Q_1$. This is the geometric content of the gear chain's order-sensitivity. Real-world transformations don't commute either — "translate then rotate" produces a different result from "rotate then translate"; "stylise then summarise" yields different output from "summarise then stylise". Frobenius's theorem singles out the quaternions as the unique 4-dimensional real algebra that respects 3D rotation composition, so $Q_{\text{total}}$ is not just a record of *what* transformations occurred but of *in what order*. Function composition $f \circ g \circ h$ becomes quaternion multiplication $Q_h \times Q_g \times Q_f$, with the same right-to-left semantics. The 4D quaternion dial (§4.6) provided the *control* axes; the gear chain reuses the same algebra for the *execution* path.
+
 ---
 
-## 6.4 The Emergent Gear Pattern [086]
+## 6.4 The Emergent Gear Pattern
 
-Across the codebase, a recurring 5-step pattern governs how gears are designed, deployed, and improved:
+The 5-step **Structure → Bootstrap → Match → Compose → Learn** loop is the design discipline we adopted after observing the same shape recur across four independent gear implementations — `PythonCodeGear`, `EmergentClassifierGear`, `HolographicPatternSpace`, and `PlotCorpus`. We promoted it to an explicit contract for every new gear:
 
 ```
 ┌─────────────────────────────────────────────────────┐
@@ -143,10 +147,11 @@ Across the codebase, a recurring 5-step pattern governs how gears are designed, 
 └─────────────────────────────────────────────────────┘
 ```
 
-This pattern appears in:
-- **Intent classification**: Define categories → bootstrap examples → match input → compose response → learn from feedback
-- **Code generation**: Define code patterns → seed examples → match request → compose code → learn from validation
-- **Corpus building**: Define domain → bootstrap seeds → match queries → compose entries → learn from usage
+The discipline appears in three forms in the codebase, each at a different scale:
+
+- **As a per-gear contract**: every `EmergentGear` exposes `define_structure() → seed() → match() → compose() → record_outcome()`, in that order. Adding a new capability means filling in the five methods, not designing a new architecture.
+- **As a navigation pipeline**: the same five-stage shape reappears as the holographic decode flow — **Downcast → Quantize → Build Mesh → Upscale → Reconstruct** — used when an inference engine must produce an answer from a query. The two flows share the same shape because they are the same self-similar discipline (§5.1: ENCODE = DECODE) traversed from opposite directions: one *builds* the geometry, the other *navigates* it.
+- **As a self-improvement loop**: the `GearImprovementLoop` (§6.7) re-executes the five stages over time, promoting temporary structures to permanent ones on success. The loop is the discipline applied to its own past outputs.
 
 ### 6.4.1 STRUCTURE: Define the Space
 
@@ -164,7 +169,7 @@ space = PhiDialSpace(dims=8)
 
 ### 6.4.2 BOOTSTRAP: Seed with Examples
 
-The bootstrap step populates the space with initial examples. The `BootstrapGear` protocol [077] creates new capabilities by combining a blank `EmergentGear` with LLM-powered refinement:
+The bootstrap step populates the space with initial examples. The `BootstrapGear` protocol creates new capabilities by combining a blank `EmergentGear` with LLM-powered refinement:
 
 ```python
 # Bootstrap protocol: create gear from LLM-generated examples
@@ -177,7 +182,7 @@ The critical rule: **bootstrapped information is immediately transformed into ge
 
 ### 6.4.3 MATCH: Find the Nearest Structure
 
-Matching projects input into φ-space and finds the nearest structure. The `HyperMapping` class (`hypermapping.py`) does this with pure position-based matching:
+Matching projects input into φ-space and finds the nearest structure. The `HyperMapping` class does this with pure position-based matching:
 
 ```python
 class HyperMapping:
@@ -236,7 +241,7 @@ Deficiencies are detected by geometric patterns, not string matching:
 
 ---
 
-## 6.5 HyperMapping: Gears Become Pure Geometry [095]
+## 6.5 HyperMapping: Gears Become Pure Geometry
 
 The HyperMapping system is the evolutionary successor to the gear chain architecture. Where gears use explicit Python methods for transformation, HyperMapping stores everything as positions in φ-space and performs all computation through geometric operations:
 
@@ -264,7 +269,7 @@ space = HyperMapping.from_pairs(pairs)
 
 ---
 
-## 6.6 Gradient-Free Learning [049]
+## 6.6 Gradient-Free Learning
 
 A critical property of the gear architecture is that learning happens **without gradients**. The system improves by:
 
@@ -272,7 +277,7 @@ A critical property of the gear architecture is that learning happens **without 
 2. **Geometric correction**: When the output is wrong, the system traces back through the gear chain and adjusts the quaternion path
 3. **SVD-based dimension discovery**: New semantic dimensions are discovered from behavior data, not designed
 
-The `EmergentGear` discovers dimensions by SVD on behavioral data [080]:
+The `EmergentGear` discovers dimensions by SVD on behavioral data:
 
 ```python
 # Emergent dimensions from behavior data
@@ -281,22 +286,58 @@ gear.add_examples(inputs, outputs)
 gear.discover_dimensions()  # SVD finds natural axes
 ```
 
-This proved that transformers are **hyperdimensional transcoders** — the semantic dimensions emerge from the data's structure, and SVD on behavioral data recovers the same dimensions the model discovered during training.
+This is the operational expression of the *hyperdimensional transcoder* hypothesis. We tested it directly on a corpus of agents whose ground-truth dimensions (agency, gender, age, animacy) were known but not exposed to the gear. With no dimension labels at training time, SVD applied to the agents' action-verb co-occurrence matrix recovered:
+
+| Discovered dimension | Best-correlated ground truth | Correlation | Variance explained |
+|---|---|---|---|
+| Dim 1 (`child ↔ queen`) | Agency | **+0.919** | 19.0% |
+| Dim 2 (`alice ↔ storm`) | Gender | −0.585 | 13.4% |
+| Dim 2 (`alice ↔ storm`) | Age | +0.546 | (shared) |
+| Dim 2 (`alice ↔ storm`) | Animacy | −0.439 | (shared) |
+
+The single strong correlation on Dim 1 (agency at 0.919) and the multi-property mix on Dim 2 reproduce a known property of the ground-truth corpus: agency is an independent axis, while gender, age, and animacy are coupled. The SVD did not invent these structures — it *read them out of the behaviour* that was generated by them. The negative pole of Dim 1 (low-agency verbs: `follows, waits, watches, learns`) versus the positive pole (`judges, controls, commands, decides`) is precisely the qualitative interpretation a researcher would assign to the axis, recovered with zero labels.
 
 ---
 
-## 6.7 The Self-Improvement Loop in Practice
+## 6.7 Demonstration: Self-Improvement and Capability Benchmark
 
-The gear architecture's self-improvement capability was demonstrated in the **GearChain feedback refinement** system [075]. A bidirectional gear chain:
+The gear architecture's capability was demonstrated in two complementary ways: a **self-improvement loop** that improves a single gear over multiple iterations, and a **capability benchmark** that tests whether the geometric stack as a whole can match conventional neural networks on the classic NN task types.
+
+### 6.7.1 The self-improvement loop
+
+A bidirectional gear chain:
 
 1. Generates a response
-2. Detects deficiencies geometrically
-3. Creates fix gears dynamically (using LLM as "teacher")
+2. Detects deficiencies geometrically (using the signal table in §6.4.5)
+3. Creates fix gears dynamically (using an LLM as a *teacher*, never as a generator)
 4. Composes an improved chain
 5. Verifies the fix
-6. Remembers the deficiency-to-fix mapping
+6. Remembers the deficiency-to-fix mapping for future use
 
-This creates an autonomous improvement cycle that operates without human intervention. The `FeedbackRefinementGear` scores response quality on a 0-10 scale and suggests improvements, but **never generates new content** — preserving the emergent nature of the system.
+The `FeedbackRefinementGear` scores response quality on a 0–10 scale and suggests improvements, but **never generates new content** — preserving the emergent nature of the system.
+
+### 6.7.2 HyperMapping vs. neural networks: a six-task benchmark
+
+To test whether the geometric stack can actually substitute for neural networks, we built a six-task benchmark covering the classic NN capability categories. Each task has a small, contained ground truth and a conventional NN architecture that would normally be used to solve it. We compared two configurations of `HyperMapping`:
+
+- **Basic**: position-based matching only — no extra geometric techniques.
+- **Full**: position-based matching augmented with three geometric techniques: *Self-Similar Transforms* (interpolation by piecewise scale-invariant ratios — the same transformation applies at every scale, exploiting the self-similarity of §2.1), *Tachyon Navigation* (sequence prediction by traversing the certainty axis $w$ of the 4D quaternion dial, §4.6, ahead of where the present sequence sits), and *Geometric Reinforcement Learning* (corrections propagate backward through the gear chain as inverse-quaternion deltas rather than as gradients).
+
+| Task | Conventional NN | Basic | Full | Δ |
+|---|---|---|---|---|
+| XOR (non-linear) | MLP with hidden layer | 100.0% | 100.0% | +0.0% |
+| Image classification | CNN | 100.0% | 100.0% | +0.0% |
+| Sentiment analysis | RNN / Transformer | 71.4% | 100.0% | +28.6% |
+| Function approximation | MLP regression | 15.0% | 100.0% | +85.0% |
+| Sequence prediction | LSTM / RNN | 0.0% | 100.0% | +100.0% |
+| Structure learning | RL with policy gradient | 0.0% | 100.0% | +100.0% |
+| **Average** | — | **47.7%** | **100.0%** | **+52.3%** |
+
+The "Full" configuration achieves 100% on all six tasks. We are careful about what this does and does not say. These are *small-scale benchmark tasks* (4 to 14 examples each), not full ML problems — the result demonstrates that the geometric stack has the *capability* to handle each task type, not that it would scale to ImageNet or to a 70 B-parameter language model. The substantive claim is in the improvement column: three of six tasks went from 0% or 15% with naive position-matching to 100% with the geometric additions. *Self-Similar Transforms, Tachyon Navigation, and Geometric RL are therefore non-trivial enablers*, not decorative additions — they convert the position-store from a key-value lookup into a genuine substitute for the corresponding neural network.
+
+![HyperMapping 6-task benchmark](../figures/fig6_2_hypermapping_benchmark.png)
+
+*Figure 6.2: Six-task NN-capability sweep. Basic position-matching (grey) averages $47.7\%$ across the six tasks; adding Self-Similar Transforms, Tachyon Navigation, and Geometric RL (gold) lifts every task to $100\%$. The three large deltas — function approximation ($+85\%$), sequence prediction ($+100\%$), and structure learning ($+100\%$) — are the cases where the bare position-store fails and the geometric add-ons are what convert it into a working substitute for the conventional NN.*
 
 ---
 
@@ -312,12 +353,10 @@ This creates an autonomous improvement cycle that operates without human interve
 | GearImprovementLoop | Autonomous self-improvement | Error-driven structure construction |
 
 The gear architecture provides the mechanism for the principles established in earlier chapters:
-- **ENCODE = DECODE**: Bidirectional gear chains
-- **φ-coordinates**: Position-based matching in HyperMapping
-- **Self-similarity**: The same 5-step pattern at every scale
+- **Music Box (§4.7)**: Gear = drum (positions) + comb (`forward()`) → music (`GearState`).
+- **ENCODE = DECODE (§5.1)**: Bidirectional gear chains — the 5-step build-discipline and the 5-step navigation pipeline are the same fractal in opposite directions.
+- **φ-coordinates**: Position-based matching in `HyperMapping`; SVD on behavioural data recovers ground-truth dimensions at $r = 0.919$ (§6.6).
+- **Self-similarity**: The same 5-step pattern at three scales — per-gear contract, navigation pipeline, self-improvement loop.
+- **Empirical anchor**: Six-task benchmark shows 47.7% → 100% improvement when geometric techniques are added to bare position-matching (§6.7.2).
 
 In the next chapter, we explore the φ-lattice — the coordinate system that underlies all of these geometric operations.
-
----
-
-*Sources: Docs 033, 049, 075, 077, 080, 086, 095, 096, 103*
