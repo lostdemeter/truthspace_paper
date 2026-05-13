@@ -36,6 +36,7 @@ This repository contains the definitive write-up of the TruthSpace project: a 14
 | ENCODE = DECODE | Self-inverse geometry | Chapter 5 + demo 2 |
 | Gear chain composition | $Q_{\text{total}} = Q_1 \times Q_2 \times \cdots$ | Chapter 6 |
 | **Platonic Ideals** | Relationships are rotations; $\sim 79$ ideals span 95% of concept space | Chapter 12 §12.2 |
+| ***Critical-line thread (Appendix B)*** | | |
 | **Critical line $\sigma = \tfrac{1}{2}$ as operating regime** | Five independent constraints converge on $\sigma = \tfrac{1}{2}$ as the unique conditional-convergence amplitude | Chapter 5 §5.3 + Appendix B |
 | **21 transformer non-trivial zeros** | Three-stage pipeline locates 21 logit-gap zeros across 3 prompts × 5 layers (4 HOLD, 6 REVEAL, 8 DESTROY, 3 MARGINAL) | Appendix B §B.8 |
 | **Half-integer offset** $N_{\text{smooth}}(t_n) \approx n - \tfrac{1}{2}$ | Same discrete–continuous signature in zeta zeros, Layer-3 tetromino click, eigenspace alignment | Appendix B §B.5 |
@@ -85,7 +86,7 @@ python3 output/code/04_phi_computer_demo/phi_computer_proof_demo.py
 
 ## For Derivative Projects
 
-This repository is intentionally self-contained. The twelve chapters plus the four runnable demos in `output/code/` are the complete reference. Derivative projects — such as a Bloch-sphere reorganisation of OLMo2, a memory-injection toolkit for any transformer, or a from-scratch $\phi$-lattice model — should be able to:
+This repository is intentionally self-contained. The twelve chapters, Appendix B, and the four runnable demos in `output/code/` are the complete reference. Derivative projects — such as a Bloch-sphere reorganisation of OLMo2, a memory-injection toolkit for any transformer, or a from-scratch $\phi$-lattice model — should be able to:
 
 1. **Read this paper** as the theoretical foundation.
 2. **Use the four code demos** as ground-truth implementations of the $\phi$-primitives. Every function in those demos passes the exact equivalence tests stated in the paper.
