@@ -110,7 +110,11 @@ def caption(ax, text: str, *, y=-0.18, **kw) -> None:
 def save_fig(name: str, *, pad=0.35) -> None:
     here = os.path.dirname(os.path.abspath(__file__))
     out  = os.path.normpath(os.path.join(here, "..", f"{name}.png"))
+    # Strip Software/Source/CreationTime so identical visual output ->
+    # identical bytes -> no git churn on rebuilds.
     plt.savefig(out, dpi=200, bbox_inches="tight", pad_inches=pad,
-                facecolor=PAPER)
+                facecolor=PAPER,
+                metadata={"Software": None, "Source": None,
+                          "CreationTime": None})
     plt.close()
     print(f"saved {os.path.basename(out)}")

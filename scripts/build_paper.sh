@@ -10,13 +10,37 @@ OUTPUT_DIR="$PROJECT_DIR/output"
 
 echo "=== Building TruthSpace Paper ==="
 
+# Pick a Python that has mpmath (needed for fig5_3's high-precision Z(t)).
+# Override with FIG_PY=/path/to/python; otherwise we probe common venvs.
+# The figure scripts all fall back gracefully if mpmath is missing, so
+# the build still succeeds either way -- this just preserves precision.
+pick_fig_py() {
+    if [ -n "${FIG_PY:-}" ] && "$FIG_PY" -c "import mpmath" 2>/dev/null; then
+        echo "$FIG_PY"; return
+    fi
+    for cand in python3 \
+                "$HOME/cleanup/srt_windsurf/.venv/bin/python3" \
+                "$HOME/.venv/bin/python3" \
+                "$PROJECT_DIR/.venv/bin/python3"; do
+        if command -v "$cand" >/dev/null 2>&1 && "$cand" -c "import mpmath" 2>/dev/null; then
+            echo "$cand"; return
+        fi
+    done
+    echo "python3"   # last resort: scripts will use the fallback path
+}
+
 # Step 1: Regenerate figures (optional, skip with --skip-figures)
 if [ "${1:-}" != "--skip-figures" ]; then
-    echo "[1/4] Regenerating figures..."
+    FIG_PY_RESOLVED="$(pick_fig_py)"
+    if "$FIG_PY_RESOLVED" -c "import mpmath" 2>/dev/null; then
+        echo "[1/4] Regenerating figures (using $FIG_PY_RESOLVED, mpmath OK)..."
+    else
+        echo "[1/4] Regenerating figures (using $FIG_PY_RESOLVED, no mpmath -- fig5_3 will use Riemann-Siegel fallback)..."
+    fi
     cd "$OUTPUT_DIR/figures/scripts"
     for fig in fig*.py; do
         echo "  $fig"
-        python3 "$fig" 2>/dev/null
+        "$FIG_PY_RESOLVED" "$fig" 2>/dev/null
     done
     echo "  Done."
 else
