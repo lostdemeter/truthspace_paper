@@ -151,7 +151,13 @@ $$\phi^{-\log_{\phi}(f)} \;=\; f^{-1}$$
 
 which just restates $1/f = 1/f$. The substantive form uses the *natural* logarithm in the exponent:
 
-$$\phi^{-\ln f} \;=\; \bigl(e^{\ln \phi}\bigr)^{-\ln f} \;=\; e^{-\ln \phi \cdot \ln f} \;=\; f^{-\ln \phi} \;=\; f^{-0.481\ldots}$$
+$$\begin{aligned}
+\phi^{-\ln f}
+  &= \bigl(e^{\ln \phi}\bigr)^{-\ln f}
+   = e^{-\ln \phi \,\cdot\, \ln f} \\
+  &= f^{-\ln \phi}
+   = f^{-0.481\ldots}.
+\end{aligned}$$
 
 This is a **power law with exponent $\ln \phi \approx 0.481$** — a Zipf-style $1/r^{\alpha}$ distribution whose exponent is *derived from φ rather than fitted to data*. Two consequences:
 

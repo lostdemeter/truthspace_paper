@@ -207,6 +207,61 @@ src = re.sub(
     src,
 )
 
+# Promote multi-panel figures to span both columns.  Pandoc emits
+# every alone-in-paragraph image as a column-width \begin{figure}
+# float; for figures whose underlying matplotlib panels are too small
+# to read at that width, rewrite the wrapper to \begin{figure*} so
+# the float spans both columns.  The default \includegraphics width
+# is \linewidth (set in preamble.tex), which expands to \textwidth
+# inside figure*, so no further size-spec rewriting is needed.
+WIDE_FIGS = (
+    # 2-panel side-by-side figures (Panel A / Panel B layouts)
+    'fig2_2_self_similarity', 'fig3_1_shape_coordinates',
+    'fig3_2_cross_architecture', 'fig5_1_encode_decode',
+    'fig5_2_phase_transition', 'fig5_3_zeta_transformer',
+    'fig7_1_phi_lattice', 'fig8_2_discriminant_spectrum',
+    'fig9_1_navigation_vs_inference', 'fig9_2_holographic_gate',
+    'fig10_1_irreducible_shape', 'fig10_2_two_spectra',
+    'fig11_1_phi_computer_proof', 'fig11_2_fibonacci_correction',
+    'fig12_2_platonic_rotation',
+    # 3-panel side-by-side figures
+    'fig2_1_phi_spiral',
+)
+def _maybe_widen(m):
+    block = m.group(0)
+    if any(name in block for name in WIDE_FIGS):
+        # dblfloatfix (loaded in preamble.tex) extends figure*'s
+        # placement options so [!tbp] becomes valid: t = top of page,
+        # b = bottom of page, p = float page, ! = override the float
+        # quota.  Without dblfloatfix, b would be silently ignored
+        # for wide floats.  This keeps wide figures close to their
+        # text reference rather than getting deferred to a float
+        # page.
+        block = block.replace(
+            r'\begin{figure}', r'\begin{figure*}[!tbp]', 1
+        )
+        block = block.replace(r'\end{figure}', r'\end{figure*}', 1)
+    return block
+
+src = re.sub(
+    r'\\begin\{figure\}.*?\\end\{figure\}',
+    _maybe_widen,
+    src,
+    flags=re.DOTALL,
+)
+
+# Insert \FloatBarrier before each top-level \section (which in our
+# pandoc setup corresponds to a chapter heading -- "Chapter 5",
+# "Appendix B" etc.).  This stops floats from migrating across
+# chapter boundaries (e.g. a Chapter 9 figure rising up into the
+# Chapter 7 area) without imposing per-subsection barriers that
+# would isolate wide figures on their own pages.
+src = re.sub(
+    r'(\n)(\\section\{[^}]+\}\\label\{[^}]*\})',
+    r'\1\\FloatBarrier\n\2',
+    src,
+)
+
 open('paper.tex', 'w').write(src)
 PYFIX
 

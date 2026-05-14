@@ -1048,7 +1048,13 @@ $$\phi^{-\log_{\phi}(f)} \;=\; f^{-1}$$
 
 which just restates $1/f = 1/f$. The substantive form uses the *natural* logarithm in the exponent:
 
-$$\phi^{-\ln f} \;=\; \bigl(e^{\ln \phi}\bigr)^{-\ln f} \;=\; e^{-\ln \phi \cdot \ln f} \;=\; f^{-\ln \phi} \;=\; f^{-0.481\ldots}$$
+$$\begin{aligned}
+\phi^{-\ln f}
+  &= \bigl(e^{\ln \phi}\bigr)^{-\ln f}
+   = e^{-\ln \phi \,\cdot\, \ln f} \\
+  &= f^{-\ln \phi}
+   = f^{-0.481\ldots}.
+\end{aligned}$$
 
 This is a **power law with exponent $\ln \phi \approx 0.481$** — a Zipf-style $1/r^{\alpha}$ distribution whose exponent is *derived from φ rather than fitted to data*. Two consequences:
 
@@ -2931,7 +2937,12 @@ The rotation $(\theta_R, \operatorname{axis}_e(I_R))$ has a clean operational in
 
 The most striking implication of the φ-computer proof: if the model can discover true things about itself, and *how to discover* is a property of the model, then discovery is closed under self-application:
 
-$$\text{DISCOVER} \;\to\; \text{DISCOVER}(\text{DISCOVER}) \;\to\; \text{DISCOVER}(\text{DISCOVER}(\text{DISCOVER})) \;\to\; \cdots$$
+$$\begin{aligned}
+&\text{DISCOVER}
+   \;\to\; \text{DISCOVER}(\text{DISCOVER}) \\
+&\quad\;\to\; \text{DISCOVER}(\text{DISCOVER}(\text{DISCOVER}))
+   \;\to\; \cdots
+\end{aligned}$$
 
 The model can discover how to discover.
 
@@ -3297,7 +3308,10 @@ $$Z(t) \;=\; e^{i\theta(t)}\,\zeta\!\left(\tfrac{1}{2} + it\right)$$
 
 is real-valued and shares its zeros with $\zeta(s)$ on the critical line. Riemann's identity, derived by Siegel from his unpublished notes, expresses $Z(t)$ as a finite main sum plus a small remainder:
 
-$$Z(t) \;=\; 2 \sum_{n=1}^{N(t)} \frac{\cos\bigl(\theta(t) - t \ln n\bigr)}{\sqrt{n}} \;+\; R(t), \qquad N(t) = \left\lfloor \sqrt{t/(2\pi)} \right\rfloor.$$
+$$\begin{aligned}
+Z(t) \;&=\; 2 \sum_{n=1}^{N(t)} \frac{\cos\bigl(\theta(t) - t \ln n\bigr)}{\sqrt{n}} \;+\; R(t), \\
+N(t) \;&=\; \left\lfloor \sqrt{t/(2\pi)} \right\rfloor.
+\end{aligned}$$
 
 The remainder $R(t)$ is a rapidly converging asymptotic series of $\Gamma$-derived correction terms (the first one supplies the Riemann–Siegel correction term that lands the value of $Z(t)$ at the right zero in Figure 5.3 of Ch 5). The structural content of the formula is a *finite-length sequence of phase-amplitude pairs* whose superposition equals $Z(t)$ up to a small correction.
 

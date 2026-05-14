@@ -108,7 +108,12 @@ The rotation $(\theta_R, \operatorname{axis}_e(I_R))$ has a clean operational in
 
 The most striking implication of the φ-computer proof: if the model can discover true things about itself, and *how to discover* is a property of the model, then discovery is closed under self-application:
 
-$$\text{DISCOVER} \;\to\; \text{DISCOVER}(\text{DISCOVER}) \;\to\; \text{DISCOVER}(\text{DISCOVER}(\text{DISCOVER})) \;\to\; \cdots$$
+$$\begin{aligned}
+&\text{DISCOVER}
+   \;\to\; \text{DISCOVER}(\text{DISCOVER}) \\
+&\quad\;\to\; \text{DISCOVER}(\text{DISCOVER}(\text{DISCOVER}))
+   \;\to\; \cdots
+\end{aligned}$$
 
 The model can discover how to discover.
 

@@ -163,7 +163,10 @@ $$Z(t) \;=\; e^{i\theta(t)}\,\zeta\!\left(\tfrac{1}{2} + it\right)$$
 
 is real-valued and shares its zeros with $\zeta(s)$ on the critical line. Riemann's identity, derived by Siegel from his unpublished notes, expresses $Z(t)$ as a finite main sum plus a small remainder:
 
-$$Z(t) \;=\; 2 \sum_{n=1}^{N(t)} \frac{\cos\bigl(\theta(t) - t \ln n\bigr)}{\sqrt{n}} \;+\; R(t), \qquad N(t) = \left\lfloor \sqrt{t/(2\pi)} \right\rfloor.$$
+$$\begin{aligned}
+Z(t) \;&=\; 2 \sum_{n=1}^{N(t)} \frac{\cos\bigl(\theta(t) - t \ln n\bigr)}{\sqrt{n}} \;+\; R(t), \\
+N(t) \;&=\; \left\lfloor \sqrt{t/(2\pi)} \right\rfloor.
+\end{aligned}$$
 
 The remainder $R(t)$ is a rapidly converging asymptotic series of $\Gamma$-derived correction terms (the first one supplies the Riemann–Siegel correction term that lands the value of $Z(t)$ at the right zero in Figure 5.3 of Ch 5). The structural content of the formula is a *finite-length sequence of phase-amplitude pairs* whose superposition equals $Z(t)$ up to a small correction.
 
