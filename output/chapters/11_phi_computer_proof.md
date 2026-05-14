@@ -100,7 +100,11 @@ $$\ell(x) \;=\; \operatorname{sign}(x) \cdot \frac{\ln |x|}{\ln \phi} \;=\; \ope
 
 Then SiLU has the exact identity
 
-$$\boxed{\;\text{SiLU}(x) \;=\; \underbrace{x \cdot \sigma\!\left(\ell(x)\right)}_{\phi\text{-sigmoid: geometric base}} \;+\; \underbrace{x \cdot \big(\sigma(x) - \sigma(\ell(x))\big)}_{\text{Fibonacci correction: } \Delta(x)}\;}$$
+$$\boxed{\;\begin{aligned}
+\text{SiLU}(x)
+  \;=\;& \underbrace{x \cdot \sigma\!\left(\ell(x)\right)}_{\phi\text{-sigmoid: geometric base}} \\
+  \;+\;& \underbrace{x \cdot \big(\sigma(x) - \sigma(\ell(x))\big)}_{\text{Fibonacci correction: } \Delta(x)}
+\end{aligned}\;}$$
 
 The identity is trivially exact — the two $\sigma(\ell)$ terms cancel — but the decomposition is operationally meaningful: the first term gates on the *level* (the geometric coordinate), the second term carries the *deviation* between gating-on-level and gating-on-magnitude. A reference implementation (`silu_from_phi` in DC 145):
 
@@ -208,6 +212,11 @@ The φ-computer proof is the capstone of the TruthSpace project. It transforms t
 
 ## 11.9 Summary
 
+```{=latex}
+\begin{table*}[!t]
+\centering
+```
+
 | Operation | Standard Form | φ-Form | Verification |
 |-----------|-------------|--------|--------------|
 | Sigmoid | $1/(1+e^{-x})$ | $1/(1+\phi^{-x/\ln\phi})$ | Error $< 10^{-14}$ |
@@ -217,5 +226,10 @@ The φ-computer proof is the capstone of the TruthSpace project. It transforms t
 | RMSNorm | $x / \text{rms}(x)$ | $x \cdot \phi^{-\log_\phi(\text{rms})}$ | Algebraically identical |
 | Weight storage | float32 (32 bits) | φ-2byte (16 bits, 8+1+7) | $2\times$ compression, $0.9999993$ roundtrip |
 | Token prediction | Full forward pass | φ-computer | **100% accuracy** |
+
+```{=latex}
+\caption*{\textit{Table 11.1: Every standard transformer operation has an exact \texorpdfstring{\(\phi\)}{phi}-form. The Fibonacci correction in the SiLU row is the operationally non-trivial entry; everything else is algebraic re-coordinatisation.}}
+\end{table*}
+```
 
 The single most important row is the **Fibonacci correction**: it is the operationally non-trivial part of the proof — the only entry where the φ-form is not a pure re-coordinatisation of the standard form, but a genuine *decomposition* of SiLU into a geometric base (φ-sigmoid on the level) and a bridge (the $\sigma(x) - \sigma(\ell)$ residual) that carries the negative-zero information of the holographic gate field.

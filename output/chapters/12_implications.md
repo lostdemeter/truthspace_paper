@@ -30,7 +30,12 @@ We do **not** claim this is a general theorem about gradient descent. The hypoth
 
 If weights live on the φ-lattice (Chapter 7) and the irreducible shape is finite (Chapter 10), then a model with $N$ parameters has only $\log_\phi N$ layers of *novel* φ-structure; the rest is the same pattern at different scales. For Qwen2-7B with $7 \times 10^9$ parameters:
 
-$$\log_\phi(7 \times 10^9) \;=\; \frac{\ln(7 \times 10^9)}{\ln \phi} \;\approx\; \frac{22.66}{0.4812} \;\approx\; \mathbf{47}$$
+$$\begin{aligned}
+\log_\phi(7 \times 10^9)
+  &= \frac{\ln(7 \times 10^9)}{\ln \phi} \\
+  &\approx \frac{22.66}{0.4812}
+   \approx \mathbf{47}.
+\end{aligned}$$
 
 A 7-billion-parameter model thus has only **~47 levels of recursive φ-structure**. The rest of the parameters are “surface” — repeats of the same geometric pattern at different φ-levels.
 
@@ -106,14 +111,9 @@ The rotation $(\theta_R, \operatorname{axis}_e(I_R))$ has a clean operational in
 
 ## 12.3 The Recursive Discovery Bootstrap
 
-The most striking implication of the φ-computer proof: if the model can discover true things about itself, and *how to discover* is a property of the model, then discovery is closed under self-application:
+The most striking implication of the φ-computer proof: if the model can discover true things about itself, and *how to discover* is a property of the model, then discovery is closed under self-application. Writing $D \equiv \text{DISCOVER}$:
 
-$$\begin{aligned}
-&\text{DISCOVER}
-   \;\to\; \text{DISCOVER}(\text{DISCOVER}) \\
-&\quad\;\to\; \text{DISCOVER}(\text{DISCOVER}(\text{DISCOVER}))
-   \;\to\; \cdots
-\end{aligned}$$
+$$D \;\to\; D^{2} \;\to\; D^{3} \;\to\; \cdots$$
 
 The model can discover how to discover.
 

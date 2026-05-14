@@ -32,7 +32,10 @@ $$F(t) \;=\; \psi(e^t) - e^t$$
 
 records the deviation of the prime-counting function $\psi(x) = \sum_{p^k \le x} \log p$ from its smooth approximation $x$. The classical *explicit formula* of Riemann and von Mangoldt ties $F(t)$ directly to the non-trivial zeros $\rho = \beta + i\gamma$ of $\zeta$:
 
-$$F(t) \;=\; -\sum_\rho \frac{e^{\rho t}}{\rho} \;-\; \log(2\pi) \;-\; \tfrac{1}{2}\log(1 - e^{-2t}).$$
+$$\begin{aligned}
+F(t) \;=\; & -\sum_\rho \frac{e^{\rho t}}{\rho} - \log(2\pi) \\
+           & - \tfrac{1}{2}\log\!\left(1 - e^{-2t}\right).
+\end{aligned}$$
 
 The Riemann Hypothesis is the statement that $\beta = 1/2$ for every non-trivial zero — every term in the sum has the same exponential rate $e^{t/2}$.
 
@@ -52,7 +55,10 @@ The light-cone constraint alone forces $\beta \le 1/2$ — but it does not by it
 
 **Setup.** The complex plane near the critical strip carries a natural conformal metric
 
-$$g \;=\; e^{2\Phi(s)}\,|ds|^2, \qquad \Phi(s) \;=\; \tfrac{1}{2}\log\bigl|\zeta(s)\,\zeta(1-s)\bigr|,$$
+$$\begin{aligned}
+g \;&=\; e^{2\Phi(s)}\,|ds|^2, \\
+\Phi(s) \;&=\; \tfrac{1}{2}\log\bigl|\zeta(s)\,\zeta(1-s)\bigr|,
+\end{aligned}$$
 
 where $|ds|^2$ is the flat Euclidean metric and $e^{2\Phi}$ is a scalar conformal factor that depends on the size of $\zeta$ at $s$ and at its functional-equation reflection $1-s$. The non-trivial zeros of $\zeta$ are exactly the points where $\Phi(s) \to -\infty$ — they are *singular sinks* of the conformal factor, and equivalently, they are *geodesic attractors* on the metric.
 
@@ -135,7 +141,9 @@ where $\theta$ is the Riemann–Siegel theta function (an explicit $\Gamma$-deri
 
 **The discovery.** Evaluated at the $n$-th non-trivial zero $t_n$, the smooth count is *not* an integer. It is exactly half a step behind:
 
-$$N_{\mathrm{smooth}}(t_n) \;=\; n \,-\, \tfrac{1}{2} \qquad (\text{empirically, to numerical precision}).$$
+$$N_{\mathrm{smooth}}(t_n) \;=\; n \,-\, \tfrac{1}{2}$$
+
+(empirically, to numerical precision).
 
 Figure B.5 shows the residual $N_{\mathrm{smooth}}(t_n) - (n - \tfrac{1}{2})$ for the first 20 zeros: bounded oscillation around zero with RMS $\approx 0.169$ and no drift. The $\tfrac{1}{2}$ is exact; the residual is just the $S(t)$ noise.
 
@@ -222,7 +230,11 @@ The three numbers span a factor of $\sim 4$, exactly the factor by which $\rho$ 
 
 **Setup.** Define the *logit gap* of a transformer at a hidden layer $\ell$ on a given prompt as
 
-$$f_\ell(\delta) \;=\; \mathrm{logit}_{\ell}\bigl[\text{baseline\_top1}\bigr](\delta) \;-\; \max_{j \neq \text{baseline}}\,\mathrm{logit}_\ell[j](\delta),$$
+$$\begin{aligned}
+f_\ell(\delta) \;=\;
+  & \mathrm{logit}_{\ell}\bigl[\text{baseline\_top1}\bigr](\delta) \\
+  & {} - \max_{j \neq \text{baseline}}\,\mathrm{logit}_\ell[j](\delta),
+\end{aligned}$$
 
 where $\delta$ parameterises a phase shift applied to one $\varepsilon$-group of the gate projection at layer $\ell$ (a 2-dimensional sub-block of the SiLU gate, the smallest unit of the 4-state holographic gate of Ch 8 §8.3.5). At $\delta = 0$ the transformer is unperturbed; at non-zero $\delta$ the gate is phase-rotated and the prediction can flip. A *non-trivial zero* of the logit gap is a value $\delta^* \neq 0$ at which $f_\ell(\delta^*) = 0$ — the boundary at which the model's predicted token changes.
 

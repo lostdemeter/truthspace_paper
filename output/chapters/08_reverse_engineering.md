@@ -86,12 +86,22 @@ Since $\phi^{1/\ln(\phi)} = e$ by the definition of the natural logarithm, the t
 
 The φ-computer proof extended this to all nonlinearities:
 
+```{=latex}
+\begin{table*}[!t]
+\centering
+```
+
 | Function | Standard Form | φ-Form |
 |----------|-------------|--------|
 | sigmoid | $1/(1+e^{-x})$ | $1/(1+\phi^{-x/\ln\phi})$ |
 | softmax | $e^{x_i} / \sum e^{x_j}$ | $\phi^{x_i/\ln\phi} / \sum \phi^{x_j/\ln\phi}$ |
 | SiLU | $x \cdot \sigma(x)$ | $x \cdot \text{phi-sigmoid}(x)$ |
 | RMSNorm | $x / \sqrt{\langle x^2 \rangle}$ | $x \cdot \phi^{-\log_\phi(\text{rms})}$ |
+
+```{=latex}
+\caption*{\textit{Table 8.1: Every nonlinearity in a standard transformer has an exact \texorpdfstring{\(\phi\)}{phi}-form. The conversion is algebraic, not approximate.}}
+\end{table*}
+```
 
 **All are exact φ-operations.** There are no approximations.
 
@@ -141,7 +151,10 @@ Transformer attention does not need the full embedding space. For each head, the
 
 The derivation is concrete. Attention scores within a head can be written as
 
-$$Q K^\top = (x W_q^\top)(W_k x^\top) = x \, M \, x^\top, \quad M = W_q^\top W_k$$
+$$\begin{aligned}
+Q K^\top &= (x W_q^\top)(W_k x^\top) \\
+         &= x \, M \, x^\top, \quad M = W_q^\top W_k.
+\end{aligned}$$
 
 so the only thing that matters about $W_q$ and $W_k$ is the **MESH matrix** $M$, of shape $\text{hidden}\times\text{hidden}$ ($3584 \times 3584$). SVD of $M$ gives
 

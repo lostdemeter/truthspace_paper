@@ -22,7 +22,10 @@ If weights are coordinates of a shape (Chapter 3), and the shape is a φ-lattice
 
 The reframing of attention as navigation starts with the **BBP (Bailey-Borwein-Plouffe) algorithm** for computing digits of π:
 
-$$\pi \;=\; \sum_{k=0}^\infty \frac{1}{16^k} \!\left[ \frac{4}{8k+1} - \frac{2}{8k+4} - \frac{1}{8k+5} - \frac{1}{8k+6} \right]$$
+$$\begin{aligned}
+\pi \;=\; \sum_{k=0}^\infty \frac{1}{16^k} \!\Big[\, & \frac{4}{8k+1} - \frac{2}{8k+4} \\
+  & {} - \frac{1}{8k+5} - \frac{1}{8k+6} \,\Big].
+\end{aligned}$$
 
 BBP can compute the $n$-th hexadecimal digit of $\pi$ **without computing digits $0$ through $n-1$**. The key property is that *position encodes information locally* — you do not need the whole sequence to extract a digit, because the geometric structure of the formula lets you jump directly to position $k$ using modular arithmetic.
 
@@ -48,7 +51,12 @@ $$A(Q, K) = \text{softmax}\left(\frac{QK^T}{\sqrt{d}}\right)$$
 
 Its exact φ-rewriting (Chapter 8 §8.2):
 
-$$A_\phi(Q, K) = \phi\text{-softmax}\left(\frac{Q \cdot K}{\sqrt{d}}\right) = \frac{\phi^{Q \cdot K / (\sqrt{d} \cdot \ln\phi)}}{\sum \phi^{Q \cdot K / (\sqrt{d} \cdot \ln\phi)}}$$
+$$\begin{aligned}
+A_\phi(Q, K)
+  &= \phi\text{-softmax}\!\left(\frac{Q \cdot K}{\sqrt{d}}\right) \\
+  &= \frac{\phi^{Q \cdot K / (\sqrt{d} \cdot \ln\phi)}}
+         {\sum \phi^{Q \cdot K / (\sqrt{d} \cdot \ln\phi)}}.
+\end{aligned}$$
 
 This is an algebraic identity — not an approximation — because $\phi^{1/\ln\phi} = e$ by the definition of the natural logarithm. The Q·K dot product becomes a **φ-exponent comparison**, exploitable at $O(N \log N)$ instead of $O(N^2)$ by traversing the lattice structure directly. A reference `PhiAttention` implements this:
 
@@ -212,7 +220,8 @@ Chapter 4 (§4.5) introduced **holographic φ-encoding** as the *static* version
 
 The SiLU/GELU activation function in an MLP block is not a binary on/off switch. The boundaries
 
-$$\pm \log\phi \;\approx\; \pm 0.481, \qquad \text{where } \sigma(\log\phi) = \tfrac{1}{\phi} \text{ exactly}$$
+$$\pm \log\phi \;\approx\; \pm 0.481,
+\quad \sigma(\log\phi) = \tfrac{1}{\phi}.$$
 
 partition its domain into four regions, each with a distinct geometric role:
 

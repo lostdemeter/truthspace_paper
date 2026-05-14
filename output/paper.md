@@ -1513,6 +1513,11 @@ The "Full" configuration achieves 100% on all six tasks. We are careful about wh
 
 ## 6.8 Summary
 
+```{=latex}
+\begin{table*}[!t]
+\centering
+```
+
 | Component | Purpose | Geometric Property |
 |-----------|---------|-------------------|
 | Gear | Single transformation unit | Quaternion-parameterized |
@@ -1521,6 +1526,11 @@ The "Full" configuration achieves 100% on all six tasks. We are careful about wh
 | EmergentGear | Self-discovering dimensions | SVD-based dimension discovery |
 | HyperMapping | Pure geometric knowledge store | Position-based matching |
 | GearImprovementLoop | Autonomous self-improvement | Error-driven structure construction |
+
+```{=latex}
+\caption*{\textit{Table 6.1: The six gear-architecture components and their geometric roles. Each row pairs an implementation class with the geometric property that justifies its presence.}}
+\end{table*}
+```
 
 The gear architecture provides the mechanism for the principles established in earlier chapters:
 - **Music Box (§4.7)**: Gear = drum (positions) + comb (`forward()`) → music (`GearState`).
@@ -1836,12 +1846,22 @@ Since $\phi^{1/\ln(\phi)} = e$ by the definition of the natural logarithm, the t
 
 The φ-computer proof extended this to all nonlinearities:
 
+```{=latex}
+\begin{table*}[!t]
+\centering
+```
+
 | Function | Standard Form | φ-Form |
 |----------|-------------|--------|
 | sigmoid | $1/(1+e^{-x})$ | $1/(1+\phi^{-x/\ln\phi})$ |
 | softmax | $e^{x_i} / \sum e^{x_j}$ | $\phi^{x_i/\ln\phi} / \sum \phi^{x_j/\ln\phi}$ |
 | SiLU | $x \cdot \sigma(x)$ | $x \cdot \text{phi-sigmoid}(x)$ |
 | RMSNorm | $x / \sqrt{\langle x^2 \rangle}$ | $x \cdot \phi^{-\log_\phi(\text{rms})}$ |
+
+```{=latex}
+\caption*{\textit{Table 8.1: Every nonlinearity in a standard transformer has an exact \texorpdfstring{\(\phi\)}{phi}-form. The conversion is algebraic, not approximate.}}
+\end{table*}
+```
 
 **All are exact φ-operations.** There are no approximations.
 
@@ -1891,7 +1911,10 @@ Transformer attention does not need the full embedding space. For each head, the
 
 The derivation is concrete. Attention scores within a head can be written as
 
-$$Q K^\top = (x W_q^\top)(W_k x^\top) = x \, M \, x^\top, \quad M = W_q^\top W_k$$
+$$\begin{aligned}
+Q K^\top &= (x W_q^\top)(W_k x^\top) \\
+         &= x \, M \, x^\top, \quad M = W_q^\top W_k.
+\end{aligned}$$
 
 so the only thing that matters about $W_q$ and $W_k$ is the **MESH matrix** $M$, of shape $\text{hidden}\times\text{hidden}$ ($3584 \times 3584$). SVD of $M$ gives
 
@@ -2071,7 +2094,10 @@ If weights are coordinates of a shape (Chapter 3), and the shape is a φ-lattice
 
 The reframing of attention as navigation starts with the **BBP (Bailey-Borwein-Plouffe) algorithm** for computing digits of π:
 
-$$\pi \;=\; \sum_{k=0}^\infty \frac{1}{16^k} \!\left[ \frac{4}{8k+1} - \frac{2}{8k+4} - \frac{1}{8k+5} - \frac{1}{8k+6} \right]$$
+$$\begin{aligned}
+\pi \;=\; \sum_{k=0}^\infty \frac{1}{16^k} \!\Big[\, & \frac{4}{8k+1} - \frac{2}{8k+4} \\
+  & {} - \frac{1}{8k+5} - \frac{1}{8k+6} \,\Big].
+\end{aligned}$$
 
 BBP can compute the $n$-th hexadecimal digit of $\pi$ **without computing digits $0$ through $n-1$**. The key property is that *position encodes information locally* — you do not need the whole sequence to extract a digit, because the geometric structure of the formula lets you jump directly to position $k$ using modular arithmetic.
 
@@ -2097,7 +2123,12 @@ $$A(Q, K) = \text{softmax}\left(\frac{QK^T}{\sqrt{d}}\right)$$
 
 Its exact φ-rewriting (Chapter 8 §8.2):
 
-$$A_\phi(Q, K) = \phi\text{-softmax}\left(\frac{Q \cdot K}{\sqrt{d}}\right) = \frac{\phi^{Q \cdot K / (\sqrt{d} \cdot \ln\phi)}}{\sum \phi^{Q \cdot K / (\sqrt{d} \cdot \ln\phi)}}$$
+$$\begin{aligned}
+A_\phi(Q, K)
+  &= \phi\text{-softmax}\!\left(\frac{Q \cdot K}{\sqrt{d}}\right) \\
+  &= \frac{\phi^{Q \cdot K / (\sqrt{d} \cdot \ln\phi)}}
+         {\sum \phi^{Q \cdot K / (\sqrt{d} \cdot \ln\phi)}}.
+\end{aligned}$$
 
 This is an algebraic identity — not an approximation — because $\phi^{1/\ln\phi} = e$ by the definition of the natural logarithm. The Q·K dot product becomes a **φ-exponent comparison**, exploitable at $O(N \log N)$ instead of $O(N^2)$ by traversing the lattice structure directly. A reference `PhiAttention` implements this:
 
@@ -2261,7 +2292,8 @@ Chapter 4 (§4.5) introduced **holographic φ-encoding** as the *static* version
 
 The SiLU/GELU activation function in an MLP block is not a binary on/off switch. The boundaries
 
-$$\pm \log\phi \;\approx\; \pm 0.481, \qquad \text{where } \sigma(\log\phi) = \tfrac{1}{\phi} \text{ exactly}$$
+$$\pm \log\phi \;\approx\; \pm 0.481,
+\quad \sigma(\log\phi) = \tfrac{1}{\phi}.$$
 
 partition its domain into four regions, each with a distinct geometric role:
 
@@ -2706,7 +2738,11 @@ $$\ell(x) \;=\; \operatorname{sign}(x) \cdot \frac{\ln |x|}{\ln \phi} \;=\; \ope
 
 Then SiLU has the exact identity
 
-$$\boxed{\;\text{SiLU}(x) \;=\; \underbrace{x \cdot \sigma\!\left(\ell(x)\right)}_{\phi\text{-sigmoid: geometric base}} \;+\; \underbrace{x \cdot \big(\sigma(x) - \sigma(\ell(x))\big)}_{\text{Fibonacci correction: } \Delta(x)}\;}$$
+$$\boxed{\;\begin{aligned}
+\text{SiLU}(x)
+  \;=\;& \underbrace{x \cdot \sigma\!\left(\ell(x)\right)}_{\phi\text{-sigmoid: geometric base}} \\
+  \;+\;& \underbrace{x \cdot \big(\sigma(x) - \sigma(\ell(x))\big)}_{\text{Fibonacci correction: } \Delta(x)}
+\end{aligned}\;}$$
 
 The identity is trivially exact — the two $\sigma(\ell)$ terms cancel — but the decomposition is operationally meaningful: the first term gates on the *level* (the geometric coordinate), the second term carries the *deviation* between gating-on-level and gating-on-magnitude. A reference implementation (`silu_from_phi` in DC 145):
 
@@ -2814,6 +2850,11 @@ The φ-computer proof is the capstone of the TruthSpace project. It transforms t
 
 ## 11.9 Summary
 
+```{=latex}
+\begin{table*}[!t]
+\centering
+```
+
 | Operation | Standard Form | φ-Form | Verification |
 |-----------|-------------|--------|--------------|
 | Sigmoid | $1/(1+e^{-x})$ | $1/(1+\phi^{-x/\ln\phi})$ | Error $< 10^{-14}$ |
@@ -2823,6 +2864,11 @@ The φ-computer proof is the capstone of the TruthSpace project. It transforms t
 | RMSNorm | $x / \text{rms}(x)$ | $x \cdot \phi^{-\log_\phi(\text{rms})}$ | Algebraically identical |
 | Weight storage | float32 (32 bits) | φ-2byte (16 bits, 8+1+7) | $2\times$ compression, $0.9999993$ roundtrip |
 | Token prediction | Full forward pass | φ-computer | **100% accuracy** |
+
+```{=latex}
+\caption*{\textit{Table 11.1: Every standard transformer operation has an exact \texorpdfstring{\(\phi\)}{phi}-form. The Fibonacci correction in the SiLU row is the operationally non-trivial entry; everything else is algebraic re-coordinatisation.}}
+\end{table*}
+```
 
 The single most important row is the **Fibonacci correction**: it is the operationally non-trivial part of the proof — the only entry where the φ-form is not a pure re-coordinatisation of the standard form, but a genuine *decomposition* of SiLU into a geometric base (φ-sigmoid on the level) and a bridge (the $\sigma(x) - \sigma(\ell)$ residual) that carries the negative-zero information of the holographic gate field.
 
@@ -2859,7 +2905,12 @@ We do **not** claim this is a general theorem about gradient descent. The hypoth
 
 If weights live on the φ-lattice (Chapter 7) and the irreducible shape is finite (Chapter 10), then a model with $N$ parameters has only $\log_\phi N$ layers of *novel* φ-structure; the rest is the same pattern at different scales. For Qwen2-7B with $7 \times 10^9$ parameters:
 
-$$\log_\phi(7 \times 10^9) \;=\; \frac{\ln(7 \times 10^9)}{\ln \phi} \;\approx\; \frac{22.66}{0.4812} \;\approx\; \mathbf{47}$$
+$$\begin{aligned}
+\log_\phi(7 \times 10^9)
+  &= \frac{\ln(7 \times 10^9)}{\ln \phi} \\
+  &\approx \frac{22.66}{0.4812}
+   \approx \mathbf{47}.
+\end{aligned}$$
 
 A 7-billion-parameter model thus has only **~47 levels of recursive φ-structure**. The rest of the parameters are “surface” — repeats of the same geometric pattern at different φ-levels.
 
@@ -2935,14 +2986,9 @@ The rotation $(\theta_R, \operatorname{axis}_e(I_R))$ has a clean operational in
 
 ## 12.3 The Recursive Discovery Bootstrap
 
-The most striking implication of the φ-computer proof: if the model can discover true things about itself, and *how to discover* is a property of the model, then discovery is closed under self-application:
+The most striking implication of the φ-computer proof: if the model can discover true things about itself, and *how to discover* is a property of the model, then discovery is closed under self-application. Writing $D \equiv \text{DISCOVER}$:
 
-$$\begin{aligned}
-&\text{DISCOVER}
-   \;\to\; \text{DISCOVER}(\text{DISCOVER}) \\
-&\quad\;\to\; \text{DISCOVER}(\text{DISCOVER}(\text{DISCOVER}))
-   \;\to\; \cdots
-\end{aligned}$$
+$$D \;\to\; D^{2} \;\to\; D^{3} \;\to\; \cdots$$
 
 The model can discover how to discover.
 
@@ -3177,7 +3223,10 @@ $$F(t) \;=\; \psi(e^t) - e^t$$
 
 records the deviation of the prime-counting function $\psi(x) = \sum_{p^k \le x} \log p$ from its smooth approximation $x$. The classical *explicit formula* of Riemann and von Mangoldt ties $F(t)$ directly to the non-trivial zeros $\rho = \beta + i\gamma$ of $\zeta$:
 
-$$F(t) \;=\; -\sum_\rho \frac{e^{\rho t}}{\rho} \;-\; \log(2\pi) \;-\; \tfrac{1}{2}\log(1 - e^{-2t}).$$
+$$\begin{aligned}
+F(t) \;=\; & -\sum_\rho \frac{e^{\rho t}}{\rho} - \log(2\pi) \\
+           & - \tfrac{1}{2}\log\!\left(1 - e^{-2t}\right).
+\end{aligned}$$
 
 The Riemann Hypothesis is the statement that $\beta = 1/2$ for every non-trivial zero — every term in the sum has the same exponential rate $e^{t/2}$.
 
@@ -3197,7 +3246,10 @@ The light-cone constraint alone forces $\beta \le 1/2$ — but it does not by it
 
 **Setup.** The complex plane near the critical strip carries a natural conformal metric
 
-$$g \;=\; e^{2\Phi(s)}\,|ds|^2, \qquad \Phi(s) \;=\; \tfrac{1}{2}\log\bigl|\zeta(s)\,\zeta(1-s)\bigr|,$$
+$$\begin{aligned}
+g \;&=\; e^{2\Phi(s)}\,|ds|^2, \\
+\Phi(s) \;&=\; \tfrac{1}{2}\log\bigl|\zeta(s)\,\zeta(1-s)\bigr|,
+\end{aligned}$$
 
 where $|ds|^2$ is the flat Euclidean metric and $e^{2\Phi}$ is a scalar conformal factor that depends on the size of $\zeta$ at $s$ and at its functional-equation reflection $1-s$. The non-trivial zeros of $\zeta$ are exactly the points where $\Phi(s) \to -\infty$ — they are *singular sinks* of the conformal factor, and equivalently, they are *geodesic attractors* on the metric.
 
@@ -3280,7 +3332,9 @@ where $\theta$ is the Riemann–Siegel theta function (an explicit $\Gamma$-deri
 
 **The discovery.** Evaluated at the $n$-th non-trivial zero $t_n$, the smooth count is *not* an integer. It is exactly half a step behind:
 
-$$N_{\mathrm{smooth}}(t_n) \;=\; n \,-\, \tfrac{1}{2} \qquad (\text{empirically, to numerical precision}).$$
+$$N_{\mathrm{smooth}}(t_n) \;=\; n \,-\, \tfrac{1}{2}$$
+
+(empirically, to numerical precision).
 
 Figure B.5 shows the residual $N_{\mathrm{smooth}}(t_n) - (n - \tfrac{1}{2})$ for the first 20 zeros: bounded oscillation around zero with RMS $\approx 0.169$ and no drift. The $\tfrac{1}{2}$ is exact; the residual is just the $S(t)$ noise.
 
@@ -3367,7 +3421,11 @@ The three numbers span a factor of $\sim 4$, exactly the factor by which $\rho$ 
 
 **Setup.** Define the *logit gap* of a transformer at a hidden layer $\ell$ on a given prompt as
 
-$$f_\ell(\delta) \;=\; \mathrm{logit}_{\ell}\bigl[\text{baseline\_top1}\bigr](\delta) \;-\; \max_{j \neq \text{baseline}}\,\mathrm{logit}_\ell[j](\delta),$$
+$$\begin{aligned}
+f_\ell(\delta) \;=\;
+  & \mathrm{logit}_{\ell}\bigl[\text{baseline\_top1}\bigr](\delta) \\
+  & {} - \max_{j \neq \text{baseline}}\,\mathrm{logit}_\ell[j](\delta),
+\end{aligned}$$
 
 where $\delta$ parameterises a phase shift applied to one $\varepsilon$-group of the gate projection at layer $\ell$ (a 2-dimensional sub-block of the SiLU gate, the smallest unit of the 4-state holographic gate of Ch 8 §8.3.5). At $\delta = 0$ the transformer is unperturbed; at non-zero $\delta$ the gate is phase-rotated and the prediction can flip. A *non-trivial zero* of the logit gap is a value $\delta^* \neq 0$ at which $f_\ell(\delta^*) = 0$ — the boundary at which the model's predicted token changes.
 

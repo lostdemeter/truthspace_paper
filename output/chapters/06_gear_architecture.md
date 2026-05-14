@@ -327,6 +327,11 @@ The "Full" configuration achieves 100% on all six tasks. We are careful about wh
 
 ## 6.8 Summary
 
+```{=latex}
+\begin{table*}[!t]
+\centering
+```
+
 | Component | Purpose | Geometric Property |
 |-----------|---------|-------------------|
 | Gear | Single transformation unit | Quaternion-parameterized |
@@ -335,6 +340,11 @@ The "Full" configuration achieves 100% on all six tasks. We are careful about wh
 | EmergentGear | Self-discovering dimensions | SVD-based dimension discovery |
 | HyperMapping | Pure geometric knowledge store | Position-based matching |
 | GearImprovementLoop | Autonomous self-improvement | Error-driven structure construction |
+
+```{=latex}
+\caption*{\textit{Table 6.1: The six gear-architecture components and their geometric roles. Each row pairs an implementation class with the geometric property that justifies its presence.}}
+\end{table*}
+```
 
 The gear architecture provides the mechanism for the principles established in earlier chapters:
 - **Music Box (§4.7)**: Gear = drum (positions) + comb (`forward()`) → music (`GearState`).
