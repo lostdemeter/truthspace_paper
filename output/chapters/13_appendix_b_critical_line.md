@@ -193,11 +193,21 @@ For an ordered spectrum (such as a singular-value sequence $\sigma_k$), the natu
 
 **Application to Qwen2.5-7B MLP weights.** Computing $\rho$ per layer for the Qwen2.5-7B MLP weights yields a clean three-zone structure that mirrors the DRUM / COMB / MUSIC division of Ch 8:
 
+```{=latex}
+\begin{table*}[!t]
+\centering
+```
+
 | Zone | Layer | $\rho$ | Interpretation |
 |---|---|---|---|
 | **DRUM** | L0 | 0.0046 | Most structured: layer-1 attention bottleneck. The SV spectrum is essentially a pure $\varphi$-power decay; almost all variance is captured by the smooth predictor. |
 | **COMB** | L17 | 0.0070 | Mid-band: rank-1 projectors are valid here. Slight oscillatory residual on top of the $\varphi$-power decay, consistent with the Processor-zone "comb" structure. |
 | **MUSIC** | L27 | 0.0194 | Least structured: the Targeter zone uses near-full rank, so the smooth predictor leaves a $\sim 4\times$ larger residual. The layer is still highly structured ($\rho < 0.02$), but it is the *least* structured of the three. |
+
+```{=latex}
+\caption*{\textit{Table B.1: The $\rho$ regularity diagnostic applied to Qwen2.5-7B MLP weights, partitioned by Ch 8's DRUM / COMB / MUSIC zones. The factor-of-four span tracks the same SV-spectrum transition seen in the spacings of $\zeta$'s non-trivial zeros.}}
+\end{table*}
+```
 
 The three numbers span a factor of $\sim 4$, exactly the factor by which $\rho$ would be expected to grow as the SV spectrum transitions from a pure $\varphi$-power tail (DRUM) to a Newton-rank-1 commitment (MUSIC). The same diagnostic applied to the spacings of the first 100 non-trivial zeros of $\zeta$ produces $\rho$ values in the same order-of-magnitude band — the zero-spacing signal is also well-described by a smooth predictor with a small residual, and the residual has the same oscillatory character as the COMB zone.
 

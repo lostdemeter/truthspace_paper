@@ -22,12 +22,22 @@ Evidence for this hypothesis comes from three directions:
 
 3. **The same φ-structure appears across architectures.** Four models from three task families have been examined with φ-geometry. The signature appears in each, though the *strength* of the result depends on which component is being reconstructed (linear projections reproduce nearly perfectly; full attention stacks have a residual we discuss below).
 
+```{=latex}
+\begin{table*}[!t]
+\centering
+```
+
 | Model | Task | Architecture | Evidence |
 |---|---|---|---|
 | Qwen2-7B | Language modelling | 28-layer decoder, $H = 3584$ | 99.9991% logit correlation under full φ-reconstruction (Ch. 8) |
 | DA2 (Depth Anything V2) | Monocular depth | DINOv2 ViT + 32-feature linear head | Head: 99.9914% depth correlation at **125 bytes** of φ-weights ($756{,}400\times$ compression). Full pipeline: $r = 0.62$. |
 | DDColor | Image colorisation | ConvNeXt encoder + cross-attention decoder | Geometric V16 colorizer reaches Pearson $r = 0.999999$ vs original |
 | GPT-2 vs Qwen2-1.5B | Language modelling (cross-model) | $H = 768$ vs $H = 1536$, different tokenisers / corpora | $W_E$ PC0/PC1 correlate at $r = 0.959$ across 232 shared single-token words |
+
+```{=latex}
+\caption*{\textit{Table 3.1: Cross-architecture universality of the $\varphi$-geometric signature. Four models, three task families, all show the same lattice structure.}}
+\end{table*}
+```
 
 Across all four models, weight distributions show 100% Fibonacci structure and cluster at the same peak φ-level, $\phi^{-9} \approx 0.013$. The cross-architecture results (Qwen2 / DA2 / DDColor) and the cross-model results (GPT-2 ↔ Qwen2-1.5B) together establish that the φ-geometric signature is not an artifact of any specific architecture, tokeniser, or training corpus.
 

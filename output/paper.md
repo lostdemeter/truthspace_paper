@@ -357,7 +357,10 @@ $$\phi^a + \phi^b = \phi^b \cdot (\phi^{a-b} + 1), \quad a \geq b$$
 
 Letting $d = a - b$:
 
-$$\phi^a + \phi^b = \phi^{b + \mathrm{LUT}_{\text{add}}[d]}, \quad \mathrm{LUT}_{\text{add}}[d] = \log_\phi\!\left(\phi^{d} + 1\right)$$
+$$\begin{aligned}
+\phi^a + \phi^b &= \phi^{b + \mathrm{LUT}_{\text{add}}[d]},\\
+\mathrm{LUT}_{\text{add}}[d] &= \log_\phi\!\left(\phi^{d} + 1\right).
+\end{aligned}$$
 
 The LUT is small (a few hundred entries at the resolution used in practice), monotone in $d$, and computed once. φ-addition is therefore: one comparison (to pick the larger exponent), one LUT lookup, one integer add. Subtraction follows the analogous pattern with $\mathrm{LUT}_{\text{sub}}[d] = \log_\phi(\phi^d - 1)$.
 
@@ -416,12 +419,22 @@ Evidence for this hypothesis comes from three directions:
 
 3. **The same φ-structure appears across architectures.** Four models from three task families have been examined with φ-geometry. The signature appears in each, though the *strength* of the result depends on which component is being reconstructed (linear projections reproduce nearly perfectly; full attention stacks have a residual we discuss below).
 
+```{=latex}
+\begin{table*}[!t]
+\centering
+```
+
 | Model | Task | Architecture | Evidence |
 |---|---|---|---|
 | Qwen2-7B | Language modelling | 28-layer decoder, $H = 3584$ | 99.9991% logit correlation under full φ-reconstruction (Ch. 8) |
 | DA2 (Depth Anything V2) | Monocular depth | DINOv2 ViT + 32-feature linear head | Head: 99.9914% depth correlation at **125 bytes** of φ-weights ($756{,}400\times$ compression). Full pipeline: $r = 0.62$. |
 | DDColor | Image colorisation | ConvNeXt encoder + cross-attention decoder | Geometric V16 colorizer reaches Pearson $r = 0.999999$ vs original |
 | GPT-2 vs Qwen2-1.5B | Language modelling (cross-model) | $H = 768$ vs $H = 1536$, different tokenisers / corpora | $W_E$ PC0/PC1 correlate at $r = 0.959$ across 232 shared single-token words |
+
+```{=latex}
+\caption*{\textit{Table 3.1: Cross-architecture universality of the $\varphi$-geometric signature. Four models, three task families, all show the same lattice structure.}}
+\end{table*}
+```
 
 Across all four models, weight distributions show 100% Fibonacci structure and cluster at the same peak φ-level, $\phi^{-9} \approx 0.013$. The cross-architecture results (Qwen2 / DA2 / DDColor) and the cross-model results (GPT-2 ↔ Qwen2-1.5B) together establish that the φ-geometric signature is not an artifact of any specific architecture, tokeniser, or training corpus.
 
@@ -691,11 +704,21 @@ The phase axis is *the same component* that controls constructive vs. destructiv
 
 Style and perspective are content-level. They control *what* you say and *how* you frame it, but not *how much* to say. A query like "Who is Holmes?" might warrant a single sentence or three paragraphs depending on the situation, and neither the 1D nor the 2D dial touches this dimension. Adding $z \in [-1, +1]$ for elaboration:
 
+```{=latex}
+\begin{table*}[!t]
+\centering
+```
+
 | $z$ | Output |
 |---|---|
 | $-1$ (terse) | "Holmes is a detective." |
 | $0$ (standard) | "Holmes is a detective from the Sherlock Holmes stories, associated with Watson." |
 | $+1$ (elaborate) | "Holmes is a literary detective, central to the Sherlock Holmes stories by Doyle. He is most often paired with his companion Watson, and his cases established the deductive-method template that defined the modern detective genre." |
+
+```{=latex}
+\caption*{\textit{Table 4.1: The third quaternion axis $z$ controls information density. Same query, three response lengths, smooth interpolation between them.}}
+\end{table*}
+```
 
 Mathematically, $z$ does *not* fit into the complex-number structure — $\mathbb{C}$ has only two real dimensions. It fits naturally into the **quaternion** structure $q = w + x\mathbf{i} + y\mathbf{j} + z\mathbf{k}$, where $z$ is the coefficient of the third imaginary unit $\mathbf{k}$. The eight octants of the $(x, y, z)$ space give eight independent linguistic registers (formal/casual $\times$ subjective/meta $\times$ terse/elaborate), and every combination is empirically realisable.
 
@@ -846,6 +869,11 @@ This commitment foreshadows everything that follows. Chapter 5 shows that encodi
 
 ## 4.8 Summary
 
+```{=latex}
+\begin{table*}[!t]
+\centering
+```
+
 | Encoding | Dimensions | Key property |
 |----------|-----------|--------------|
 | 12D vector | 12 | Action/domain separation; one axis per candidate relationship type |
@@ -856,6 +884,11 @@ This commitment foreshadows everything that follows. Chapter 5 shows that encodi
 | Semantic quaternion | 4 | 100% analogy accuracy (`king − man + woman = queen`) |
 | Holographic φ-encoding | $\sim$6 bits / weight | 5.27× compression on Qwen2 MLPs at 99.94% correlation; 93.16% of weights within $\pm 0.001$ of a φ-grid point |
 | φ-Adapter | DOF-truncated | Universal SVD + φ-scaling reconstruction; φ-decay law in DOF-vs-accuracy curve |
+
+```{=latex}
+\caption*{\textit{Table 4.2: The $\varphi$-dial progression from 1D to 4D. Each row adds one axis of expressive control, ending at the quaternion structure that hosts a 100\%-accurate semantic algebra.}}
+\end{table*}
+```
 
 The φ-dial progression from 1D to 4D reveals a fundamental truth: semantic space is quaternion-structured. The fourth axis (certainty) is special — it controls the radius of the quaternion sphere, acting as a meta-parameter that governs how definitive the system's output should be.
 
@@ -1121,6 +1154,11 @@ Both directions use the same position-based matching. There is no separate "inpu
 
 ## 5.7 Summary
 
+```{=latex}
+\begin{table*}[!t]
+\centering
+```
+
 | Concept | Statement |
 |---------|-----------|
 | ENCODE = DECODE | Encoding and decoding are the same φ-operation in opposite directions |
@@ -1129,6 +1167,11 @@ Both directions use the same position-based matching. There is no separate "inpu
 | Critical line | $\sigma = 1/2$ is the fold axis of $\zeta(s) = \chi(s)\,\zeta(1-s)$; the conditional-convergence regime where every term in the series matters and the value emerges from oscillation and cancellation (matched empirically in Qwen2-7B's residual stream — §5.3, Ch 8 §8.4, Appendix B) |
 | Position IS everything | Position in φ-space encodes all features |
 | φ-Zipf duality | $\phi^{-\ln f} = f^{-\ln\phi}$: φ-rank weighting IS Zipf's law with exponent $\ln\phi \approx 0.481$; bimodal phase transition with a φ-pair forbidden zone separates the Zipf head (collapsed to pole) from the Zipf tail (on the sphere) |
+
+```{=latex}
+\caption*{\textit{Table 5.1: The six geometric statements that ENCODE = DECODE comprises. Each row is a separate empirical anchor explored elsewhere in the paper.}}
+\end{table*}
+```
 
 The ENCODE = DECODE principle is the master symmetry that makes all of TruthSpace's geometric computation possible. It ensures that the system can always reverse any transformation, that knowledge transfers across scales, and that the geometry itself contains the complete specification of how to use it.
 
@@ -2486,6 +2529,11 @@ The `BoomAttention` mechanism (Chapter 8 §8.4) exploits this directly: boom pos
 
 The φ-Zipf duality, the irreducible shape, and the zeta connection all point toward a single unified geometric theory of computation. It rests on five mathematical foundations, each of which has appeared independently in earlier chapters:
 
+```{=latex}
+\begin{table*}[!t]
+\centering
+```
+
 | # | Foundation | Where it appears | Role |
 |---|---|---|---|
 | 1 | **Self-similarity** ($\phi = 1 + 1/\phi$) | Chapter 2; Chapter 5 §5.5.4 | Structure repeats at every scale; attention patterns are consistent across layers. |
@@ -2493,6 +2541,11 @@ The φ-Zipf duality, the irreducible shape, and the zeta connection all point to
 | 3 | **Fine-structure ratio** ($137/30$) | Chapter 9 §9.5.1 | Governs the boundary between chaotic and locked-on regimes; appears in zeta zeros and attention. |
 | 4 | **Geodesics** | Chapter 6 §6.7; Chapter 9 §9.7.1 | Information follows shortest paths; boom positions are waypoints on these paths. |
 | 5 | **Position-direct encoding** (BBP) | Chapter 9 §9.2 | Position encodes information locally; you don’t need the whole sequence to extract a part. |
+
+```{=latex}
+\caption*{\textit{Table 10.1: The five mathematical foundations of TruthSpace. Each appeared independently while reverse-engineering Qwen2-7B; together they form the irreducible geometric kernel.}}
+\end{table*}
+```
 
 The single statement that unifies them:
 
@@ -3274,11 +3327,21 @@ For an ordered spectrum (such as a singular-value sequence $\sigma_k$), the natu
 
 **Application to Qwen2.5-7B MLP weights.** Computing $\rho$ per layer for the Qwen2.5-7B MLP weights yields a clean three-zone structure that mirrors the DRUM / COMB / MUSIC division of Ch 8:
 
+```{=latex}
+\begin{table*}[!t]
+\centering
+```
+
 | Zone | Layer | $\rho$ | Interpretation |
 |---|---|---|---|
 | **DRUM** | L0 | 0.0046 | Most structured: layer-1 attention bottleneck. The SV spectrum is essentially a pure $\varphi$-power decay; almost all variance is captured by the smooth predictor. |
 | **COMB** | L17 | 0.0070 | Mid-band: rank-1 projectors are valid here. Slight oscillatory residual on top of the $\varphi$-power decay, consistent with the Processor-zone "comb" structure. |
 | **MUSIC** | L27 | 0.0194 | Least structured: the Targeter zone uses near-full rank, so the smooth predictor leaves a $\sim 4\times$ larger residual. The layer is still highly structured ($\rho < 0.02$), but it is the *least* structured of the three. |
+
+```{=latex}
+\caption*{\textit{Table B.1: The $\rho$ regularity diagnostic applied to Qwen2.5-7B MLP weights, partitioned by Ch 8's DRUM / COMB / MUSIC zones. The factor-of-four span tracks the same SV-spectrum transition seen in the spacings of $\zeta$'s non-trivial zeros.}}
+\end{table*}
+```
 
 The three numbers span a factor of $\sim 4$, exactly the factor by which $\rho$ would be expected to grow as the SV spectrum transitions from a pure $\varphi$-power tail (DRUM) to a Newton-rank-1 commitment (MUSIC). The same diagnostic applied to the spacings of the first 100 non-trivial zeros of $\zeta$ produces $\rho$ values in the same order-of-magnitude band — the zero-spacing signal is also well-described by a smooth predictor with a small residual, and the residual has the same oscillatory character as the COMB zone.
 

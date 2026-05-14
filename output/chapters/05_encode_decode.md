@@ -257,6 +257,11 @@ Both directions use the same position-based matching. There is no separate "inpu
 
 ## 5.7 Summary
 
+```{=latex}
+\begin{table*}[!t]
+\centering
+```
+
 | Concept | Statement |
 |---------|-----------|
 | ENCODE = DECODE | Encoding and decoding are the same φ-operation in opposite directions |
@@ -265,6 +270,11 @@ Both directions use the same position-based matching. There is no separate "inpu
 | Critical line | $\sigma = 1/2$ is the fold axis of $\zeta(s) = \chi(s)\,\zeta(1-s)$; the conditional-convergence regime where every term in the series matters and the value emerges from oscillation and cancellation (matched empirically in Qwen2-7B's residual stream — §5.3, Ch 8 §8.4, Appendix B) |
 | Position IS everything | Position in φ-space encodes all features |
 | φ-Zipf duality | $\phi^{-\ln f} = f^{-\ln\phi}$: φ-rank weighting IS Zipf's law with exponent $\ln\phi \approx 0.481$; bimodal phase transition with a φ-pair forbidden zone separates the Zipf head (collapsed to pole) from the Zipf tail (on the sphere) |
+
+```{=latex}
+\caption*{\textit{Table 5.1: The six geometric statements that ENCODE = DECODE comprises. Each row is a separate empirical anchor explored elsewhere in the paper.}}
+\end{table*}
+```
 
 The ENCODE = DECODE principle is the master symmetry that makes all of TruthSpace's geometric computation possible. It ensures that the system can always reverse any transformation, that knowledge transfers across scales, and that the geometry itself contains the complete specification of how to use it.
 

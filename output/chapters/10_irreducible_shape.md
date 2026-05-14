@@ -148,6 +148,11 @@ The `BoomAttention` mechanism (Chapter 8 §8.4) exploits this directly: boom pos
 
 The φ-Zipf duality, the irreducible shape, and the zeta connection all point toward a single unified geometric theory of computation. It rests on five mathematical foundations, each of which has appeared independently in earlier chapters:
 
+```{=latex}
+\begin{table*}[!t]
+\centering
+```
+
 | # | Foundation | Where it appears | Role |
 |---|---|---|---|
 | 1 | **Self-similarity** ($\phi = 1 + 1/\phi$) | Chapter 2; Chapter 5 §5.5.4 | Structure repeats at every scale; attention patterns are consistent across layers. |
@@ -155,6 +160,11 @@ The φ-Zipf duality, the irreducible shape, and the zeta connection all point to
 | 3 | **Fine-structure ratio** ($137/30$) | Chapter 9 §9.5.1 | Governs the boundary between chaotic and locked-on regimes; appears in zeta zeros and attention. |
 | 4 | **Geodesics** | Chapter 6 §6.7; Chapter 9 §9.7.1 | Information follows shortest paths; boom positions are waypoints on these paths. |
 | 5 | **Position-direct encoding** (BBP) | Chapter 9 §9.2 | Position encodes information locally; you don’t need the whole sequence to extract a part. |
+
+```{=latex}
+\caption*{\textit{Table 10.1: The five mathematical foundations of TruthSpace. Each appeared independently while reverse-engineering Qwen2-7B; together they form the irreducible geometric kernel.}}
+\end{table*}
+```
 
 The single statement that unifies them:
 

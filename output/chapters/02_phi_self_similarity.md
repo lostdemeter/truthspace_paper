@@ -190,7 +190,10 @@ $$\phi^a + \phi^b = \phi^b \cdot (\phi^{a-b} + 1), \quad a \geq b$$
 
 Letting $d = a - b$:
 
-$$\phi^a + \phi^b = \phi^{b + \mathrm{LUT}_{\text{add}}[d]}, \quad \mathrm{LUT}_{\text{add}}[d] = \log_\phi\!\left(\phi^{d} + 1\right)$$
+$$\begin{aligned}
+\phi^a + \phi^b &= \phi^{b + \mathrm{LUT}_{\text{add}}[d]},\\
+\mathrm{LUT}_{\text{add}}[d] &= \log_\phi\!\left(\phi^{d} + 1\right).
+\end{aligned}$$
 
 The LUT is small (a few hundred entries at the resolution used in practice), monotone in $d$, and computed once. φ-addition is therefore: one comparison (to pick the larger exponent), one LUT lookup, one integer add. Subtraction follows the analogous pattern with $\mathrm{LUT}_{\text{sub}}[d] = \log_\phi(\phi^d - 1)$.
 

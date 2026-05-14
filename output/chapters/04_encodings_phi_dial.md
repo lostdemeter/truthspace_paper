@@ -88,11 +88,21 @@ The phase axis is *the same component* that controls constructive vs. destructiv
 
 Style and perspective are content-level. They control *what* you say and *how* you frame it, but not *how much* to say. A query like "Who is Holmes?" might warrant a single sentence or three paragraphs depending on the situation, and neither the 1D nor the 2D dial touches this dimension. Adding $z \in [-1, +1]$ for elaboration:
 
+```{=latex}
+\begin{table*}[!t]
+\centering
+```
+
 | $z$ | Output |
 |---|---|
 | $-1$ (terse) | "Holmes is a detective." |
 | $0$ (standard) | "Holmes is a detective from the Sherlock Holmes stories, associated with Watson." |
 | $+1$ (elaborate) | "Holmes is a literary detective, central to the Sherlock Holmes stories by Doyle. He is most often paired with his companion Watson, and his cases established the deductive-method template that defined the modern detective genre." |
+
+```{=latex}
+\caption*{\textit{Table 4.1: The third quaternion axis $z$ controls information density. Same query, three response lengths, smooth interpolation between them.}}
+\end{table*}
+```
 
 Mathematically, $z$ does *not* fit into the complex-number structure — $\mathbb{C}$ has only two real dimensions. It fits naturally into the **quaternion** structure $q = w + x\mathbf{i} + y\mathbf{j} + z\mathbf{k}$, where $z$ is the coefficient of the third imaginary unit $\mathbf{k}$. The eight octants of the $(x, y, z)$ space give eight independent linguistic registers (formal/casual $\times$ subjective/meta $\times$ terse/elaborate), and every combination is empirically realisable.
 
@@ -243,6 +253,11 @@ This commitment foreshadows everything that follows. Chapter 5 shows that encodi
 
 ## 4.8 Summary
 
+```{=latex}
+\begin{table*}[!t]
+\centering
+```
+
 | Encoding | Dimensions | Key property |
 |----------|-----------|--------------|
 | 12D vector | 12 | Action/domain separation; one axis per candidate relationship type |
@@ -253,6 +268,11 @@ This commitment foreshadows everything that follows. Chapter 5 shows that encodi
 | Semantic quaternion | 4 | 100% analogy accuracy (`king − man + woman = queen`) |
 | Holographic φ-encoding | $\sim$6 bits / weight | 5.27× compression on Qwen2 MLPs at 99.94% correlation; 93.16% of weights within $\pm 0.001$ of a φ-grid point |
 | φ-Adapter | DOF-truncated | Universal SVD + φ-scaling reconstruction; φ-decay law in DOF-vs-accuracy curve |
+
+```{=latex}
+\caption*{\textit{Table 4.2: The $\varphi$-dial progression from 1D to 4D. Each row adds one axis of expressive control, ending at the quaternion structure that hosts a 100\%-accurate semantic algebra.}}
+\end{table*}
+```
 
 The φ-dial progression from 1D to 4D reveals a fundamental truth: semantic space is quaternion-structured. The fourth axis (certainty) is special — it controls the radius of the quaternion sphere, acting as a meta-parameter that governs how definitive the system's output should be.
 

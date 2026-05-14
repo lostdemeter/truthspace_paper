@@ -135,7 +135,7 @@ pandoc paper.md \
 
 # 4b: rewrite longtable blocks for twocolumn compatibility.  Pandoc
 # emits each table as:
-#     \begin{longtable}[]{...}
+#     \begin{longtable}[]{@{}<spec>@{}}
 #     \toprule\noalign{}
 #     HEADER \\
 #     \midrule\noalign{}
@@ -144,30 +144,60 @@ pandoc paper.md \
 #     \endlastfoot
 #     ROWS
 #     \end{longtable}
-# The preamble redefines longtable->tabular, but the misplaced
-# \bottomrule after \endhead then appears before the rows.  Strip it
-# here and let the preamble append \bottomrule at \end{longtable}.
+# longtable is incompatible with twocolumn mode, so we rewrite each
+# block as
+#     \begin{tsxtable}\begin{tabularx}{\linewidth}{<Y-spec>}
+#     ...
+#     \end{tabularx}\end{tsxtable}
+# where <Y-spec> has every l/c/r replaced with the Y column type
+# (raggedright X) defined in preamble.tex, so cells auto-wrap.
+# The misplaced \bottomrule\noalign{} between \endhead and
+# \endlastfoot is stripped, and a final \bottomrule is inserted
+# immediately before \end{tabularx}.
 python3 - <<'PYFIX'
 import re
 src = open('paper.tex').read()
-# Drop the \bottomrule\noalign{} that appears immediately after
-# \endhead (this only matches inside longtable blocks, since that
-# pattern doesn't appear elsewhere).
+
+# Step A: Drop the misplaced \bottomrule\noalign{} immediately after
+# \endhead inside every longtable block (longtable's old syntax).
 src = re.sub(
     r'(\\endhead\s*\n)\\bottomrule\\noalign\{\}\s*\n\\endlastfoot\s*\n',
     r'\1',
     src,
 )
-# At the end of every (former) longtable block we still need a
-# \bottomrule.  The redefined longtable in preamble.tex wraps content
-# in a tabular; pandoc's row format ends with `\\` so we add a final
-# rule just before \end{longtable} (which the preamble has redefined
-# to close the tabular).
+
+# Step B: Rewrite each \begin{longtable}[]{@{}<spec>@{}} ...
+# \end{longtable} block as \begin{tsxtable}\begin{tabularx}{\linewidth}
+# {<Y-spec>} ... \bottomrule\noalign{}\end{tabularx}\end{tsxtable}.
+# Specs that already use p{...} or X are mapped 1:1.
+def _rewrite_longtable(m):
+    inner = m.group(1)  # whatever sits between @{} ... @{}
+    body = m.group(2)
+    if 'p{' in inner or '>{' in inner or 'X' in inner:
+        # Already a proportional / X spec; rewrite \columnwidth ->
+        # \linewidth so wide tables placed inside table* (which set
+        # \linewidth to \textwidth) actually fill the page width.
+        new_inner = inner.replace(r'\columnwidth', r'\linewidth')
+    else:
+        # Plain l/c/r columns: map to Y (auto-wrapping raggedright X).
+        new_inner = re.sub(r'[lcr]', 'Y', inner)
+    return (
+        f'\\begin{{tsxtable}}\\begin{{tabularx}}{{\\linewidth}}'
+        f'{{@{{}}{new_inner}@{{}}}}'
+        f'{body}\\bottomrule\\noalign{{}}\n'
+        f'\\end{{tabularx}}\\end{{tsxtable}}'
+    )
+
+# Match \begin{longtable}[]{@{}<spec>@{}}<body>\end{longtable}.
+# <spec> may contain `{...}` (proportional p{...} columns), so we
+# match the inner content non-greedily between literal @{} markers.
 src = re.sub(
-    r'(\n)(\\end\{longtable\})',
-    r'\1\\bottomrule\\noalign{}\n\2',
+    r'\\begin\{longtable\}\[\]\{@\{\}(.*?)@\{\}\}(.*?)\\end\{longtable\}',
+    _rewrite_longtable,
     src,
+    flags=re.DOTALL,
 )
+
 # Force \maketitle and \tableofcontents into single-column mode (in
 # twocolumn class, they would otherwise render as cramped two-column
 # blocks).  Wrap the title + TOC in \onecolumn ... \twocolumn.
@@ -176,6 +206,7 @@ src = re.sub(
     r'\1\\onecolumn\n\2\n\\twocolumn',
     src,
 )
+
 open('paper.tex', 'w').write(src)
 PYFIX
 

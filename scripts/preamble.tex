@@ -41,19 +41,22 @@
 % environment), which lack syntax highlighting.
 \fvset{breaklines=true,breakanywhere=true,fontsize=\scriptsize}
 
-% longtable is incompatible with twocolumn mode (it errors out with
-% "longtable not in 1-column mode").  Pandoc emits longtable for every
-% markdown table, so we redefine it as a centred \footnotesize tabular
-% that fits within a column.  The longtable-specific commands that
-% pandoc inserts (\endhead, \endfirsthead, \endfoot, \endlastfoot) are
-% turned into no-ops.  Tables that are too wide for one column can be
-% promoted to span both columns by wrapping the original markdown table
-% in raw \begin{table*}...\end{table*}.
-\renewenvironment{longtable}[2][]{%
-  \begin{center}\footnotesize\begin{tabular}{#2}%
-}{%
-  \end{tabular}\end{center}%
-}
+% Pandoc emits a longtable environment for every markdown table.
+% longtable doesn't work in twocolumn mode, so build_paper.sh
+% post-processes each one into a centred footnotesize tabularx of
+% column width.  See the post-process step in build_paper.sh for the
+% full token rewriting (the comment patterns there avoid putting
+% literal longtable begin/end tokens in this preamble).
+%
+% A wide table that should span both columns can be wrapped in raw
+% LaTeX table-star markup in the markdown source: tabularx's
+% \linewidth then expands to \textwidth (full two-column width).
+%
+% endhead / endfirsthead / endfoot / endlastfoot get \let-relaxed so
+% any surviving longtable-syntax commands are no-ops.
+\usepackage{tabularx}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newenvironment{tsxtable}{\begin{center}\footnotesize}{\end{center}}
 \let\endhead\relax
 \let\endfirsthead\relax
 \let\endfoot\relax
