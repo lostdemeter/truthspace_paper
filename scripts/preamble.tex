@@ -3,6 +3,7 @@
 
 \usepackage{float}
 \usepackage{array}
+\usepackage{etoolbox}
 
 % dblfloatfix improves placement of \begin{figure*} (two-column-
 % spanning floats).  Without it, LaTeX 2e tends to defer wide floats
@@ -10,6 +11,13 @@
 % wide floats can land at the bottom of a column and flow more
 % naturally with the text that references them.
 \usepackage{dblfloatfix}
+
+% seqsplit lets us break long monospace identifiers (file paths,
+% function names with underscores) anywhere, which prevents the
+% otherwise-unhyphenable \texttt{...} runs from overflowing a
+% narrow column.  Used by the post-process step in build_paper.sh
+% to wrap any long inline \texttt content.
+\usepackage{seqsplit}
 
 % Caption styling.  We suppress LaTeX's auto "Figure N." prefix because
 % the markdown captions already include their own chapter-prefixed labels
@@ -90,3 +98,31 @@
 \let\endfirsthead\relax
 \let\endfoot\relax
 \let\endlastfoot\relax
+
+% Figure dividers.  A subtle scroll-and-diamond ornament inserted at
+% the top and bottom of every floated figure so readers can tell
+% where the figure starts and ends when it lands in the middle of a
+% page (between paragraphs of body text).  At a page edge the
+% ornament sits against the margin and the page boundary itself
+% serves as a divider, which is harmless.
+%
+% Glyph choice: short thin rule + math tilde + math diamond + math
+% tilde + short thin rule.  The tildes evoke a "scroll" feel and
+% the diamond is the centrepiece.  All glyphs are plain LaTeX math
+% symbols so they render in any font without depending on DejaVu
+% Serif's Unicode coverage of decorative codepoints.
+\newcommand{\figdivider}{%
+  \par\addvspace{4pt}%
+  {\centering\small
+   \rule[0.55ex]{0.10\linewidth}{0.3pt}%
+   \,$\sim$\,$\diamond$\,$\sim$\,%
+   \rule[0.55ex]{0.10\linewidth}{0.3pt}%
+  \par}%
+  \addvspace{2pt}%
+}
+% Hook the divider into every figure / figure* float so the
+% ornament travels with the float to wherever LaTeX places it.
+\AtBeginEnvironment{figure}{\figdivider}
+\AtEndEnvironment{figure}{\figdivider}
+\AtBeginEnvironment{figure*}{\figdivider}
+\AtEndEnvironment{figure*}{\figdivider}

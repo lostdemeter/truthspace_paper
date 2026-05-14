@@ -207,47 +207,80 @@ src = re.sub(
     src,
 )
 
-# Promote multi-panel figures to span both columns.  Pandoc emits
+# Promote EVERY figure float to span both columns.  Pandoc emits
 # every alone-in-paragraph image as a column-width \begin{figure}
-# float; for figures whose underlying matplotlib panels are too small
-# to read at that width, rewrite the wrapper to \begin{figure*} so
-# the float spans both columns.  The default \includegraphics width
-# is \linewidth (set in preamble.tex), which expands to \textwidth
-# inside figure*, so no further size-spec rewriting is needed.
-WIDE_FIGS = (
-    # 2-panel side-by-side figures (Panel A / Panel B layouts)
-    'fig2_2_self_similarity', 'fig3_1_shape_coordinates',
-    'fig3_2_cross_architecture', 'fig5_1_encode_decode',
-    'fig5_2_phase_transition', 'fig5_3_zeta_transformer',
-    'fig7_1_phi_lattice', 'fig8_2_discriminant_spectrum',
-    'fig9_1_navigation_vs_inference', 'fig9_2_holographic_gate',
-    'fig10_1_irreducible_shape', 'fig10_2_two_spectra',
-    'fig11_1_phi_computer_proof', 'fig11_2_fibonacci_correction',
-    'fig12_2_platonic_rotation',
-    # 3-panel side-by-side figures
-    'fig2_1_phi_spiral',
-)
-def _maybe_widen(m):
+# float; at that width every single-panel figure ends up squished
+# (especially titles, axis labels, and legends generated at the
+# default matplotlib DPI).  Promoting to figure* gives every figure
+# the full text width and the keepaspectratio default scales the
+# height accordingly, so nothing is distorted -- the figure simply
+# renders at the size matplotlib intended.
+# dblfloatfix (loaded in preamble.tex) extends figure*'s placement
+# options so [!tbp] becomes valid: t = top of page, b = bottom of
+# page, p = float page, ! = override the float quota.  Without
+# dblfloatfix, b would be silently ignored for wide floats.
+def _widen(m):
     block = m.group(0)
-    if any(name in block for name in WIDE_FIGS):
-        # dblfloatfix (loaded in preamble.tex) extends figure*'s
-        # placement options so [!tbp] becomes valid: t = top of page,
-        # b = bottom of page, p = float page, ! = override the float
-        # quota.  Without dblfloatfix, b would be silently ignored
-        # for wide floats.  This keeps wide figures close to their
-        # text reference rather than getting deferred to a float
-        # page.
-        block = block.replace(
-            r'\begin{figure}', r'\begin{figure*}[!tbp]', 1
-        )
-        block = block.replace(r'\end{figure}', r'\end{figure*}', 1)
+    block = block.replace(
+        r'\begin{figure}', r'\begin{figure*}[!tbp]', 1
+    )
+    block = block.replace(r'\end{figure}', r'\end{figure*}', 1)
     return block
 
 src = re.sub(
     r'\\begin\{figure\}.*?\\end\{figure\}',
-    _maybe_widen,
+    _widen,
     src,
     flags=re.DOTALL,
+)
+
+# Wrap any long \texttt{...} run that contains a slash, underscore,
+# or dot in a \seqsplit{...} so it can break mid-token at the column
+# edge.  Without this, paths like
+# experiments/hypermapping_full_comparison.py refuse to hyphenate
+# and overflow the column (the 35pt overflow we saw on p.77).  We
+# only rewrite \texttt content that is (a) >=20 chars long and (b)
+# contains at least one of `/`, `_`, or `.` -- short identifiers do
+# not need breaking and we want to leave them alone.  We also skip
+# any \texttt that is part of a \texorpdfstring (i.e. inside a
+# section heading), because \seqsplit is fragile in moving-argument
+# contexts like the TOC.
+def _split_long_texttt(m):
+    body = m.group(1)
+    if len(body) < 20:
+        return m.group(0)
+    if not any(c in body for c in '/_.'):
+        return m.group(0)
+    # Look backwards in the source from the match start: if we see
+    # an unbalanced \texorpdfstring{ before the match, we're inside
+    # a section heading and should not seqsplit.
+    start = m.start()
+    window = src[max(0, start - 400):start]
+    last_tps = window.rfind(r'\texorpdfstring{')
+    if last_tps != -1:
+        # Count braces from \texorpdfstring{ up to our match start;
+        # if still inside braces, skip.
+        tail = window[last_tps + len(r'\texorpdfstring{'):]
+        depth = 1
+        for c in tail:
+            if c == '{':
+                depth += 1
+            elif c == '}':
+                depth -= 1
+                if depth == 0:
+                    break
+        if depth > 0:
+            return m.group(0)
+    # \seqsplit re-typesets each character allowing a break after
+    # it, so the tokenisation of LaTeX-special chars inside \texttt
+    # is preserved.  We keep the surrounding \texttt so the font
+    # stays monospace.
+    return r'\texttt{\seqsplit{' + body + r'}}'
+
+src = re.sub(
+    r'\\texttt\{([^{}]+)\}',
+    _split_long_texttt,
+    src,
 )
 
 # Insert \FloatBarrier before each top-level \section (which in our
