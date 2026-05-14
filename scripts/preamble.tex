@@ -99,25 +99,19 @@
 \let\endfoot\relax
 \let\endlastfoot\relax
 
-% Figure dividers.  A subtle scroll-and-diamond ornament inserted at
-% the top and bottom of every floated figure so readers can tell
-% where the figure starts and ends when it lands in the middle of a
-% page (between paragraphs of body text).  At a page edge the
-% ornament sits against the margin and the page boundary itself
-% serves as a divider, which is harmless.
-%
-% Glyph choice: short thin rule + math tilde + math diamond + math
-% tilde + short thin rule.  The tildes evoke a "scroll" feel and
-% the diamond is the centrepiece.  All glyphs are plain LaTeX math
-% symbols so they render in any font without depending on DejaVu
-% Serif's Unicode coverage of decorative codepoints.
+% Figure dividers.  A simple centred thin rule inserted at the top
+% and bottom of every floated figure so readers can tell where the
+% figure starts and ends when it lands in the middle of a page
+% (between paragraphs of body text).  At a page edge the rule sits
+% against the margin and the page boundary itself serves as a
+% divider, which is harmless.  The rule has the same width and
+% weight as the chapter-section separators that pandoc emits for
+% markdown horizontal rules (---), so figure dividers blend
+% visually with section breaks rather than introducing a second
+% divider style.
 \newcommand{\figdivider}{%
   \par\addvspace{4pt}%
-  {\centering\small
-   \rule[0.55ex]{0.10\linewidth}{0.3pt}%
-   \,$\sim$\,$\diamond$\,$\sim$\,%
-   \rule[0.55ex]{0.10\linewidth}{0.3pt}%
-  \par}%
+  {\centering\rule{0.5\linewidth}{0.5pt}\par}%
   \addvspace{2pt}%
 }
 % Hook the divider into every figure / figure* float so the

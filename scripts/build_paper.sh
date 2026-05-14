@@ -283,6 +283,29 @@ src = re.sub(
     src,
 )
 
+# Strip redundant section-divider blocks immediately adjacent to a
+# floated figure.  Pandoc emits a markdown horizontal rule (---) as
+# \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}; many of
+# our chapters use --- after a figure to mark "end of this idea".
+# Now that figure floats carry their own \figdivider rule (defined
+# in preamble.tex), an adjacent --- produces two stacked rules.
+# Remove the \begin{center}\rule\end{center} block when it sits
+# right after \end{figure} or \end{figure*}, and likewise when it
+# sits right before \begin{figure} or \begin{figure*}.  The
+# \figdivider on the float is enough.
+src = re.sub(
+    r'\\end\{figure\*?\}\s*\n\s*\n'
+    r'\\begin\{center\}\\rule\{0\.5\\linewidth\}\{0\.5pt\}\\end\{center\}\s*\n',
+    lambda m: m.group(0).split('\\begin{center}')[0],
+    src,
+)
+src = re.sub(
+    r'\\begin\{center\}\\rule\{0\.5\\linewidth\}\{0\.5pt\}\\end\{center\}\s*\n\s*\n'
+    r'(\\begin\{figure\*?\})',
+    r'\1',
+    src,
+)
+
 # Insert \FloatBarrier before each top-level \section (which in our
 # pandoc setup corresponds to a chapter heading -- "Chapter 5",
 # "Appendix B" etc.).  This stops floats from migrating across

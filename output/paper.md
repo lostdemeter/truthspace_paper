@@ -799,7 +799,7 @@ This suggests treating the weight as a *hologram*: a small, structured "referenc
 
 $$W \;=\; \underbrace{s \cdot \phi^{e}}_{\text{reference beam}} \;+\; \underbrace{\varepsilon}_{\text{signal}}$$
 
-- **Reference beam** ($s \cdot \phi^{e}$) is *implicit*: 1 bit of sign, $\sim$5 bits of φ-level index, generated on demand from a 1 KB lookup table of φ-powers. About 6 bits per weight.
+- **Reference beam** ($s \cdot \phi^{e}$) is *implicit*: 1 bit of sign, $\sim$ 5 bits of φ-level index, generated on demand from a 1 KB lookup table of φ-powers. About 6 bits per weight.
 - **Signal** ($\varepsilon$) is *negligible*: 93.16% of weights have $|\varepsilon| < 0.001$, and zeroing all $\varepsilon$ produces 99.94% Pearson correlation on the underlying weights and 99.98% correlation on the MLP outputs of Qwen2-7B — with text generation matching the original to several decimal places.
 
 A representative test: "The golden ratio is approximately" produces *"...equal to 1.6180339887"* identically under both the original and the φ-encoded model.
@@ -882,7 +882,7 @@ This commitment foreshadows everything that follows. Chapter 5 shows that encodi
 | 3D dial | 3 | Adds information density via the third quaternion vector axis |
 | 4D quaternion dial | 4 | Adds epistemic certainty via the scalar component |
 | Semantic quaternion | 4 | 100% analogy accuracy (`king − man + woman = queen`) |
-| Holographic φ-encoding | $\sim$6 bits / weight | 5.27× compression on Qwen2 MLPs at 99.94% correlation; 93.16% of weights within $\pm 0.001$ of a φ-grid point |
+| Holographic φ-encoding | $\sim$ 6 bits / weight | 5.27× compression on Qwen2 MLPs at 99.94% correlation; 93.16% of weights within $\pm 0.001$ of a φ-grid point |
 | φ-Adapter | DOF-truncated | Universal SVD + φ-scaling reconstruction; φ-decay law in DOF-vs-accuracy curve |
 
 ```{=latex}
@@ -1077,7 +1077,7 @@ In a 233-word sample of Qwen2-1.5B's L14 hidden states ($H = 1536$), every word'
 
 The gap is not a sparsity — it is empty. There are no words that are *somewhat* at the pole. The transition is discontinuous. The dominant predictor of which side a word lands on is word length ($r = -0.604$, $p = 1.5 \times 10^{-24}$), and the single-rule classifier "syllables $\leq 1 \to$ pole" achieves **87.1% accuracy** for phase placement — a remarkable compression for a 1536-dimensional geometric space.
 
-This is Zipf's law in *geometric* form. The Zipf head — the top $\sim$20% of vocabulary by frequency, accounting for $\sim$80% of actual usage — consists exactly of monosyllabic core vocabulary. These are the words that *collapse to the common-word pole*, losing their individual φ-address because they appear in so many contexts that the COMB layers cannot distinguish them. The Zipf tail — rare, polysyllabic, semantically specific — retains its individual φ-address and lives on the sphere.
+This is Zipf's law in *geometric* form. The Zipf head — the top $\sim$ 20% of vocabulary by frequency, accounting for $\sim$ 80% of actual usage — consists exactly of monosyllabic core vocabulary. These are the words that *collapse to the common-word pole*, losing their individual φ-address because they appear in so many contexts that the COMB layers cannot distinguish them. The Zipf tail — rare, polysyllabic, semantically specific — retains its individual φ-address and lives on the sphere.
 
 ![*Figure 5.2: The phase transition has two empirical anchors. **Panel A** shows the bimodal φ-cosine distribution on a 233-word sample of Qwen2-1.5B at L14 (§5.5.2): polysyllabic specialised vocabulary clusters at the semantic-body zone $[0.05, 0.35]$, monosyllabic core vocabulary collapses to the common-word pole $[0.95, 1.00]$, and the $(0.35, 0.95)$ gap contains zero tokens. **Panel B** shows the same phenomenon on a 2000-token morphological-axis projection (§5.5.3): the forbidden zone is bounded *exactly* by the φ-pair $M/\phi^2 \approx 11.74$ and $M/\phi \approx 19.00$, the only place in real algebra where $1/\phi + 1/\phi^2 = 1$.*](figures/fig5_2_phase_transition.png)
 

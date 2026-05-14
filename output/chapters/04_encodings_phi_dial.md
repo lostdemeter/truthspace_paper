@@ -183,7 +183,7 @@ This suggests treating the weight as a *hologram*: a small, structured "referenc
 
 $$W \;=\; \underbrace{s \cdot \phi^{e}}_{\text{reference beam}} \;+\; \underbrace{\varepsilon}_{\text{signal}}$$
 
-- **Reference beam** ($s \cdot \phi^{e}$) is *implicit*: 1 bit of sign, $\sim$5 bits of φ-level index, generated on demand from a 1 KB lookup table of φ-powers. About 6 bits per weight.
+- **Reference beam** ($s \cdot \phi^{e}$) is *implicit*: 1 bit of sign, $\sim$ 5 bits of φ-level index, generated on demand from a 1 KB lookup table of φ-powers. About 6 bits per weight.
 - **Signal** ($\varepsilon$) is *negligible*: 93.16% of weights have $|\varepsilon| < 0.001$, and zeroing all $\varepsilon$ produces 99.94% Pearson correlation on the underlying weights and 99.98% correlation on the MLP outputs of Qwen2-7B — with text generation matching the original to several decimal places.
 
 A representative test: "The golden ratio is approximately" produces *"...equal to 1.6180339887"* identically under both the original and the φ-encoded model.
@@ -266,7 +266,7 @@ This commitment foreshadows everything that follows. Chapter 5 shows that encodi
 | 3D dial | 3 | Adds information density via the third quaternion vector axis |
 | 4D quaternion dial | 4 | Adds epistemic certainty via the scalar component |
 | Semantic quaternion | 4 | 100% analogy accuracy (`king − man + woman = queen`) |
-| Holographic φ-encoding | $\sim$6 bits / weight | 5.27× compression on Qwen2 MLPs at 99.94% correlation; 93.16% of weights within $\pm 0.001$ of a φ-grid point |
+| Holographic φ-encoding | $\sim$ 6 bits / weight | 5.27× compression on Qwen2 MLPs at 99.94% correlation; 93.16% of weights within $\pm 0.001$ of a φ-grid point |
 | φ-Adapter | DOF-truncated | Universal SVD + φ-scaling reconstruction; φ-decay law in DOF-vs-accuracy curve |
 
 ```{=latex}
